@@ -7,7 +7,7 @@ EXPECTED_PREPROCESSED_DATASET_FILES = [
     "pan21-test.jsonl"
 ]
 
-EXPTECTED_DATASETS_FILES_PAN13 = [
+EXPTECTED_DATASETS_FOLDERS_PAN13 = [
     "pan13-authorship-verification-test-corpus2-2013-05-29",
     "pan13-authorship-verification-training-corpus-2013-02-01"
 ]
@@ -24,6 +24,6 @@ EXPECTED_DATASETS_FILES_PAN20 = [
 ]
 
 EXPECTED_DATASETS_FILES_PAN23 = [
-    "",
-    ""
+    "pan23_authorship-verification-training-dataset",
+    "pan23-authorship-verification-test-dataset"
 ]

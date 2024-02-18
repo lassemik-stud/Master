@@ -4,7 +4,7 @@ from module.restructure_db.restructure_pan13 import restructure_pan13_func
 from module.restructure_db.restructure_pan20 import restructure_pan20_func
 from module.restructure_db.restructure_pan22 import restructure_pan22_func
 from settings.logging import print_l
-from settings.expected_values import EXPECTED_DATASETS_FILES_PAN20, EXPECTED_DATASETS_FILES_PAN20, EXPECTED_DATASETS_FILES_PAN23, EXPECTED_PREPROCESSED_DATASET_FILES, EXPTECTED_DATASETS_FILES_PAN13
+from settings.expected_values import EXPECTED_DATASETS_FILES_PAN20, EXPECTED_DATASETS_FILES_PAN20, EXPECTED_DATASETS_FILES_PAN23, EXPECTED_PREPROCESSED_DATASET_FILES, EXPTECTED_DATASETS_FOLDERS_PAN13
 
 def verify_correct_location_of_datasets(datasets_path="../datasets"):
     found_pan20_files_dict = {}
@@ -17,12 +17,12 @@ def verify_correct_location_of_datasets(datasets_path="../datasets"):
 
         for dir in dirs:
             full_dir_path = os.path.join(root, dir)
-            if dir in EXPTECTED_DATASETS_FILES_PAN13 and os.path.isdir(full_dir_path):
+            if dir in EXPTECTED_DATASETS_FOLDERS_PAN13 and os.path.isdir(full_dir_path):
                 found_pan13_dirs_dict[dir] = full_dir_path
 
     # Check for missing files and directories
     missing_files = set(EXPECTED_DATASETS_FILES_PAN20) - found_pan20_files_dict.keys()
-    missing_dirs = set(EXPTECTED_DATASETS_FILES_PAN13) - found_pan13_dirs_dict.keys()
+    missing_dirs = set(EXPTECTED_DATASETS_FOLDERS_PAN13) - found_pan13_dirs_dict.keys()
 
     # Print results
     for file in missing_files:
