@@ -8,7 +8,7 @@
     - Constants: CAPS_WITH_UNDERSCORES
     - Use 4 spaces for indentation. For more conventions, refer to PEP8.
 
-# create requirenments file
+# create requirement file
     - pip3 install pipreqs
     - pipreqs --ignore /examples </path/to/project>
 

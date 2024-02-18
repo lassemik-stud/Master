@@ -2,7 +2,7 @@ import os
 
 from module.restructure_db.restructure_pan13 import restructure_pan13_func
 from module.restructure_db.restructure_pan20 import restructure_pan20_func
-from module.restructure_db.restructure_pan22 import restructure_pan22_func
+from module.restructure_db.restructure_pan23 import restructure_pan23_func
 from settings.logging import print_l
 from settings.expected_values import EXPECTED_DATASETS_FILES_PAN20, EXPECTED_DATASETS_FILES_PAN20, EXPECTED_DATASETS_FILES_PAN23, EXPECTED_PREPROCESSED_DATASET_FILES, EXPTECTED_DATASETS_FOLDERS_PAN13
 
@@ -93,7 +93,7 @@ def prechecks_func():
     Structures the pan13, pan20 and pan23 to the same jsonl format. 
     """
     if check_for_preprocessed_datasets_files():
-        print_l("DEBUG", "TRUE")
+        print_l("DEBUG", "Preprocessed datasets already exist. Skipping prechecks.")
         # TRUE --> GOTO 
     else:
         pan20_files_dict, pan13_dirs_dict = verify_correct_location_of_datasets()
