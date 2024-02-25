@@ -1,6 +1,6 @@
 import json
 
-from settings.structure import Dataset
+from settings.classes import Dataset
 
 def read_jsonl(file_path, max_entries):
     entries = []
@@ -27,7 +27,7 @@ def read_jsonl(file_path, max_entries):
                 
                 class_entry = Dataset(entry_id, entry_dataset, entry_type, entry_classified, known_dict, unknown_dict)
                 #print(class_entry)
-                entries.append(entry)
+                entries.append(class_entry)
             except json.JSONDecodeError:
                 print(f"Error decoding JSON on line {i+1}")
     return entries

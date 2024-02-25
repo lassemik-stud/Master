@@ -52,7 +52,7 @@ class logApplicationCustomClass():
         basicHandler.setFormatter(infoHandler)
         myLogger.info(message)
 
-def print_l(type, message):
+def print_log(type, message):
     """
     DEBUG/INFO/WARNING/ERROR/EXCEPTION
     """
