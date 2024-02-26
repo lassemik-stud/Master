@@ -9,7 +9,7 @@ class PrintLog:
         # Gets or creates a logger
         self.myLogger = logging.getLogger(__name__)
 
-        # Set log level
+        # Set log level - DEBUG < INFO < WARNING < ERROR < CRITICAL
         self.myLogger.setLevel(logging.DEBUG)
 
         # Define file log format
