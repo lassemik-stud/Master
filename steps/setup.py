@@ -1,11 +1,11 @@
 import os
 
-from module.restructure_db.restructure_pan13 import restructure_pan13_func
-from module.restructure_db.restructure_pan20 import restructure_pan20_func
-from module.restructure_db.restructure_pan23 import restructure_pan23_func
-from settings.logging import print_log
+from steps.A0_prepare_datasets.A0_restructure_pan13 import restructure_pan13
+from steps.A0_prepare_datasets.A2_restructure_pan20 import restructure_pan20
+from steps.A0_prepare_datasets.A3_restructure_pan23 import restructure_pan23
+from settings.logging import PrintLog
 from settings.static_values import EXPECTED_DATASETS_FILES_PAN20, EXPECTED_DATASETS_FILES_PAN20, EXPECTED_DATASETS_FILES_PAN23, EXPECTED_PREPROCESSED_DATASET_FILES, EXPECTED_DATASETS_FOLDERS_PAN13, EXPECTED_DATASETS_FOLDER, EXPECTED_PREPROCESSED_DATASETS_FOLDER
-from module.restructure_db.create_problem_pan13 import create_pan13_problem
+from steps.A0_prepare_datasets.A1_create_problem_pan13 import create_pan13_problem
 
 import os
 import zipfile
@@ -55,23 +55,23 @@ def verify_correct_location_of_datasets(datasets_path=EXPECTED_DATASETS_FOLDER):
 
     # Print results
     for file in missing_files:
-        print_log('ERROR',f"File missing: {file}")
+        PrintLog.error(f"File missing: {file}")
     for dir in missing_dirs:
-        print_log('ERROR',f"Directory missing: {dir}")
+        PrintLog.error(f"Directory missing: {dir}")
     if not missing_files and not missing_dirs:
-        print_log("INFO", "Located all dataset files successfully")
+        PrintLog.info(f"Located all dataset files successfully")
 
     return identified_pan_20_files_dict, identified_pan_13_files_dict
 
 def restructure_pan13_pre(pan13_dirs_dict):
     for dataset in ['pan13-test', 'pan13-train']:
-        restructure_pan13_func(main_directory=pan13_dirs_dict[EXPECTED_DATASETS_FOLDERS_PAN13[dataset]], 
+        restructure_pan13(main_directory=pan13_dirs_dict[EXPECTED_DATASETS_FOLDERS_PAN13[dataset]], 
                             truth_txt_path=pan13_dirs_dict[EXPECTED_DATASETS_FOLDERS_PAN13[dataset]] + "\\truth.txt", 
                             output_file=EXPECTED_PREPROCESSED_DATASETS_FOLDER+EXPECTED_PREPROCESSED_DATASET_FILES[dataset])
 
 def restructure_pan20_pre(pan20_files_dict):
     for dataset in  ['pan20-train-small','pan20-train-large','pan20-test','pan21-test']:
-        restructure_pan20_func(path_to_pairs=pan20_files_dict[EXPECTED_DATASETS_FILES_PAN20[dataset]],
+        restructure_pan20(path_to_pairs=pan20_files_dict[EXPECTED_DATASETS_FILES_PAN20[dataset]],
                                path_to_truth=pan20_files_dict[EXPECTED_DATASETS_FILES_PAN20[dataset+"-truth"]],
                                output_path=EXPECTED_PREPROCESSED_DATASETS_FOLDER+EXPECTED_PREPROCESSED_DATASET_FILES[dataset])
 
@@ -85,19 +85,19 @@ def check_for_preprocessed_datasets_files():
     # Check for missing files and directories
     missing_files = set(EXPECTED_PREPROCESSED_DATASET_FILES.values()) - found_preprocessed_files_dict.keys()
     for file in missing_files:
-        print_log('ERROR',f"File missing: {file}")
+        PrintLog.error(f"File missing: {file}")
     for file in found_preprocessed_files_dict.keys():
-        print_log('INFO',f"File found: {file}")
+        PrintLog.info(f"File found: {file}")
     if not missing_files:
-        print_log("INFO", "Loaded all dataset files successfully from preprocessed directory")
+        PrintLog.info( "Loaded all dataset files successfully from preprocessed directory")
         return True
     else:
-        print_log("ERROR", "Error in loading dataset files from preprocessed directory")
+        PrintLog.error( "Error in loading dataset files from preprocessed directory")
         return False
 
 def setup():
     if check_for_preprocessed_datasets_files():
-        print_log("DEBUG", "Preprocessed datasets already exist. Skipping prechecks.")
+        PrintLog.debug("Preprocessed datasets already exist. Skipping prechecks.")
         # TRUE --> GOTO 
     else:
         #unzip_all(EXPECTED_DATASETS_FOLDER)
