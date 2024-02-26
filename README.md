@@ -1,13 +1,20 @@
-# template_project
+# Status of coding 
 
-This is a template project for use in other projects. 
+## Overall steps 
+- [ ]  Prepare datasets 
+ - [ ] PAN 13
+ - [ ] PAN 20
+ - [ ] PAN 23
+- [ ] Preprocessing 
+ - [ ] Feature extraction from text 
+- [ ] Feature selection
+- [ ] Feature extraction (database terminology)
+- [ ] Classification. 
+- [ ] Data Evaluation 
 
-## Implemented
-- Logging 
-- Arguments
-- Testing
-- runLinuxCommands in WSL (when run from WSL)
+### Prepare datasets 
+- [ ] Standardize the datasets into a common json format
+- [ ] PAN 13 dataset - create a partial contract cheating problem 
 
-## To be implemented
-- Examples of code
-- Best Practices of examples
+### Preprocessing 
+- [ ]
