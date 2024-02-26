@@ -1,0 +1,55 @@
+2024-02-26 21:28:58,960 - pid: 17016 - INFO -  This is a test message
+2024-02-26 21:28:58,961 - pid: 17016 - DEBUG -  This is a test message
+2024-02-26 21:28:58,961 - pid: 17016 - DEBUG -  This is a test message
+2024-02-26 21:28:58,962 - pid: 17016 - WARNING -  This is a test message
+2024-02-26 21:28:58,962 - pid: 17016 - WARNING -  This is a test message
+2024-02-26 21:28:58,962 - pid: 17016 - WARNING -  This is a test message
+2024-02-26 21:28:58,963 - pid: 17016 - ERROR -  This is a test message
+2024-02-26 21:28:58,963 - pid: 17016 - ERROR -  This is a test message
+2024-02-26 21:28:58,963 - pid: 17016 - ERROR -  This is a test message
+2024-02-26 21:28:58,963 - pid: 17016 - ERROR -  This is a test message
+2024-02-26 21:30:02,132 - pid: 7852 - INFO -  This is a test message
+2024-02-26 21:30:02,132 - pid: 7852 - DEBUG -  This is a test message
+2024-02-26 21:30:02,132 - pid: 7852 - WARNING -  This is a test message
+2024-02-26 21:30:02,132 - pid: 7852 - ERROR -  This is a test message
+2024-02-26 21:31:27,117 - pid: 1412 - INFO -  This is a test message
+2024-02-26 21:31:27,117 - pid: 1412 - DEBUG -  This is a test message
+2024-02-26 21:31:27,117 - pid: 1412 - WARNING -  This is a test message
+2024-02-26 21:31:27,118 - pid: 1412 - ERROR -  This is a test message
+2024-02-26 21:35:51,160 - pid: 2028 - INFO -  This is a test message
+2024-02-26 21:35:51,160 - pid: 2028 - WARNING -  This is a test message
+2024-02-26 21:35:51,161 - pid: 2028 - ERROR -  This is a test message
+2024-02-26 21:37:51,423 - pid: 20500 - CRITICAL -  This is a test message
+2024-02-26 21:38:34,975 INFO This is a test message
+2024-02-26 21:38:34,975 DEBUG This is a test message
+2024-02-26 21:38:34,975 WARNING This is a test message
+2024-02-26 21:38:34,976 ERROR This is a test message
+2024-02-26 21:38:34,976 ERROR This is a test message
+NoneType: None
+2024-02-26 21:38:34,976 CRITICAL This is a test message
+2024-02-26 21:40:39,403 INFO This is a test message
+2024-02-26 21:40:39,403 DEBUG This is a test message
+2024-02-26 21:40:39,403 WARNING This is a test message
+2024-02-26 21:40:39,403 ERROR This is a test message
+2024-02-26 21:40:39,403 ERROR This is a test message
+Traceback (most recent call last):
+  File "C:\Users\lmikalsen\OneDrive - NTNU\00-Master\Github\Master\test.py", line 8, in <module>
+    1 / 0  # This will raise a ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2024-02-26 21:40:39,407 CRITICAL This is a test message
+2024-02-26 21:42:08,213 INFO This is a test message
+2024-02-26 21:42:08,213 DEBUG This is a test message
+2024-02-26 21:42:08,213 WARNING This is a test message
+2024-02-26 21:42:08,214 ERROR This is a test message
+2024-02-26 21:42:28,910 INFO This is a test message
+2024-02-26 21:42:28,911 DEBUG This is a test message
+2024-02-26 21:42:28,911 WARNING This is a test message
+2024-02-26 21:42:28,912 ERROR This is a test message
+2024-02-26 21:42:28,912 ERROR This is a test message
+Traceback (most recent call last):
+  File "C:\Users\lmikalsen\OneDrive - NTNU\00-Master\Github\Master\test.py", line 8, in <module>
+    1 / 0  # This will raise a ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2024-02-26 21:42:28,916 CRITICAL This is a test message
