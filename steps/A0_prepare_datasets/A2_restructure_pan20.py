@@ -1,7 +1,7 @@
 import json
 import sys
 
-from settings.logging import print_log
+from settings.logging import printLog as PrintLog
 
 def read_truth_data(file_path):
     truth_data = {}
@@ -32,5 +32,5 @@ def process_pairs_file(pairs_file_path, truth_data, output_file_path):
 def restructure_pan20(path_to_pairs, path_to_truth, output_path):
     truth_data = read_truth_data(path_to_truth)
     process_pairs_file(path_to_pairs, truth_data, output_path)
-    print_log("DEBUG", f"JSON data has been saved to {output_path}")
+    PrintLog.debug(f"JSON data has been saved to {output_path}")
 

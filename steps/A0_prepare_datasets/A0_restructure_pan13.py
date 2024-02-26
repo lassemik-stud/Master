@@ -4,7 +4,7 @@ import os
 import glob
 import re
 
-from settings.logging import PrintLog
+from settings.logging import printLog as PrintLog
 
 def read_file_content(file_path): 
     with open(os.path.abspath(file_path), 'r', encoding='utf-8') as file:

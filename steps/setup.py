@@ -3,7 +3,7 @@ import os
 from steps.A0_prepare_datasets.A0_restructure_pan13 import restructure_pan13
 from steps.A0_prepare_datasets.A2_restructure_pan20 import restructure_pan20
 from steps.A0_prepare_datasets.A3_restructure_pan23 import restructure_pan23
-from settings.logging import PrintLog
+from settings.logging import printLog as PrintLog
 from settings.static_values import EXPECTED_DATASETS_FILES_PAN20, EXPECTED_DATASETS_FILES_PAN20, EXPECTED_DATASETS_FILES_PAN23, EXPECTED_PREPROCESSED_DATASET_FILES, EXPECTED_DATASETS_FOLDERS_PAN13, EXPECTED_DATASETS_FOLDER, EXPECTED_PREPROCESSED_DATASETS_FOLDER
 from steps.A0_prepare_datasets.A1_create_problem_pan13 import create_pan13_problem
 

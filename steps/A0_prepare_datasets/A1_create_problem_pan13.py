@@ -2,7 +2,7 @@ import json
 import random
 
 from settings.static_values import EXPECTED_PREPROCESSED_DATASETS_FOLDER, EXPECTED_PREPROCESSED_DATASET_FILES
-from settings.logging import PrintLog
+from settings.logging import printLog as PrintLog
 
 pan13_train_file = EXPECTED_PREPROCESSED_DATASETS_FOLDER+EXPECTED_PREPROCESSED_DATASET_FILES['pan13-train']
 pan13_test_file = EXPECTED_PREPROCESSED_DATASETS_FOLDER+EXPECTED_PREPROCESSED_DATASET_FILES['pan13-test']

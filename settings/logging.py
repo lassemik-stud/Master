@@ -59,4 +59,4 @@ class PrintLog:
         self.basicHandler.setFormatter(self.criticalHandler)
         self.myLogger.critical(message)
 
-print_log = PrintLog()
+printLog = PrintLog()
