@@ -105,6 +105,6 @@ def setup():
         restructure_pan13_pre(pan13_dirs_dict)
         #restructure_pan20_pre(pan20_files_dict)
         check_for_preprocessed_datasets_files()
-        print(create_pan13_problem(EXPECTED_PREPROCESSED_DATASETS_FOLDER+EXPECTED_PREPROCESSED_DATASET_FILES['pan13-train']))
+        create_pan13_problem(EXPECTED_PREPROCESSED_DATASETS_FOLDER+EXPECTED_PREPROCESSED_DATASET_FILES['pan13-train'])
         #print(length)
 

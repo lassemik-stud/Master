@@ -24,7 +24,7 @@ def generate_json_structure(directory, truth_file, dataset_number):
                 "id": str(uuid.uuid4()),
                 "dataset": dataset_number,
                 "type": [subdir[:2]],  # Assuming first two characters denote the type
-                "author": [],
+                "author": subdir,
                 "same author": truth_dict.get(subdir, 0),
                 "known text": [],
                 "unknown text": "",
@@ -53,7 +53,7 @@ def restructure_pan13(main_directory, truth_txt_path, output_file):
             json.dump(item, file, ensure_ascii=False)
             file.write('\n')
 
-    PrintLog().debug(f"JSON data has been saved to {output_file}")
+    PrintLog.debug(f"JSON data has been saved to {output_file}")
 
 
 

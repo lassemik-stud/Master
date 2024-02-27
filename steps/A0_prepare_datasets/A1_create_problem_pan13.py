@@ -12,20 +12,20 @@ placeholder = ""
 
 def generate_random_numbers(seed, max_number):
     if max_number < 0:
-        PrintLog.error()("Max number must be greater than 0")
+        PrintLog.error("Max number must be greater than 0")
         return 0
     try:
         random.seed(seed)
         return random.randint(0, max_number)
     except ValueError as e:
-        PrintLog.Info()(f"Error generating random number: {e} - {seed} - {max_number}")
+        PrintLog.info(f"Error generating random number: {e} - {seed} - {max_number}")
 
 def get_sentences_from_text(text, paragraph_size, unknown_text_location, random_seed=42):
     used_indices = [index for range_ in unknown_text_location for index in range_]
     counter = 0
     while True:
         if counter >= 100:
-            PrintLog.error()("Did not find a solution. Adjust the paragraph size or number of sentences", unknown_text_location, random_seed)
+            PrintLog.error("Did not find a solution. Adjust the paragraph size or number of sentences", unknown_text_location, random_seed)
             exit()
         start_pos = generate_random_numbers(random_seed, len(text)-paragraph_size-1)
         end_pos = start_pos + paragraph_size
@@ -44,7 +44,7 @@ def add_sentence_to_array(text, paragraph, _known_text_put_location, random_seed
         if counter >= 50:
             pass
         if counter >= 100:
-            PrintLog.error()("Did not find a solution. Adjust the paragraph size or number of sentences", _known_text_put_location)
+            PrintLog.error("Did not find a solution. Adjust the paragraph size or number of sentences", _known_text_put_location)
             exit()
         start_pos = generate_random_numbers(random_seed, len(text)-1)
         end_pos = start_pos + len(paragraph)
@@ -70,9 +70,9 @@ def test_create_pan13_problem(paragraph_size, number_of_sentences_to_extract,see
         _problem_text,_known_text_put_location = add_sentence_to_array(_known_text[-1],_extracted_paragraph,_known_text_put_location,seed+5555)
         #PrintLog.Info()(f"Extracted paragraph: {_extracted_paragraph}")
     
-    PrintLog.debug()(f"Unknown text retrieval location: \t{_unknown_text_retrieval_location}")
-    PrintLog.debug()(f"Known text put location: \t\t{_known_text_put_location}")
-    PrintLog.debug()("---------------------------------")
+    #PrintLog.debug(f"Unknown text retrieval location: \t{_unknown_text_retrieval_location}")
+    #PrintLog.debug(f"Known text put location: \t\t{_known_text_put_location}")
+    #PrintLog.debug("---------------------------------")
     #PrintLog.Info()(f"Problem text: {_problem_text}")
         
         
@@ -86,7 +86,7 @@ def create_pan13_problem(file_path, paragraph_size=2, number_of_sentences_to_ext
             try:
                 entry = json.loads(line)
                 if len(entry.get('known text')) != 1 and entry.get('same author') == 0:
-                    PrintLog.debug()(f"{entry.get('id')}")
+                    #PrintLog.debug(f"{entry.get('id')}")
                     _unknown_text = entry.get('unknown text')
                     _known_text = entry.get('known text')
                     _problem_text = []
@@ -97,8 +97,8 @@ def create_pan13_problem(file_path, paragraph_size=2, number_of_sentences_to_ext
                         _extracted_paragraph,_unknown_text_retrieval_location = get_sentences_from_text(_unknown_text, paragraph_size, _unknown_text_retrieval_location,seed)
                         _problem_text,_known_text_put_location = add_sentence_to_array(_known_text[-1],_extracted_paragraph,_known_text_put_location,seed+5555)
                     
-                    PrintLog.debug()(_known_text_put_location)
-                    PrintLog.debug()(_unknown_text_retrieval_location)
+                    #PrintLog.debug(_known_text_put_location)
+                    #PrintLog.debug(_unknown_text_retrieval_location)
                     entry = {
                         "id": entry.get('id'),
                         "dataset": entry.get('dataset'),
@@ -115,13 +115,12 @@ def create_pan13_problem(file_path, paragraph_size=2, number_of_sentences_to_ext
 
 
             except json.JSONDecodeError as e:
-                PrintLog.error()(f"Error decoding JSON on line {i+1} - {e}")
+                PrintLog.error(f"Error decoding JSON on line {i+1} - {e}")
             
     with open(EXPECTED_PREPROCESSED_DATASETS_FOLDER+'\\pan13-partial-contract-cheating-test.jsonl', 'w', encoding='utf-8') as file:
         for item in json_data:
             json.dump(item, file, ensure_ascii=False)
             file.write('\n')
-    return len(json_data)
 
 
 

@@ -19,6 +19,8 @@
 ### Preprocessing 
 The goal is to convert data into feature space. Scale features, handle missing data. 
 In stylometric terminology this is "feature extraction". In ML it is just part of preprocessing.  
+- [ ] Load dataset into class
+- [ ] Split dataset into TRAIN, VALIDATION and CALIBRATION SET
 - [ ] 
 - [ ] Identify python libraries for the task
 **Libraries**
