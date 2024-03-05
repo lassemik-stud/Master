@@ -1,6 +1,6 @@
 import json
 
-from settings.classes import Dataset
+
 
 def read_jsonl(file_path, max_entries):
     entries = []

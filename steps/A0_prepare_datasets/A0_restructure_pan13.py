@@ -14,7 +14,7 @@ def generate_json_structure(directory, truth_file, dataset_number):
     with open(os.path.abspath(truth_file), 'r', encoding='utf-8') as file:
         truth_data = file.readlines()
     truth_data = [line.strip() for line in truth_data if line.strip() != ""]
-    truth_dict = {line.split()[0]: (1 if 'Y' in line.split()[1] else 0) for line in truth_data}
+    truth_dict = {line.split()[0]: (1 if 'Y' in line.split()[1] else -1) for line in truth_data}
 
     json_data = []
 
@@ -25,7 +25,7 @@ def generate_json_structure(directory, truth_file, dataset_number):
                 "dataset": dataset_number,
                 "type": [subdir[:2]],  # Assuming first two characters denote the type
                 "author": subdir,
-                "same author": truth_dict.get(subdir, 0),
+                "same author": truth_dict.get(subdir, -1),
                 "known text": [],
                 "unknown text": "",
                 "additional_info": {"subdirectory": subdir}
@@ -33,11 +33,11 @@ def generate_json_structure(directory, truth_file, dataset_number):
 
             known_files = glob.glob(os.path.join(directory, subdir, 'known*.txt'))
             for file_path in known_files:
-                entry["known text"].append(re.split('\. |\.\n',read_file_content(file_path)))
+                entry["known text"].append(read_file_content(file_path))
 
             unknown_file_path = os.path.join(directory, subdir, 'unknown.txt')
             if os.path.exists(os.path.abspath(unknown_file_path)):
-                entry["unknown text"] = re.split('\. |\.\n',read_file_content(os.path.abspath(unknown_file_path)))
+                entry["unknown text"] = read_file_content(os.path.abspath(unknown_file_path))
             else:
                 PrintLog.warning(f"Unknown text file not found for {subdir}")
 

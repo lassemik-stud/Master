@@ -3,7 +3,7 @@
 
 import argparse
 
-from settings.logging import print_log
+from settings.logging import printLog as PrintLog
 
 def parse_arguments_controller(): 
     parser = argparse.ArgumentParser()
@@ -11,5 +11,5 @@ def parse_arguments_controller():
     parser.add_argument('-n2', '--smessage', help='this is the message', required=True)
     args = parser.parse_args()
 
-    print_log('DEBUG','finished loading arguments')
+    PrintLog.debug('finished loading arguments')
     return args.message, args.smessage

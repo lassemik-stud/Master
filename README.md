@@ -1,8 +1,22 @@
 # Status of coding 
 
+# GOAL UNTIL WEDNESDAY
+- [ ] Create a prototype for partial contract cheating
+
+## HOW
+- [ ] MONDAY
+Use the PAN 13 dataset. Do a json transformation. Do not add extra splittings. 
+Perform some simple feature extraction. 
+Perform a one class classifier on the data. 
+- [ ] THURSDAY
+Implement the rolling attribution method on the data above. 
+
+- [ ] WEDNESDAY
+Implement other feature extraction and classification methods. 
+
 ## Overall steps 
-- [ ]  Prepare datasets 
- - [ ] PAN 13
+- [X]  Prepare datasets 
+ - [X] PAN 13
  - [ ] PAN 20
  - [ ] PAN 23
 - [ ] Preprocessing 
@@ -13,15 +27,43 @@
 - [ ] Data Evaluation 
 
 ### Prepare datasets 
-- [ ] Standardize the datasets into a common json format
-- [ ] PAN 13 dataset - create a partial contract cheating problem 
+- [X] Standardize the datasets into a common json format
+- [X] PAN 13 dataset - create a partial contract cheating problem 
 
 ### Preprocessing 
 The goal is to convert data into feature space. Scale features, handle missing data. 
 In stylometric terminology this is "feature extraction". In ML it is just part of preprocessing.  
-- [ ] Load dataset into class
-- [ ] Split dataset into TRAIN, VALIDATION and CALIBRATION SET
-- [ ] 
+- [X] Load dataset into Corpus class
+- [X] Split dataset into TRAIN, VALIDATION and CALIBRATION SET
+- [ ] Feature Extraction 
+    - [ ] Syntactic Features. Syntax tree 
+    - [ ] Lexial Features. 
+        - [ ] Word based. Word n-grams.
+        - [ ] Character based. Character n-grams.
+    - [ ] Syntactic Features
+        - [ ] Syntax tree. 
+    - [ ] Semantic Features. Synonyms and semantic dependencies. 
+    - [ ] Structural Features. 
+    - [ ] Versification Features
+
+    - [ ] Classical features 
+        - [ ] N-grams
+        - [ ] length of sentences
+        - [ ] length of paragraphs and words
+        - [ ] punctiantion marks
+        - [ ] stop words and POS-tags
+        - [ ] word and character embeddings
+        - [ ] word and character based transformers
+        - [ ] n-grams Bag og Words
+        - [ ] unmasking
+        - [ ] syntax trees 
+    - [ ] Bag of words
+- [ ] Classification
+    - [ ] SVM
+    - [ ] Random Forest
+    - [ ] RNN
+    - [ ] Logic Regression
+
 - [ ] Identify python libraries for the task
 **Libraries**
 - Natural Language Toolkit (nltk) 'pip install nltk'
