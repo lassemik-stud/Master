@@ -8026,3 +8026,555 @@ All the gates that we have discussed in this chapter are manufactured as integra
 2024-03-05 12:26:50,524 DEBUG Vectorizing test...
 2024-03-05 12:26:57,910 DEBUG Length of vectorized train: 85
 2024-03-05 12:26:57,969 DEBUG Vectorizing test...
+2024-03-05 12:30:02,949 DEBUG Length of vectorized test: 35
+2024-03-05 12:30:02,995 DEBUG Classifying with Logistic Regression...
+2024-03-05 12:30:11,754 DEBUG Evaluating:
+2024-03-05 12:30:12,115 DEBUG Accuracy: 0.6857142857142857, Precision: 0.65, Recall: 0.7647058823529411, F1: 0.7027027027027027
+2024-03-05 12:30:12,143 DEBUG Assessing feature importance...
+2024-03-05 12:32:48,824 DEBUG Length of vectorized test: 35
+2024-03-05 12:32:48,842 DEBUG Classifying with Logistic Regression...
+2024-03-05 12:32:54,736 DEBUG Evaluating:
+2024-03-05 12:32:54,753 DEBUG Accuracy: 0.6857142857142857, Precision: 0.65, Recall: 0.7647058823529411, F1: 0.7027027027027027
+2024-03-05 12:32:54,754 DEBUG Assessing feature importance...
+2024-03-05 12:48:23,857 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 12:48:24,163 DEBUG Number of documents in set: 85
+2024-03-05 12:48:24,164 DEBUG Number of same author (SA) in set: 42
+2024-03-05 12:48:24,164 DEBUG Number of different author (DA) in set: 43
+2024-03-05 12:48:24,164 DEBUG Number of documents dropped: 0
+2024-03-05 12:48:24,164 DEBUG Number of unique authors: 85
+2024-03-05 12:48:24,164 DEBUG Number of unique types: 3
+2024-03-05 12:48:24,164 DEBUG Number of unique documents: 85
+2024-03-05 12:48:24,165 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 12:48:24,165 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 12:48:24,166 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 12:48:24,337 DEBUG Number of documents in set: 35
+2024-03-05 12:48:24,338 DEBUG Number of same author (SA) in set: 17
+2024-03-05 12:48:24,338 DEBUG Number of different author (DA) in set: 18
+2024-03-05 12:48:24,339 DEBUG Number of documents dropped: 0
+2024-03-05 12:48:24,339 DEBUG Number of unique authors: 35
+2024-03-05 12:48:24,339 DEBUG Number of unique types: 3
+2024-03-05 12:48:24,340 DEBUG Number of unique documents: 35
+2024-03-05 12:48:24,340 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 12:48:24,340 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 12:48:24,343 DEBUG Experiment 1 started...
+2024-03-05 12:48:24,344 DEBUG Extracting features for train...
+2024-03-05 12:50:36,113 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 12:50:36,414 DEBUG Number of documents in set: 85
+2024-03-05 12:50:36,414 DEBUG Number of same author (SA) in set: 42
+2024-03-05 12:50:36,415 DEBUG Number of different author (DA) in set: 43
+2024-03-05 12:50:36,415 DEBUG Number of documents dropped: 0
+2024-03-05 12:50:36,416 DEBUG Number of unique authors: 85
+2024-03-05 12:50:36,416 DEBUG Number of unique types: 3
+2024-03-05 12:50:36,416 DEBUG Number of unique documents: 85
+2024-03-05 12:50:36,416 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 12:50:36,416 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 12:50:36,417 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 12:50:36,585 DEBUG Number of documents in set: 35
+2024-03-05 12:50:36,585 DEBUG Number of same author (SA) in set: 17
+2024-03-05 12:50:36,586 DEBUG Number of different author (DA) in set: 18
+2024-03-05 12:50:36,586 DEBUG Number of documents dropped: 0
+2024-03-05 12:50:36,586 DEBUG Number of unique authors: 35
+2024-03-05 12:50:36,587 DEBUG Number of unique types: 3
+2024-03-05 12:50:36,587 DEBUG Number of unique documents: 35
+2024-03-05 12:50:36,587 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 12:50:36,587 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 12:50:36,590 DEBUG Experiment 1 started...
+2024-03-05 12:50:36,590 DEBUG Extracting features for train...
+2024-03-05 12:51:07,538 DEBUG Extracting features for test...
+2024-03-05 12:51:21,687 DEBUG Fitting to transformer...
+2024-03-05 12:54:16,895 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 12:54:17,197 DEBUG Number of documents in set: 85
+2024-03-05 12:54:17,198 DEBUG Number of same author (SA) in set: 42
+2024-03-05 12:54:17,198 DEBUG Number of different author (DA) in set: 43
+2024-03-05 12:54:17,198 DEBUG Number of documents dropped: 0
+2024-03-05 12:54:17,198 DEBUG Number of unique authors: 85
+2024-03-05 12:54:17,198 DEBUG Number of unique types: 3
+2024-03-05 12:54:17,198 DEBUG Number of unique documents: 85
+2024-03-05 12:54:17,199 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 12:54:17,199 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 12:54:17,199 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 12:54:17,364 DEBUG Number of documents in set: 35
+2024-03-05 12:54:17,365 DEBUG Number of same author (SA) in set: 17
+2024-03-05 12:54:17,365 DEBUG Number of different author (DA) in set: 18
+2024-03-05 12:54:17,365 DEBUG Number of documents dropped: 0
+2024-03-05 12:54:17,365 DEBUG Number of unique authors: 35
+2024-03-05 12:54:17,365 DEBUG Number of unique types: 3
+2024-03-05 12:54:17,366 DEBUG Number of unique documents: 35
+2024-03-05 12:54:17,366 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 12:54:17,366 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 12:54:17,368 DEBUG Experiment 1 started...
+2024-03-05 12:54:17,368 DEBUG Extracting features for train...
+2024-03-05 12:54:47,776 DEBUG Extracting features for test...
+2024-03-05 12:55:01,591 DEBUG Fitting to transformer...
+2024-03-05 13:02:53,204 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 13:02:53,511 DEBUG Number of documents in set: 85
+2024-03-05 13:02:53,512 DEBUG Number of same author (SA) in set: 42
+2024-03-05 13:02:53,512 DEBUG Number of different author (DA) in set: 43
+2024-03-05 13:02:53,512 DEBUG Number of documents dropped: 0
+2024-03-05 13:02:53,512 DEBUG Number of unique authors: 85
+2024-03-05 13:02:53,513 DEBUG Number of unique types: 3
+2024-03-05 13:02:53,513 DEBUG Number of unique documents: 85
+2024-03-05 13:02:53,513 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 13:02:53,513 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 13:02:53,513 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 13:02:53,687 DEBUG Number of documents in set: 35
+2024-03-05 13:02:53,687 DEBUG Number of same author (SA) in set: 17
+2024-03-05 13:02:53,687 DEBUG Number of different author (DA) in set: 18
+2024-03-05 13:02:53,687 DEBUG Number of documents dropped: 0
+2024-03-05 13:02:53,688 DEBUG Number of unique authors: 35
+2024-03-05 13:02:53,688 DEBUG Number of unique types: 3
+2024-03-05 13:02:53,688 DEBUG Number of unique documents: 35
+2024-03-05 13:02:53,688 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 13:02:53,689 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 13:02:53,691 DEBUG Experiment 1 started...
+2024-03-05 13:02:53,691 DEBUG Extracting features for train...
+2024-03-05 13:03:23,736 DEBUG Extracting features for test...
+2024-03-05 13:03:37,455 DEBUG Fitting to transformer...
+2024-03-05 13:04:43,989 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 13:04:44,302 DEBUG Number of documents in set: 85
+2024-03-05 13:04:44,302 DEBUG Number of same author (SA) in set: 42
+2024-03-05 13:04:44,305 DEBUG Number of different author (DA) in set: 43
+2024-03-05 13:04:44,305 DEBUG Number of documents dropped: 0
+2024-03-05 13:04:44,306 DEBUG Number of unique authors: 85
+2024-03-05 13:04:44,306 DEBUG Number of unique types: 3
+2024-03-05 13:04:44,306 DEBUG Number of unique documents: 85
+2024-03-05 13:04:44,306 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 13:04:44,307 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 13:04:44,307 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 13:04:44,491 DEBUG Number of documents in set: 35
+2024-03-05 13:04:44,492 DEBUG Number of same author (SA) in set: 17
+2024-03-05 13:04:44,492 DEBUG Number of different author (DA) in set: 18
+2024-03-05 13:04:44,492 DEBUG Number of documents dropped: 0
+2024-03-05 13:04:44,493 DEBUG Number of unique authors: 35
+2024-03-05 13:04:44,493 DEBUG Number of unique types: 3
+2024-03-05 13:04:44,493 DEBUG Number of unique documents: 35
+2024-03-05 13:04:44,493 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 13:04:44,494 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 13:04:44,496 DEBUG Experiment 1 started...
+2024-03-05 13:04:44,496 DEBUG Extracting features for train...
+2024-03-05 13:05:16,592 DEBUG Extracting features for test...
+2024-03-05 13:05:30,787 DEBUG Fitting to transformer...
+2024-03-05 13:08:49,912 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 13:08:50,233 DEBUG Number of documents in set: 85
+2024-03-05 13:08:50,234 DEBUG Number of same author (SA) in set: 42
+2024-03-05 13:08:50,234 DEBUG Number of different author (DA) in set: 43
+2024-03-05 13:08:50,235 DEBUG Number of documents dropped: 0
+2024-03-05 13:08:50,235 DEBUG Number of unique authors: 85
+2024-03-05 13:08:50,235 DEBUG Number of unique types: 3
+2024-03-05 13:08:50,235 DEBUG Number of unique documents: 85
+2024-03-05 13:08:50,236 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 13:08:50,236 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 13:08:50,236 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 13:08:50,406 DEBUG Number of documents in set: 35
+2024-03-05 13:08:50,407 DEBUG Number of same author (SA) in set: 17
+2024-03-05 13:08:50,407 DEBUG Number of different author (DA) in set: 18
+2024-03-05 13:08:50,408 DEBUG Number of documents dropped: 0
+2024-03-05 13:08:50,408 DEBUG Number of unique authors: 35
+2024-03-05 13:08:50,408 DEBUG Number of unique types: 3
+2024-03-05 13:08:50,408 DEBUG Number of unique documents: 35
+2024-03-05 13:08:50,409 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 13:08:50,409 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 13:08:50,411 DEBUG Experiment 1 started...
+2024-03-05 13:08:50,412 DEBUG Extracting features for train...
+2024-03-05 13:09:21,437 DEBUG Extracting features for test...
+2024-03-05 13:09:35,360 DEBUG Fitting to transformer...
+2024-03-05 13:11:09,212 DEBUG Vectorizing train...
+2024-03-05 13:14:02,369 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 13:14:02,680 DEBUG Number of documents in set: 85
+2024-03-05 13:14:02,680 DEBUG Number of same author (SA) in set: 42
+2024-03-05 13:14:02,681 DEBUG Number of different author (DA) in set: 43
+2024-03-05 13:14:02,681 DEBUG Number of documents dropped: 0
+2024-03-05 13:14:02,681 DEBUG Number of unique authors: 85
+2024-03-05 13:14:02,681 DEBUG Number of unique types: 3
+2024-03-05 13:14:02,682 DEBUG Number of unique documents: 85
+2024-03-05 13:14:02,682 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 13:14:02,682 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 13:14:02,682 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 13:14:02,852 DEBUG Number of documents in set: 35
+2024-03-05 13:14:02,852 DEBUG Number of same author (SA) in set: 17
+2024-03-05 13:14:02,853 DEBUG Number of different author (DA) in set: 18
+2024-03-05 13:14:02,853 DEBUG Number of documents dropped: 0
+2024-03-05 13:14:02,853 DEBUG Number of unique authors: 35
+2024-03-05 13:14:02,853 DEBUG Number of unique types: 3
+2024-03-05 13:14:02,854 DEBUG Number of unique documents: 35
+2024-03-05 13:14:02,854 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 13:14:02,854 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 13:14:02,856 DEBUG Experiment 1 started...
+2024-03-05 13:14:02,857 DEBUG Extracting features for train...
+2024-03-05 13:14:33,095 DEBUG Extracting features for test...
+2024-03-05 13:14:47,444 DEBUG Fitting to transformer...
+2024-03-05 13:16:24,939 DEBUG Vectorizing train...
+2024-03-05 13:18:00,737 DEBUG Length of vectorized train: 85
+2024-03-05 13:18:00,737 DEBUG Vectorizing test...
+2024-03-05 13:18:43,808 DEBUG Length of vectorized test: 35
+2024-03-05 13:18:43,808 DEBUG Classifying with Logistic Regression...
+2024-03-05 13:18:43,870 DEBUG Evaluating:
+2024-03-05 13:18:43,876 DEBUG Accuracy: 0.6857142857142857, Precision: 0.7142857142857143, Recall: 0.5882352941176471, F1: 0.6451612903225806
+2024-03-05 13:18:43,877 DEBUG Assessing feature importance...
+2024-03-05 13:18:43,880 ERROR Error getting feature names from: dependency_features - 'DependencyFeatures' object has no attribute 'get_feature_names_out'
+2024-03-05 13:23:56,609 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 13:23:56,916 DEBUG Number of documents in set: 85
+2024-03-05 13:23:56,917 DEBUG Number of same author (SA) in set: 42
+2024-03-05 13:23:56,919 DEBUG Number of different author (DA) in set: 43
+2024-03-05 13:23:56,919 DEBUG Number of documents dropped: 0
+2024-03-05 13:23:56,920 DEBUG Number of unique authors: 85
+2024-03-05 13:23:56,920 DEBUG Number of unique types: 3
+2024-03-05 13:23:56,920 DEBUG Number of unique documents: 85
+2024-03-05 13:23:56,921 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 13:23:56,922 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 13:23:56,922 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 13:23:57,090 DEBUG Number of documents in set: 35
+2024-03-05 13:23:57,090 DEBUG Number of same author (SA) in set: 17
+2024-03-05 13:23:57,091 DEBUG Number of different author (DA) in set: 18
+2024-03-05 13:23:57,091 DEBUG Number of documents dropped: 0
+2024-03-05 13:23:57,091 DEBUG Number of unique authors: 35
+2024-03-05 13:23:57,092 DEBUG Number of unique types: 3
+2024-03-05 13:23:57,092 DEBUG Number of unique documents: 35
+2024-03-05 13:23:57,092 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 13:23:57,092 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 13:23:57,095 DEBUG Experiment 1 started...
+2024-03-05 13:23:57,095 DEBUG Extracting features for train...
+2024-03-05 13:24:27,683 DEBUG Extracting features for test...
+2024-03-05 13:24:41,509 DEBUG Fitting to transformer...
+2024-03-05 13:26:38,642 DEBUG Vectorizing train...
+2024-03-05 13:28:19,967 DEBUG Length of vectorized train: 85
+2024-03-05 13:28:19,967 DEBUG Vectorizing test...
+2024-03-05 13:29:07,839 DEBUG Length of vectorized test: 35
+2024-03-05 13:29:07,842 DEBUG Classifying with Logistic Regression...
+2024-03-05 13:29:08,340 DEBUG Evaluating:
+2024-03-05 13:29:08,347 DEBUG Accuracy: 0.6857142857142857, Precision: 0.65, Recall: 0.7647058823529411, F1: 0.7027027027027027
+2024-03-05 13:29:08,347 DEBUG Assessing feature importance...
+2024-03-05 13:32:52,953 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 13:32:53,262 DEBUG Number of documents in set: 85
+2024-03-05 13:32:53,263 DEBUG Number of same author (SA) in set: 42
+2024-03-05 13:32:53,263 DEBUG Number of different author (DA) in set: 43
+2024-03-05 13:32:53,263 DEBUG Number of documents dropped: 0
+2024-03-05 13:32:53,264 DEBUG Number of unique authors: 85
+2024-03-05 13:32:53,264 DEBUG Number of unique types: 3
+2024-03-05 13:32:53,264 DEBUG Number of unique documents: 85
+2024-03-05 13:32:53,264 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 13:32:53,265 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 13:32:53,265 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 13:32:53,432 DEBUG Number of documents in set: 35
+2024-03-05 13:32:53,433 DEBUG Number of same author (SA) in set: 17
+2024-03-05 13:32:53,433 DEBUG Number of different author (DA) in set: 18
+2024-03-05 13:32:53,434 DEBUG Number of documents dropped: 0
+2024-03-05 13:32:53,434 DEBUG Number of unique authors: 35
+2024-03-05 13:32:53,434 DEBUG Number of unique types: 3
+2024-03-05 13:32:53,434 DEBUG Number of unique documents: 35
+2024-03-05 13:32:53,434 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 13:32:53,435 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 13:32:53,437 DEBUG Experiment 1 started...
+2024-03-05 13:32:53,437 DEBUG Extracting features for train...
+2024-03-05 13:33:22,893 DEBUG Extracting features for test...
+2024-03-05 13:33:36,349 DEBUG Fitting to transformer...
+2024-03-05 13:35:31,914 DEBUG Vectorizing train...
+2024-03-05 13:37:12,058 DEBUG Length of vectorized train: 85
+2024-03-05 13:37:12,058 DEBUG Vectorizing test...
+2024-03-05 13:37:59,051 DEBUG Length of vectorized test: 35
+2024-03-05 13:37:59,054 DEBUG Assessing feature importance...
+2024-03-05 13:39:22,990 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 13:39:23,295 DEBUG Number of documents in set: 85
+2024-03-05 13:39:23,295 DEBUG Number of same author (SA) in set: 42
+2024-03-05 13:39:23,296 DEBUG Number of different author (DA) in set: 43
+2024-03-05 13:39:23,296 DEBUG Number of documents dropped: 0
+2024-03-05 13:39:23,296 DEBUG Number of unique authors: 85
+2024-03-05 13:39:23,296 DEBUG Number of unique types: 3
+2024-03-05 13:39:23,297 DEBUG Number of unique documents: 85
+2024-03-05 13:39:23,297 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 13:39:23,298 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 13:39:23,298 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 13:39:23,468 DEBUG Number of documents in set: 35
+2024-03-05 13:39:23,469 DEBUG Number of same author (SA) in set: 17
+2024-03-05 13:39:23,469 DEBUG Number of different author (DA) in set: 18
+2024-03-05 13:39:23,469 DEBUG Number of documents dropped: 0
+2024-03-05 13:39:23,470 DEBUG Number of unique authors: 35
+2024-03-05 13:39:23,470 DEBUG Number of unique types: 3
+2024-03-05 13:39:23,470 DEBUG Number of unique documents: 35
+2024-03-05 13:39:23,470 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 13:39:23,471 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 13:39:23,473 DEBUG Experiment 1 started...
+2024-03-05 13:39:23,473 DEBUG Extracting features for train...
+2024-03-05 13:39:53,758 DEBUG Extracting features for test...
+2024-03-05 13:40:07,605 DEBUG Fitting to transformer...
+2024-03-05 13:42:03,711 DEBUG Vectorizing train...
+2024-03-05 13:43:44,177 DEBUG Length of vectorized train: 85
+2024-03-05 13:43:44,178 DEBUG Vectorizing test...
+2024-03-05 13:44:31,437 DEBUG Length of vectorized test: 35
+2024-03-05 13:44:31,440 DEBUG Classifying with Logistic Regression...
+2024-03-05 13:44:31,932 DEBUG Evaluating:
+2024-03-05 13:44:31,939 DEBUG Accuracy: 0.6857142857142857, Precision: 0.65, Recall: 0.7647058823529411, F1: 0.7027027027027027
+2024-03-05 13:44:31,939 DEBUG Assessing feature importance...
+2024-03-05 14:13:25,656 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 14:13:25,964 DEBUG Number of documents in set: 85
+2024-03-05 14:13:25,965 DEBUG Number of same author (SA) in set: 42
+2024-03-05 14:13:25,965 DEBUG Number of different author (DA) in set: 43
+2024-03-05 14:13:25,966 DEBUG Number of documents dropped: 0
+2024-03-05 14:13:25,966 DEBUG Number of unique authors: 85
+2024-03-05 14:13:25,966 DEBUG Number of unique types: 3
+2024-03-05 14:13:25,966 DEBUG Number of unique documents: 85
+2024-03-05 14:13:25,966 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 14:13:25,967 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 14:13:25,967 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 14:13:26,138 DEBUG Number of documents in set: 35
+2024-03-05 14:13:26,139 DEBUG Number of same author (SA) in set: 17
+2024-03-05 14:13:26,139 DEBUG Number of different author (DA) in set: 18
+2024-03-05 14:13:26,140 DEBUG Number of documents dropped: 0
+2024-03-05 14:13:26,140 DEBUG Number of unique authors: 35
+2024-03-05 14:13:26,140 DEBUG Number of unique types: 3
+2024-03-05 14:13:26,140 DEBUG Number of unique documents: 35
+2024-03-05 14:13:26,141 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 14:13:26,141 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 14:13:26,143 DEBUG Experiment 1 started...
+2024-03-05 14:13:26,143 DEBUG Extracting features for train...
+2024-03-05 14:13:58,573 DEBUG Extracting features for test...
+2024-03-05 14:14:12,959 DEBUG Fitting to transformer...
+2024-03-05 14:16:08,829 DEBUG Vectorizing train...
+2024-03-05 14:17:51,326 DEBUG Length of vectorized train: 85
+2024-03-05 14:17:51,326 DEBUG Vectorizing test...
+2024-03-05 14:18:38,744 DEBUG Length of vectorized test: 35
+2024-03-05 14:18:38,746 DEBUG Classifying with Logistic Regression...
+2024-03-05 14:18:39,243 DEBUG Evaluating:
+2024-03-05 14:18:39,250 DEBUG Accuracy: 0.6857142857142857, Precision: 0.65, Recall: 0.7647058823529411, F1: 0.7027027027027027
+2024-03-05 14:18:39,250 DEBUG Assessing feature importance...
+2024-03-05 15:05:44,022 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 15:05:44,500 DEBUG Number of documents in set: 85
+2024-03-05 15:05:44,500 DEBUG Number of same author (SA) in set: 42
+2024-03-05 15:05:44,500 DEBUG Number of different author (DA) in set: 43
+2024-03-05 15:05:44,500 DEBUG Number of documents dropped: 0
+2024-03-05 15:05:44,500 DEBUG Number of unique authors: 85
+2024-03-05 15:05:44,501 DEBUG Number of unique types: 3
+2024-03-05 15:05:44,501 DEBUG Number of unique documents: 85
+2024-03-05 15:05:44,501 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 15:05:44,501 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 15:05:44,502 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 15:05:44,673 DEBUG Number of documents in set: 35
+2024-03-05 15:05:44,674 DEBUG Number of same author (SA) in set: 17
+2024-03-05 15:05:44,674 DEBUG Number of different author (DA) in set: 18
+2024-03-05 15:05:44,674 DEBUG Number of documents dropped: 0
+2024-03-05 15:05:44,675 DEBUG Number of unique authors: 35
+2024-03-05 15:05:44,675 DEBUG Number of unique types: 3
+2024-03-05 15:05:44,675 DEBUG Number of unique documents: 35
+2024-03-05 15:05:44,675 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 15:05:44,675 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 15:05:44,715 DEBUG Experiment 1 started...
+2024-03-05 15:05:44,715 DEBUG Extracting features for train...
+2024-03-05 15:06:16,411 DEBUG Extracting features for test...
+2024-03-05 15:06:30,316 DEBUG Fitting to transformer...
+2024-03-05 15:08:10,361 DEBUG Vectorizing train...
+2024-03-05 15:10:46,934 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 15:10:47,315 DEBUG Number of documents in set: 85
+2024-03-05 15:10:47,316 DEBUG Number of same author (SA) in set: 42
+2024-03-05 15:10:47,316 DEBUG Number of different author (DA) in set: 43
+2024-03-05 15:10:47,317 DEBUG Number of documents dropped: 0
+2024-03-05 15:10:47,317 DEBUG Number of unique authors: 85
+2024-03-05 15:10:47,317 DEBUG Number of unique types: 3
+2024-03-05 15:10:47,318 DEBUG Number of unique documents: 85
+2024-03-05 15:10:47,318 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 15:10:47,319 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 15:10:47,319 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 15:10:47,478 DEBUG Number of documents in set: 35
+2024-03-05 15:10:47,479 DEBUG Number of same author (SA) in set: 17
+2024-03-05 15:10:47,479 DEBUG Number of different author (DA) in set: 18
+2024-03-05 15:10:47,479 DEBUG Number of documents dropped: 0
+2024-03-05 15:10:47,480 DEBUG Number of unique authors: 35
+2024-03-05 15:10:47,480 DEBUG Number of unique types: 3
+2024-03-05 15:10:47,480 DEBUG Number of unique documents: 35
+2024-03-05 15:10:47,480 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 15:10:47,481 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 15:10:47,490 DEBUG Experiment 1 started...
+2024-03-05 15:10:47,491 DEBUG Extracting features for train...
+2024-03-05 15:11:17,853 DEBUG Extracting features for test...
+2024-03-05 15:11:31,573 DEBUG Fitting to transformer...
+2024-03-05 15:13:27,204 DEBUG Vectorizing train...
+2024-03-05 15:15:06,321 DEBUG Length of vectorized train: 85
+2024-03-05 15:15:06,321 DEBUG Vectorizing test...
+2024-03-05 15:15:52,887 DEBUG Length of vectorized test: 35
+2024-03-05 15:15:52,889 DEBUG Classifying with Logistic Regression...
+2024-03-05 15:15:53,346 DEBUG Evaluating:
+2024-03-05 15:15:53,354 DEBUG Accuracy: 0.7428571428571429, Precision: 0.7222222222222222, Recall: 0.7647058823529411, F1: 0.7428571428571429
+2024-03-05 15:15:53,355 DEBUG Assessing feature importance...
+2024-03-05 15:15:53,392 ERROR Error getting feature names from: word_embeddings - ufunc 'add' did not contain a loop with signature matching types (dtype('<U9'), dtype('<U11')) -> None
+2024-03-05 15:21:17,338 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 15:21:17,681 DEBUG Number of documents in set: 85
+2024-03-05 15:21:17,681 DEBUG Number of same author (SA) in set: 42
+2024-03-05 15:21:17,682 DEBUG Number of different author (DA) in set: 43
+2024-03-05 15:21:17,682 DEBUG Number of documents dropped: 0
+2024-03-05 15:21:17,682 DEBUG Number of unique authors: 85
+2024-03-05 15:21:17,683 DEBUG Number of unique types: 3
+2024-03-05 15:21:17,683 DEBUG Number of unique documents: 85
+2024-03-05 15:21:17,683 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 15:21:17,684 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 15:21:17,684 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 15:21:17,846 DEBUG Number of documents in set: 35
+2024-03-05 15:21:17,847 DEBUG Number of same author (SA) in set: 17
+2024-03-05 15:21:17,847 DEBUG Number of different author (DA) in set: 18
+2024-03-05 15:21:17,847 DEBUG Number of documents dropped: 0
+2024-03-05 15:21:17,848 DEBUG Number of unique authors: 35
+2024-03-05 15:21:17,848 DEBUG Number of unique types: 3
+2024-03-05 15:21:17,848 DEBUG Number of unique documents: 35
+2024-03-05 15:21:17,848 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 15:21:17,849 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 15:21:17,851 DEBUG Experiment 1 started...
+2024-03-05 15:21:17,851 DEBUG Extracting features for train...
+2024-03-05 15:21:48,409 DEBUG Extracting features for test...
+2024-03-05 15:22:02,298 DEBUG Fitting to transformer...
+2024-03-05 15:23:58,917 DEBUG Vectorizing train...
+2024-03-05 15:25:39,883 DEBUG Length of vectorized train: 85
+2024-03-05 15:25:39,884 DEBUG Vectorizing test...
+2024-03-05 15:26:27,606 DEBUG Length of vectorized test: 35
+2024-03-05 15:26:27,608 DEBUG Classifying with Logistic Regression...
+2024-03-05 15:26:28,071 DEBUG Evaluating:
+2024-03-05 15:26:28,079 DEBUG Accuracy: 0.7428571428571429, Precision: 0.7222222222222222, Recall: 0.7647058823529411, F1: 0.7428571428571429
+2024-03-05 15:26:28,079 DEBUG Assessing feature importance...
+2024-03-05 15:28:37,870 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 15:28:38,319 DEBUG Number of documents in set: 85
+2024-03-05 15:28:38,320 DEBUG Number of same author (SA) in set: 42
+2024-03-05 15:28:38,320 DEBUG Number of different author (DA) in set: 43
+2024-03-05 15:28:38,320 DEBUG Number of documents dropped: 0
+2024-03-05 15:28:38,321 DEBUG Number of unique authors: 85
+2024-03-05 15:28:38,321 DEBUG Number of unique types: 3
+2024-03-05 15:28:38,321 DEBUG Number of unique documents: 85
+2024-03-05 15:28:38,322 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 15:28:38,322 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 15:28:38,322 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 15:28:38,490 DEBUG Number of documents in set: 35
+2024-03-05 15:28:38,491 DEBUG Number of same author (SA) in set: 17
+2024-03-05 15:28:38,491 DEBUG Number of different author (DA) in set: 18
+2024-03-05 15:28:38,492 DEBUG Number of documents dropped: 0
+2024-03-05 15:28:38,492 DEBUG Number of unique authors: 35
+2024-03-05 15:28:38,492 DEBUG Number of unique types: 3
+2024-03-05 15:28:38,493 DEBUG Number of unique documents: 35
+2024-03-05 15:28:38,493 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 15:28:38,493 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 15:28:38,509 DEBUG Experiment 1 started...
+2024-03-05 15:28:38,509 DEBUG Extracting features for train...
+2024-03-05 15:29:09,388 DEBUG Extracting features for test...
+2024-03-05 15:29:23,493 DEBUG Fitting to transformer...
+2024-03-05 15:31:47,939 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 15:31:48,496 DEBUG Number of documents in set: 85
+2024-03-05 15:31:48,497 DEBUG Number of same author (SA) in set: 42
+2024-03-05 15:31:48,497 DEBUG Number of different author (DA) in set: 43
+2024-03-05 15:31:48,498 DEBUG Number of documents dropped: 0
+2024-03-05 15:31:48,498 DEBUG Number of unique authors: 85
+2024-03-05 15:31:48,498 DEBUG Number of unique types: 3
+2024-03-05 15:31:48,498 DEBUG Number of unique documents: 85
+2024-03-05 15:31:48,499 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 15:31:48,499 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 15:31:48,500 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 15:31:48,656 DEBUG Number of documents in set: 35
+2024-03-05 15:31:48,656 DEBUG Number of same author (SA) in set: 17
+2024-03-05 15:31:48,656 DEBUG Number of different author (DA) in set: 18
+2024-03-05 15:31:48,657 DEBUG Number of documents dropped: 0
+2024-03-05 15:31:48,657 DEBUG Number of unique authors: 35
+2024-03-05 15:31:48,657 DEBUG Number of unique types: 3
+2024-03-05 15:31:48,657 DEBUG Number of unique documents: 35
+2024-03-05 15:31:48,658 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 15:31:48,658 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 15:31:48,676 DEBUG Experiment 1 started...
+2024-03-05 15:31:48,676 DEBUG Extracting features for train...
+2024-03-05 15:32:18,751 DEBUG Extracting features for test...
+2024-03-05 15:32:32,639 DEBUG Fitting to transformer...
+2024-03-05 15:32:53,609 DEBUG Vectorizing train...
+2024-03-05 15:33:03,490 DEBUG Length of vectorized train: 85
+2024-03-05 15:33:03,491 DEBUG Vectorizing test...
+2024-03-05 15:33:08,162 DEBUG Length of vectorized test: 35
+2024-03-05 15:33:08,163 DEBUG Classifying with Logistic Regression...
+2024-03-05 15:33:08,712 DEBUG Evaluating:
+2024-03-05 15:33:08,725 DEBUG Accuracy: 0.7428571428571429, Precision: 0.7222222222222222, Recall: 0.7647058823529411, F1: 0.7428571428571429
+2024-03-05 15:33:08,725 DEBUG Assessing feature importance...
+2024-03-05 15:33:22,683 DEBUG Assessing feature importance...
+2024-03-05 15:35:17,271 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 15:35:17,612 DEBUG Number of documents in set: 85
+2024-03-05 15:35:17,613 DEBUG Number of same author (SA) in set: 42
+2024-03-05 15:35:17,613 DEBUG Number of different author (DA) in set: 43
+2024-03-05 15:35:17,613 DEBUG Number of documents dropped: 0
+2024-03-05 15:35:17,614 DEBUG Number of unique authors: 85
+2024-03-05 15:35:17,614 DEBUG Number of unique types: 3
+2024-03-05 15:35:17,614 DEBUG Number of unique documents: 85
+2024-03-05 15:35:17,615 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 15:35:17,615 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 15:35:17,615 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 15:35:17,775 DEBUG Number of documents in set: 35
+2024-03-05 15:35:17,776 DEBUG Number of same author (SA) in set: 17
+2024-03-05 15:35:17,776 DEBUG Number of different author (DA) in set: 18
+2024-03-05 15:35:17,776 DEBUG Number of documents dropped: 0
+2024-03-05 15:35:17,776 DEBUG Number of unique authors: 35
+2024-03-05 15:35:17,777 DEBUG Number of unique types: 3
+2024-03-05 15:35:17,777 DEBUG Number of unique documents: 35
+2024-03-05 15:35:17,777 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 15:35:17,777 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 15:35:17,780 DEBUG Experiment 1 started...
+2024-03-05 15:35:17,780 DEBUG Extracting features for train...
+2024-03-05 15:35:48,197 DEBUG Extracting features for test...
+2024-03-05 15:36:02,015 DEBUG Fitting to transformer...
+2024-03-05 15:38:11,916 DEBUG Vectorizing train...
+2024-03-05 15:39:58,734 DEBUG Length of vectorized train: 85
+2024-03-05 15:39:58,734 DEBUG Vectorizing test...
+2024-03-05 15:40:49,378 DEBUG Length of vectorized test: 35
+2024-03-05 15:40:49,381 DEBUG Classifying with Logistic Regression...
+2024-03-05 15:40:49,893 DEBUG Evaluating:
+2024-03-05 15:40:49,900 DEBUG Accuracy: 0.6571428571428571, Precision: 0.6190476190476191, Recall: 0.7647058823529411, F1: 0.6842105263157895
+2024-03-05 15:40:49,901 DEBUG Assessing feature importance...
+2024-03-05 15:41:09,117 DEBUG Assessing feature importance...
+2024-03-05 15:43:14,578 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 15:43:14,900 DEBUG Number of documents in set: 85
+2024-03-05 15:43:14,900 DEBUG Number of same author (SA) in set: 42
+2024-03-05 15:43:14,900 DEBUG Number of different author (DA) in set: 43
+2024-03-05 15:43:14,900 DEBUG Number of documents dropped: 0
+2024-03-05 15:43:14,901 DEBUG Number of unique authors: 85
+2024-03-05 15:43:14,901 DEBUG Number of unique types: 3
+2024-03-05 15:43:14,901 DEBUG Number of unique documents: 85
+2024-03-05 15:43:14,901 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 15:43:14,901 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 15:43:14,901 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 15:43:15,058 DEBUG Number of documents in set: 35
+2024-03-05 15:43:15,059 DEBUG Number of same author (SA) in set: 17
+2024-03-05 15:43:15,059 DEBUG Number of different author (DA) in set: 18
+2024-03-05 15:43:15,060 DEBUG Number of documents dropped: 0
+2024-03-05 15:43:15,060 DEBUG Number of unique authors: 35
+2024-03-05 15:43:15,060 DEBUG Number of unique types: 3
+2024-03-05 15:43:15,060 DEBUG Number of unique documents: 35
+2024-03-05 15:43:15,061 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 15:43:15,061 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 15:43:15,064 DEBUG Experiment 1 started...
+2024-03-05 15:43:15,064 DEBUG Extracting features for train...
+2024-03-05 15:43:45,879 DEBUG Extracting features for test...
+2024-03-05 15:44:00,673 DEBUG Fitting to transformer...
+2024-03-05 15:44:20,782 DEBUG Vectorizing train...
+2024-03-05 15:44:31,724 DEBUG Length of vectorized train: 85
+2024-03-05 15:44:31,724 DEBUG Vectorizing test...
+2024-03-05 15:44:37,884 DEBUG Length of vectorized test: 35
+2024-03-05 15:44:37,886 DEBUG Classifying with Logistic Regression...
+2024-03-05 15:44:38,408 DEBUG Evaluating:
+2024-03-05 15:44:38,415 DEBUG Accuracy: 0.6857142857142857, Precision: 0.6666666666666666, Recall: 0.7058823529411765, F1: 0.6857142857142857
+2024-03-05 15:44:38,416 DEBUG Assessing feature importance...
+2024-03-05 15:45:56,952 DEBUG Assessing feature importance...
+2024-03-05 15:52:16,511 DEBUG Reading data from ..\preprocessed_datasets\pan13-test.jsonl
+2024-03-05 15:52:16,848 DEBUG Number of documents in set: 85
+2024-03-05 15:52:16,848 DEBUG Number of same author (SA) in set: 42
+2024-03-05 15:52:16,849 DEBUG Number of different author (DA) in set: 43
+2024-03-05 15:52:16,849 DEBUG Number of documents dropped: 0
+2024-03-05 15:52:16,849 DEBUG Number of unique authors: 85
+2024-03-05 15:52:16,850 DEBUG Number of unique types: 3
+2024-03-05 15:52:16,850 DEBUG Number of unique documents: 85
+2024-03-05 15:52:16,850 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 15:52:16,850 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 15:52:16,851 DEBUG Reading data from ..\preprocessed_datasets\pan13-train.jsonl
+2024-03-05 15:52:17,014 DEBUG Number of documents in set: 35
+2024-03-05 15:52:17,014 DEBUG Number of same author (SA) in set: 17
+2024-03-05 15:52:17,014 DEBUG Number of different author (DA) in set: 18
+2024-03-05 15:52:17,015 DEBUG Number of documents dropped: 0
+2024-03-05 15:52:17,015 DEBUG Number of unique authors: 35
+2024-03-05 15:52:17,015 DEBUG Number of unique types: 3
+2024-03-05 15:52:17,015 DEBUG Number of unique documents: 35
+2024-03-05 15:52:17,016 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 15:52:17,016 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 15:52:17,022 DEBUG Experiment 1 started...
+2024-03-05 15:52:17,023 DEBUG Extracting features for train...
+2024-03-05 15:52:47,860 DEBUG Extracting features for test...
+2024-03-05 15:53:02,670 DEBUG Fitting to transformer...
+2024-03-05 15:53:23,750 DEBUG Vectorizing train...
+2024-03-05 15:53:34,287 DEBUG Length of vectorized train: 85
+2024-03-05 15:53:34,288 DEBUG Vectorizing test...
+2024-03-05 15:53:39,940 DEBUG Length of vectorized test: 35

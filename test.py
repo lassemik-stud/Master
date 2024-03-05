@@ -49,7 +49,21 @@ import spacy
 from sklearn.base import BaseEstimator, TransformerMixin
 nlp = spacy.load('en_core_web_sm')
 
+# word2vec - load the model. 
+# https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing
+# https://github.com/harmanpreet93/load-word2vec-google
+from gensim.models import KeyedVectors
+word2vec_model_path = '..\pretrained_models\GoogleNews-vectors-negative300.bin\GoogleNews-vectors-negative300.bin'
+word2vec_model = KeyedVectors.load_word2vec_format(word2vec_model_path, binary=True)
+
+# word2vec imports 
+import numpy as np
+from sklearn.base import BaseEstimator, TransformerMixin
+
 # nltk.download('treebank')
+
+# permutation importance
+from sklearn.inspection import permutation_importance
 
 chunker_instance = None
 tokenizer = tokenize.TreebankWordTokenizer()
@@ -112,6 +126,10 @@ class fe():
         self.tranformer = get_writeprints_transformer()
         self.scaler = StandardScaler(with_mean=False)
 
+        # Features
+        self.x_kn = {'train': [],'test': []}
+        self.x_un = {'train': [],'test': []}
+
         # Classifier
         self.clf = LogisticRegression()
 
@@ -120,9 +138,11 @@ class fe():
         self.run_feature_extraction()
         self.fit_to_transformer()
         self.vectorize_corpus()
-        test_pred = self.classify_LR()
-        self.evaluations()
-        self.assess_feature_importance()
+        self.assess_permutation_importance()
+        #test_pred = self.classify_LR()
+        #self.evaluations()
+        #self.assess_feature_importance()
+        #self.assess_feature_importance_aggregate()
         
     def evaluations(self):
         print_log.debug("Evaluating:")        
@@ -150,9 +170,9 @@ class fe():
     def vectorize_corpus(self):
         for version in 'train', 'test':
             print_log.debug(f"Vectorizing {version}...")
-            x_kn = self.scaler.transform(self.tranformer.transform([item['kt'] for item in self.x_corpus[version]]))
-            x_un = self.scaler.transform(self.tranformer.transform([item['ut'] for item in self.x_corpus[version]]))
-            self.x_features_diff[version] = pd.DataFrame(np.abs(x_kn - x_un).todense())
+            self.x_kn[version] = self.scaler.transform(self.tranformer.transform([item['kt'] for item in self.x_corpus[version]]))
+            self.x_un[version] = self.scaler.transform(self.tranformer.transform([item['ut'] for item in self.x_corpus[version]]))
+            self.x_features_diff[version] = pd.DataFrame(np.abs(self.x_kn[version] - self.x_un[version]).todense())
             print_log.debug(f"Length of vectorized {version}: {len(self.x_features_diff[version])}")
 
     def run_feature_extraction(self):
@@ -192,10 +212,54 @@ class fe():
         importances = sorted(zip(feature_names, coefficients), key=lambda x: abs(x[1]), reverse=True)
         importances_df = pd.DataFrame(importances, columns=['Feature', 'Coefficient'])
         plt.figure(figsize=(10,8))
-        sns.barplot(data=importances_df.head(20),x='Coefficient',y='Feature')
+        sns.barplot(data=importances_df.head(50),x='Coefficient',y='Feature')
         plt.title('Top 20 Feature Importance from LR')
         plt.show()
         
+    def assess_feature_importance_aggregate(self):
+        print_log.debug("Assessing feature importance...")
+        coefficients = self.clf.coef_[0]
+        feature_names = get_features_from_FeatureUnion(transformer_union=self.tranformer)
+
+        # Aggregate coefficients by transformer prefix
+        transformer_impact = {}
+        for name, coef in zip(feature_names, coefficients):
+            # Extract the transformer prefix (e.g., 'char_dist')
+            prefix = name.split('__')[0]
+            # Sum the absolute values of coefficients for each prefix
+            if prefix in transformer_impact:
+                transformer_impact[prefix] += abs(coef)
+            else:
+                transformer_impact[prefix] = abs(coef)
+
+        # Convert the dictionary to a list of tuples and sort it
+        importances = sorted(transformer_impact.items(), key=lambda x: x[1], reverse=True)
+        importances_df = pd.DataFrame(importances, columns=['Transformer', 'Total Impact'])
+
+        # Plot the results
+        plt.figure(figsize=(10, 8))
+        sns.barplot(data=importances_df.head(20), x='Total Impact', y='Transformer')
+        plt.title('Top Transformer Feature Importance from LR')
+        plt.show()
+
+    def assess_permutation_importance(self):
+        # Assuming you've already split your dataset into X_train, X_test, y_train, y_test
+        # and that you've transformed X_test using the same transformations as X_train
+        transformed_X_test = self.transformer.transform(self.x_kn['train'])
+        feature_names = get_features_from_FeatureUnion(self.transformer)
+        
+        # Compute permutation importance
+        r = permutation_importance(self.clf, transformed_X_test, self.y_truth['train'], n_repeats=30, random_state=42, n_jobs=-1)
+        
+        # Sort the features by importance
+        sorted_idx = r.importances_mean.argsort()
+
+        # Plot
+        plt.figure(figsize=(12, 8))
+        plt.boxplot(r.importances[sorted_idx].T, vert=False, labels=np.array(feature_names)[sorted_idx])
+        plt.title("Permutation Importance (test set)")
+        plt.tight_layout()
+        plt.show()
 
 def get_nltk_pos_tag_based_chunker():
     global chunker_instance
@@ -296,16 +360,17 @@ def get_features_from_FeatureUnion(transformer_union):
     return feature_names
 
 def get_writeprints_transformer():
-    #char_distr = CustomTfIdfTransformer('preprocessed', 'char_wb', n=6)
+    char_distr = CustomTfIdfTransformer('preprocessed', 'char_wb', n=6)
     #word_distr = CustomTfIdfTransformer('preprocessed', 'word', n=3)
-    #pos_tag_distr = CustomTfIdfTransformer('pos_tags', 'word', n=3)
+    pos_tag_distr = CustomTfIdfTransformer('pos_tags', 'word', n=3)
     #pos_tag_chunks_distr = CustomTfIdfTransformer('pos_tag_chunks', 'word', n=3)
-    #pos_tag_chunks_subtree_distr = CustomTfIdfTransformer('pos_tag_chunk_subtrees', 'word', n=1)
-    char_distr = [('char_distr_{0}'.format(i), CustomTfIdfTransformer('preprocessed', 'char_wb', n=i)) for i in range(1,10)]
-    word_distr =  [('word_distr_{0}'.format(i), CustomTfIdfTransformer('preprocessed', 'word', n=i)) for i in range(1,10)]
-    pos_tag_distr =  [('pos_tags_{0}'.format(i), CustomTfIdfTransformer('pos_tags', 'word', n=i)) for i in range(1,10)]
-    pos_tag_chunks_distr =  [('pos_tag_chunks_distr_{0}'.format(i), CustomTfIdfTransformer('pos_tag_chunks', 'word', n=i)) for i in range(1,10)]
-    pos_tag_chunks_subtree_distr =  [('pos_tag_chunks_subtree_distr_{0}'.format(i), CustomTfIdfTransformer('pos_tag_chunk_subtrees', 'word', n=i)) for i in range(1,10)]
+    pos_tag_chunks_subtree_distr = CustomTfIdfTransformer('pos_tag_chunk_subtrees', 'word', n=1)
+    #word_embeddings = Word2VecVectorizer(word2vec_model=word2vec_model)
+    #char_distr = [('char_distr_{0}'.format(i), CustomTfIdfTransformer('preprocessed', 'char_wb', n=i)) for i in range(1,10)]
+    #word_distr =  [('word_distr_{0}'.format(i), CustomTfIdfTransformer('preprocessed', 'word', n=i)) for i in range(1,10)]
+    #pos_tag_distr =  [('pos_tags_{0}'.format(i), CustomTfIdfTransformer('pos_tags', 'word', n=i)) for i in range(1,10)]
+    #pos_tag_chunks_distr =  [('pos_tag_chunks_distr_{0}'.format(i), CustomTfIdfTransformer('pos_tag_chunks', 'word', n=i)) for i in range(1,10)]
+    #pos_tag_chunks_subtree_distr =  [('pos_tag_chunks_subtree_distr_{0}'.format(i), CustomTfIdfTransformer('pos_tag_chunk_subtrees', 'word', n=i)) for i in range(1,10)]
     
     # COPILOT FOUND THIS IS PUBLIC CODE --> https://github.com/github-copilot/code_referencing?cursor=ca5f9bd57d3db90e19fffc1d295dd071&editor=vscode
     # This is from PAN20 https://github.com/GabrielePisciotta/NLP-Authorship-Verification-Case-Study/blob/main/HumanLanguageTechnologies_project_2021_extended.ipynb
@@ -315,26 +380,28 @@ def get_writeprints_transformer():
     freq_func_words = CustomFreqTransformer('word', vocab=stopwords.words('english'))
 
     transformer = FeatureUnion(
-        char_distr + 
-        word_distr +
-        pos_tag_distr +
-        pos_tag_chunks_distr +
-        pos_tag_chunks_subtree_distr +
+        #char_distr + 
+        #word_distr +
+        #pos_tag_distr +
+        #pos_tag_chunks_distr +
+        #pos_tag_chunks_subtree_distr +
         [
-        #('char_distr', char_distr),
+        ('char_distr', char_distr),
         #('word_distr', word_distr),
-        #('pos_tag_distr', pos_tag_distr),
-        #('pos_tag_chunks_distr', pos_tag_chunks_distr),
-        #('pos_tag_chunks_subtree_distr', pos_tag_chunks_subtree_distr),
-        ('special_char_distr', special_char_distr),
-        ('freq_func_words', freq_func_words),
-        ('hapax_legomena', CustomFuncTransformer(hapax_legomena)),
-        ('character_count', CustomFuncTransformer(character_count)),
-        ('distr_chars_per_word', CustomFuncTransformer(distr_chars_per_word, fnames=[str(i) for i in range(10)])),
-        ('avg_chars_per_word', CustomFuncTransformer(avg_chars_per_word)),
-        ('word_count', CustomFuncTransformer(word_count)),
+        ('pos_tag_distr', pos_tag_distr),
+       # ('pos_tag_chunks_distr', pos_tag_chunks_distr),
+        ('pos_tag_chunks_subtree_distr', pos_tag_chunks_subtree_distr),
+        #('word_embeddings', word_embeddings),
+        #('special_char_distr', special_char_distr),
+        #('freq_func_words', freq_func_words),
+        #('hapax_legomena', CustomFuncTransformer(hapax_legomena)),
+        #('character_count', CustomFuncTransformer(character_count)),
+        #('distr_chars_per_word', CustomFuncTransformer(distr_chars_per_word, fnames=[str(i) for i in range(10)])),
+        #('avg_chars_per_word', CustomFuncTransformer(avg_chars_per_word)),
+        #('word_count', CustomFuncTransformer(word_count)),
         #('readability', CustomFuncTransformer(gunning_fog_index) ),
-        ('n_of_pronouns', CustomFuncTransformer(n_of_pronouns) )
+        #('n_of_pronouns', CustomFuncTransformer(n_of_pronouns)),
+        #('dependency_features', DependencyFeatures())
     ], n_jobs=-1)
     
     return transformer
@@ -383,7 +450,56 @@ def gunning_fog_index(entry):
 def pass_fn(x):
     return x
 
+class DependencyFeatures(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+    
+    def get_feature_names_out(self):
+        return ['num_tokens', 'max_parse_tree_depth', 'avg_parse_tree_depth']
+    
+    def transform(self, X):
+        # X is assumed to be a list of dictionaries, each with a 'preprocessed' key for the text
+        dep_features = []
+        for entry in X:
+            doc = nlp(str(entry['preprocessed']))  # Use the preprocessed text for parsing
+            num_tokens = len(doc)
+            depths = [self.get_depth(token) for token in doc]
+            max_depth = max(depths) if depths else 0
+            avg_depth = sum(depths) / len(depths) if depths else 0
+            dep_features.append([num_tokens, max_depth, avg_depth])
+        return dep_features
 
+    @staticmethod
+    def get_depth(token, depth=0):
+        """
+        Recursively gets the depth of a token within the dependency tree.
+        A root token has a depth of 0.
+        """
+        if token.dep_ == 'ROOT':
+            return depth
+        else:
+            return DependencyFeatures.get_depth(token.head, depth+1)
+
+class Word2VecVectorizer(BaseEstimator, TransformerMixin):
+    def __init__(self, word2vec_model):
+        self.word2vec_model = word2vec_model
+        self.vector_size = word2vec_model.vector_size
+
+    def get_feature_names_out(self):
+        return 'word2vec_'
+    
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        # X is assumed to be a list of dictionaries each containing 'tokens'
+        return np.array([
+            np.mean([self.word2vec_model[token] for token in entry['tokens'] if token in self.word2vec_model]
+                    or [np.zeros(self.vector_size)], axis=0)
+            for entry in X
+        ])
+    
+    
 
 #experiment = fe(load_corpus('pan13-train.jsonl'),load_corpus('pan13-test.jsonl'))
 #experiment.run()
