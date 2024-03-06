@@ -1,5 +1,5 @@
-EXPECTED_DATASETS_FOLDER = "..\\datasets\\"
-EXPECTED_PREPROCESSED_DATASETS_FOLDER = "..\\preprocessed_datasets\\"
+EXPECTED_DATASETS_FOLDER = "../datasets/"
+EXPECTED_PREPROCESSED_DATASETS_FOLDER = "../preprocessed_datasets/"
 
 EXPECTED_PREPROCESSED_DATASET_FILES = {
     'pan13-test': "pan13-test.jsonl",
@@ -16,8 +16,8 @@ EXPECTED_DATASETS_FOLDERS_PAN13 = {
 }
 
 EXPECTED_DATASETS_FILES_PAN13 = {
-    'pan13-test-truth': EXPECTED_DATASETS_FOLDERS_PAN13['pan13-test'] + "\\truth.txt",
-    'pan13-train-truth': EXPECTED_DATASETS_FOLDERS_PAN13['pan13-train'] + "\\truth.txt"
+    'pan13-test-truth': EXPECTED_DATASETS_FOLDERS_PAN13['pan13-test'] + "/truth.txt",
+    'pan13-train-truth': EXPECTED_DATASETS_FOLDERS_PAN13['pan13-train'] + "/truth.txt"
 }
 
 EXPECTED_DATASETS_FILES_PAN20 = {

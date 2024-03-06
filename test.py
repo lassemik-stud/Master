@@ -52,9 +52,9 @@ nlp = spacy.load('en_core_web_sm')
 # word2vec - load the model. 
 # https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing
 # https://github.com/harmanpreet93/load-word2vec-google
-from gensim.models import KeyedVectors
-word2vec_model_path = '..\pretrained_models\GoogleNews-vectors-negative300.bin\GoogleNews-vectors-negative300.bin'
-word2vec_model = KeyedVectors.load_word2vec_format(word2vec_model_path, binary=True)
+#from gensim.models import KeyedVectors
+#word2vec_model_path = '..\pretrained_models\GoogleNews-vectors-negative300.bin\GoogleNews-vectors-negative300.bin'
+#word2vec_model = KeyedVectors.load_word2vec_format(word2vec_model_path, binary=True)
 
 # word2vec imports 
 import numpy as np
@@ -68,6 +68,13 @@ from sklearn.inspection import permutation_importance
 chunker_instance = None
 tokenizer = tokenize.TreebankWordTokenizer()
 #tagger = data.load("treebank")
+
+# Import all stuffs for NLTK
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+
+import multiprocessing as mp
+from multiprocessing import cpu_count
 
 grammar = r"""
   NP: 
@@ -107,9 +114,10 @@ class Instance():
         return f"ID: {self.id}, Dataset: {self.dataset}, Type: {self.type}, Author: {self.author}, Same Author: {self.same_author}, Known Text: {self.known_text}, Additional Info: {self.additional_info}"
 
 
-def load_corpus(dataset):
+def load_corpus(dataset, max_entries = 0):
     corpus = Corpus()
     corpus.parse_raw_data(os.path.join(EXP_PRE_DATASETS_FOLDER,dataset))
+    corpus.select_balanced_corpus(max_entries)
     corpus.get_avg_statistics()
     corpus.print_corpus_info()
     return corpus
@@ -122,8 +130,8 @@ class fe():
         self.x_features_diff = {'train': [],'test': []}
         self.test_predicions = []
 
-        # Tranformer and scalers
-        self.tranformer = get_writeprints_transformer()
+        # transformer and scalers
+        self.transformer = get_writeprints_transformer()
         self.scaler = StandardScaler(with_mean=False)
 
         # Features
@@ -135,12 +143,13 @@ class fe():
 
     def run(self):
         print_log.debug("Experiment 1 started...")
+        #self.run_feature_extraction_backup()
         self.run_feature_extraction()
         self.fit_to_transformer()
         self.vectorize_corpus()
-        self.assess_permutation_importance()
-        #test_pred = self.classify_LR()
-        #self.evaluations()
+        #self.assess_permutation_importance()
+        test_pred = self.classify_LR()
+        self.evaluations()
         #self.assess_feature_importance()
         #self.assess_feature_importance_aggregate()
         
@@ -153,9 +162,11 @@ class fe():
         print_log.debug(f"Accuracy: {accuracy}, Precision: {precision}, Recall: {recall}, F1: {f1}")
     
     def classify_LR(self):
+        threshold = 0.6
         print_log.debug("Classifying with Logistic Regression...")
         self.clf = LogisticRegression(random_state=42).fit(self.x_features_diff['train'], self.y_truth['train'])
-        self.test_predicions = self.clf.predict(self.x_features_diff['test'])
+        test_predicions = self.clf.predict_proba(self.x_features_diff['test'])[:, 1]
+        self.test_predicions = [1 if prob > threshold else -1 for prob in test_predicions]
         
     def print_test(self):
         print(self.x_corpus['train'][0]['id'])
@@ -164,27 +175,48 @@ class fe():
     def fit_to_transformer(self):
         print_log.debug("Fitting to transformer...")
         fit_corpus = [item['kt'] for item in self.x_corpus['train']] + [item['ut'] for item in self.x_corpus['train']]
-        corpus_transformed = self.tranformer.fit_transform(fit_corpus)
+        corpus_transformed = self.transformer.fit_transform(fit_corpus[:len(fit_corpus)//2])
         corpus_scaled = self.scaler.fit_transform(corpus_transformed) 
 
     def vectorize_corpus(self):
         for version in 'train', 'test':
             print_log.debug(f"Vectorizing {version}...")
-            self.x_kn[version] = self.scaler.transform(self.tranformer.transform([item['kt'] for item in self.x_corpus[version]]))
-            self.x_un[version] = self.scaler.transform(self.tranformer.transform([item['ut'] for item in self.x_corpus[version]]))
+            self.x_kn[version] = self.scaler.transform(self.transformer.transform([item['kt'] for item in self.x_corpus[version]]))
+            self.x_un[version] = self.scaler.transform(self.transformer.transform([item['ut'] for item in self.x_corpus[version]]))
             self.x_features_diff[version] = pd.DataFrame(np.abs(self.x_kn[version] - self.x_un[version]).todense())
             print_log.debug(f"Length of vectorized {version}: {len(self.x_features_diff[version])}")
 
-    def run_feature_extraction(self):
+    def run_feature_extraction_backup(self):
         for version in 'train', 'test':
             print_log.debug(f"Extracting features for {version}...")
             for instance in self.raw_corpus[version].all:
                 id = instance.id
-                kt = fe.feature_extraction(" ".join(instance.known_text))
-                ut = fe.feature_extraction(instance.unknown_text)
-                truth = 1 if instance.same_author == 1 else -1
+                #kt = fe.feature_extraction(" ".join(instance.known_text))
+                kt = fe.feature_extraction(instance.known_text[0])
+                ut = fe.feature_extraction(instance.unknown_text[0])
+                truth = 1 if int(instance.same_author) == 1 else -1
                 self.x_corpus[version].append({'id': id, 'kt': kt, 'ut': ut})
-                self.y_truth[version].append(truth)            
+                self.y_truth[version].append(truth)
+
+    @staticmethod
+    def worker(instance):
+        id = instance.id
+        kt = fe.feature_extraction(instance.known_text[0])
+        #kt = fe.feature_extraction(" ".join(instance.known_text)) # used for PAN13 that has multiple known texts
+        ut = fe.feature_extraction(instance.unknown_text[0])
+        truth = 1 if instance.same_author == 1 else -1
+        return {'id': id, 'kt': kt, 'ut': ut}, truth
+
+    def run_feature_extraction(self):
+        for version in 'train', 'test':
+            print_log.debug(f"Extracting features for {version}...")
+            with mp.Pool(cpu_count() - 1) as pool:
+                results = pool.map(self.worker, self.raw_corpus[version].all)
+            for result in results:
+                self.x_corpus[version].append(result[0])
+                self.y_truth[version].append(result[1])  
+              
+            
     
     @staticmethod
     def feature_extraction(text): 
@@ -208,18 +240,18 @@ class fe():
     def assess_feature_importance(self):
         print_log.debug("Assessing feature importance...")
         coefficients = self.clf.coef_[0]
-        feature_names = get_features_from_FeatureUnion(transformer_union=self.tranformer)
+        feature_names = get_features_from_FeatureUnion(transformer_union=self.transformer)
         importances = sorted(zip(feature_names, coefficients), key=lambda x: abs(x[1]), reverse=True)
         importances_df = pd.DataFrame(importances, columns=['Feature', 'Coefficient'])
         plt.figure(figsize=(10,8))
         sns.barplot(data=importances_df.head(50),x='Coefficient',y='Feature')
         plt.title('Top 20 Feature Importance from LR')
-        plt.show()
+        plt.savefig("plot/fi_1.png")
         
     def assess_feature_importance_aggregate(self):
         print_log.debug("Assessing feature importance...")
         coefficients = self.clf.coef_[0]
-        feature_names = get_features_from_FeatureUnion(transformer_union=self.tranformer)
+        feature_names = get_features_from_FeatureUnion(transformer_union=self.transformer)
 
         # Aggregate coefficients by transformer prefix
         transformer_impact = {}
@@ -240,7 +272,7 @@ class fe():
         plt.figure(figsize=(10, 8))
         sns.barplot(data=importances_df.head(20), x='Total Impact', y='Transformer')
         plt.title('Top Transformer Feature Importance from LR')
-        plt.show()
+        plt.savefig("plot/fi_2.png")
 
     def assess_permutation_importance(self):
         # Assuming you've already split your dataset into X_train, X_test, y_train, y_test
@@ -259,7 +291,7 @@ class fe():
         plt.boxplot(r.importances[sorted_idx].T, vert=False, labels=np.array(feature_names)[sorted_idx])
         plt.title("Permutation Importance (test set)")
         plt.tight_layout()
-        plt.show()
+        #plt.show()
 
 def get_nltk_pos_tag_based_chunker():
     global chunker_instance
@@ -361,9 +393,9 @@ def get_features_from_FeatureUnion(transformer_union):
 
 def get_writeprints_transformer():
     char_distr = CustomTfIdfTransformer('preprocessed', 'char_wb', n=6)
-    #word_distr = CustomTfIdfTransformer('preprocessed', 'word', n=3)
+    word_distr = CustomTfIdfTransformer('preprocessed', 'word', n=3)
     pos_tag_distr = CustomTfIdfTransformer('pos_tags', 'word', n=3)
-    #pos_tag_chunks_distr = CustomTfIdfTransformer('pos_tag_chunks', 'word', n=3)
+    pos_tag_chunks_distr = CustomTfIdfTransformer('pos_tag_chunks', 'word', n=3)
     pos_tag_chunks_subtree_distr = CustomTfIdfTransformer('pos_tag_chunk_subtrees', 'word', n=1)
     #word_embeddings = Word2VecVectorizer(word2vec_model=word2vec_model)
     #char_distr = [('char_distr_{0}'.format(i), CustomTfIdfTransformer('preprocessed', 'char_wb', n=i)) for i in range(1,10)]
@@ -387,20 +419,20 @@ def get_writeprints_transformer():
         #pos_tag_chunks_subtree_distr +
         [
         ('char_distr', char_distr),
-        #('word_distr', word_distr),
+        ('word_distr', word_distr),
         ('pos_tag_distr', pos_tag_distr),
-       # ('pos_tag_chunks_distr', pos_tag_chunks_distr),
+        ('pos_tag_chunks_distr', pos_tag_chunks_distr),
         ('pos_tag_chunks_subtree_distr', pos_tag_chunks_subtree_distr),
         #('word_embeddings', word_embeddings),
-        #('special_char_distr', special_char_distr),
-        #('freq_func_words', freq_func_words),
-        #('hapax_legomena', CustomFuncTransformer(hapax_legomena)),
-        #('character_count', CustomFuncTransformer(character_count)),
-        #('distr_chars_per_word', CustomFuncTransformer(distr_chars_per_word, fnames=[str(i) for i in range(10)])),
-        #('avg_chars_per_word', CustomFuncTransformer(avg_chars_per_word)),
-        #('word_count', CustomFuncTransformer(word_count)),
+        ('special_char_distr', special_char_distr),
+        ('freq_func_words', freq_func_words),
+        ('hapax_legomena', CustomFuncTransformer(hapax_legomena)),
+        ('character_count', CustomFuncTransformer(character_count)),
+        ('distr_chars_per_word', CustomFuncTransformer(distr_chars_per_word, fnames=[str(i) for i in range(10)])),
+        ('avg_chars_per_word', CustomFuncTransformer(avg_chars_per_word)),
+        ('word_count', CustomFuncTransformer(word_count)),
         #('readability', CustomFuncTransformer(gunning_fog_index) ),
-        #('n_of_pronouns', CustomFuncTransformer(n_of_pronouns)),
+        ('n_of_pronouns', CustomFuncTransformer(n_of_pronouns)),
         #('dependency_features', DependencyFeatures())
     ], n_jobs=-1)
     
@@ -503,5 +535,6 @@ class Word2VecVectorizer(BaseEstimator, TransformerMixin):
 
 #experiment = fe(load_corpus('pan13-train.jsonl'),load_corpus('pan13-test.jsonl'))
 #experiment.run()
-experiment = fe(load_corpus('pan13-test.jsonl'),load_corpus('pan13-train.jsonl'))
+#load_corpus('pan20-train-small.jsonl',50)
+experiment = fe(load_corpus('pan20-train-small.jsonl',5000),load_corpus('pan20-test.jsonl',5000))
 experiment.run()

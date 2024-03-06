@@ -24,8 +24,8 @@ def process_pairs_file(pairs_file_path, truth_data, output_file_path):
                     'type': pair['fandoms'],
                     'author': truth_data[id]['authors'],
                     'same author': 1 if truth_data[id]['same'] else 0,
-                    'known text': [pair['pair'][0].split('. ')],
-                    'unknown text': pair['pair'][1].split('. ')
+                    'known text': [pair['pair'][0]],
+                    'unknown text': pair['pair'][1]
                 }
                 output_file.write(json.dumps(combined_entry) + '\n')
 

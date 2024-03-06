@@ -9,8 +9,11 @@ from steps.A0_prepare_datasets.A1_create_problem_pan13 import create_pan13_probl
 
 import os
 import zipfile
+from settings.logging import printLog as PrintLog
+
 
 def unzip_all(directory):
+    PrintLog.debug(f"Unzipping all files in {directory}")
     # Find all zip files in the directory
     for root, dirs, files in os.walk(directory):
         for file in files:
@@ -66,7 +69,7 @@ def verify_correct_location_of_datasets(datasets_path=EXPECTED_DATASETS_FOLDER):
 def restructure_pan13_pre(pan13_dirs_dict):
     for dataset in ['pan13-test', 'pan13-train']:
         restructure_pan13(main_directory=pan13_dirs_dict[EXPECTED_DATASETS_FOLDERS_PAN13[dataset]], 
-                            truth_txt_path=pan13_dirs_dict[EXPECTED_DATASETS_FOLDERS_PAN13[dataset]] + "\\truth.txt", 
+                            truth_txt_path=pan13_dirs_dict[EXPECTED_DATASETS_FOLDERS_PAN13[dataset]] + "/truth.txt", 
                             output_file=EXPECTED_PREPROCESSED_DATASETS_FOLDER+EXPECTED_PREPROCESSED_DATASET_FILES[dataset])
 
 def restructure_pan20_pre(pan20_files_dict):
@@ -85,14 +88,14 @@ def check_for_preprocessed_datasets_files():
     # Check for missing files and directories
     missing_files = set(EXPECTED_PREPROCESSED_DATASET_FILES.values()) - found_preprocessed_files_dict.keys()
     for file in missing_files:
-        PrintLog.error(f"File missing: {file}")
+        PrintLog.error(f"Preprocessed dataset file missing: {file}")
     for file in found_preprocessed_files_dict.keys():
-        PrintLog.info(f"File found: {file}")
+        PrintLog.info(f"Preprocessed dataset file found: {file}")
     if not missing_files:
         PrintLog.info( "Loaded all dataset files successfully from preprocessed directory")
         return True
     else:
-        PrintLog.error( "Error in loading dataset files from preprocessed directory")
+        PrintLog.warning( "Error in loading dataset files from preprocessed directory")
         return False
 
 def setup():
@@ -103,8 +106,8 @@ def setup():
         #unzip_all(EXPECTED_DATASETS_FOLDER)
         pan20_files_dict, pan13_dirs_dict = verify_correct_location_of_datasets()
         restructure_pan13_pre(pan13_dirs_dict)
-        #restructure_pan20_pre(pan20_files_dict)
-        check_for_preprocessed_datasets_files()
+        restructure_pan20_pre(pan20_files_dict)
+        #check_for_preprocessed_datasets_files()
         #create_pan13_problem(EXPECTED_PREPROCESSED_DATASETS_FOLDER+EXPECTED_PREPROCESSED_DATASET_FILES['pan13-train'])
         #print(length)
 

@@ -3,6 +3,9 @@
 import json
 
 from settings.logging import printLog as printLog
+from sklearn.utils import shuffle 
+import random 
+
 
 class Instance():
     def __init__(self):
@@ -73,6 +76,7 @@ class Corpus():
             self.authors.add(str(instance.author))
             self.types.add(str(instance.type))
             self.all.append(instance)
+        
 
     # Split the corpus into training, validation and calibration sets
     def split_corpus(self,train_size,val_size):
@@ -84,6 +88,38 @@ class Corpus():
         self.train = set(list(self.all)[:self.n_train])
         self.val = set(list(self.all)[self.n_train:self.n_train+self.n_val])
         self.cal = set(list(self.all)[self.n_train+self.n_val:])
+    
+    def select_balanced_corpus(self, max_instances):
+        """
+        Selects a balanced corpus with an equal number of instances having the same and different authors.
+
+        :param corpus: List of instances (assumed to have 'same_author' attribute).
+        :param x: Total number of instances to select.
+        :return: A list of instances with 50% having the same author and 50% having different authors.
+        """
+        # Ensure x is even to divide evenly between same and different authors
+        if max_instances % 2 != 0:
+            raise ValueError("The number of entries 'x' must be even to balance same and different authors.")
+
+        # Shuffle the corpus to ensure randomness
+        random.shuffle(self.all)
+
+        # Partition the corpus into same_author and different_author
+        same_author_instances = [instance for instance in self.all if instance.same_author == 1]
+        different_author_instances = [instance for instance in self.all if instance.same_author != 1]
+
+        # Determine the number of entries from each partition
+        num_each = max_instances // 2
+
+        # Randomly select instances from each partition
+        selected_same_author = random.sample(same_author_instances, num_each)
+        selected_different_author = random.sample(different_author_instances, min(num_each, len(different_author_instances)))
+
+        # Combine and shuffle the selected instances
+        balanced_corpus = selected_same_author + selected_different_author
+        random.shuffle(balanced_corpus)
+
+        self.all = balanced_corpus
 
     # Get the average statistics of the corpus
     def get_avg_statistics(self):
@@ -95,14 +131,12 @@ class Corpus():
                 self.diff_author += 1
 
             # Average number of words and characters
-            for entry in instance.known_text:
-                entry_count += 1
-                self.avg_number_of_words +=len(entry.split(" "))
-                for character in entry:
-                    self.avg_number_of_characters += 1
+            entry_count += 1
+            self.avg_number_of_words +=len(instance.known_text)
+            for character in instance.known_text:
+              self.avg_number_of_characters += 1
             
             entry_count += 1
-            
             self.avg_number_of_words += len(instance.unknown_text.split(" "))
             for character in instance.unknown_text:
                 self.avg_number_of_characters += 1

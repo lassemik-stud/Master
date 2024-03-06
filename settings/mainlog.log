@@ -8578,3 +8578,859 @@ All the gates that we have discussed in this chapter are manufactured as integra
 2024-03-05 15:53:34,287 DEBUG Length of vectorized train: 85
 2024-03-05 15:53:34,288 DEBUG Vectorizing test...
 2024-03-05 15:53:39,940 DEBUG Length of vectorized test: 35
+2024-03-05 21:27:24,722 DEBUG Reading data from ..\preprocessed_datasets\/pan13-test.jsonl
+2024-03-05 21:28:11,129 DEBUG Reading data from ..\preprocessed_datasets\/pan13-test.jsonl
+2024-03-05 21:29:54,195 DEBUG Reading data from ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 21:29:54,863 DEBUG Number of documents in set: 85
+2024-03-05 21:29:54,863 DEBUG Number of same author (SA) in set: 42
+2024-03-05 21:29:54,863 DEBUG Number of different author (DA) in set: 43
+2024-03-05 21:29:54,863 DEBUG Number of documents dropped: 0
+2024-03-05 21:29:54,863 DEBUG Number of unique authors: 85
+2024-03-05 21:29:54,863 DEBUG Number of unique types: 3
+2024-03-05 21:29:54,863 DEBUG Number of unique documents: 85
+2024-03-05 21:29:54,864 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 21:29:54,864 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 21:29:54,864 DEBUG Reading data from ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 21:29:55,160 DEBUG Number of documents in set: 35
+2024-03-05 21:29:55,161 DEBUG Number of same author (SA) in set: 17
+2024-03-05 21:29:55,161 DEBUG Number of different author (DA) in set: 18
+2024-03-05 21:29:55,161 DEBUG Number of documents dropped: 0
+2024-03-05 21:29:55,161 DEBUG Number of unique authors: 35
+2024-03-05 21:29:55,161 DEBUG Number of unique types: 3
+2024-03-05 21:29:55,161 DEBUG Number of unique documents: 35
+2024-03-05 21:29:55,161 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 21:29:55,161 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 21:30:39,566 DEBUG Reading data from ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 21:30:40,096 DEBUG Number of documents in set: 85
+2024-03-05 21:30:40,097 DEBUG Number of same author (SA) in set: 42
+2024-03-05 21:30:40,097 DEBUG Number of different author (DA) in set: 43
+2024-03-05 21:30:40,097 DEBUG Number of documents dropped: 0
+2024-03-05 21:30:40,097 DEBUG Number of unique authors: 85
+2024-03-05 21:30:40,097 DEBUG Number of unique types: 3
+2024-03-05 21:30:40,097 DEBUG Number of unique documents: 85
+2024-03-05 21:30:40,097 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 21:30:40,097 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 21:30:40,097 DEBUG Reading data from ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 21:30:40,354 DEBUG Number of documents in set: 35
+2024-03-05 21:30:40,354 DEBUG Number of same author (SA) in set: 17
+2024-03-05 21:30:40,354 DEBUG Number of different author (DA) in set: 18
+2024-03-05 21:30:40,354 DEBUG Number of documents dropped: 0
+2024-03-05 21:30:40,355 DEBUG Number of unique authors: 35
+2024-03-05 21:30:40,355 DEBUG Number of unique types: 3
+2024-03-05 21:30:40,355 DEBUG Number of unique documents: 35
+2024-03-05 21:30:40,355 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 21:30:40,355 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 21:30:40,357 DEBUG Experiment 1 started...
+2024-03-05 21:30:40,357 DEBUG Extracting features for train...
+2024-03-05 21:30:56,263 DEBUG Reading data from ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 21:30:56,840 DEBUG Number of documents in set: 85
+2024-03-05 21:30:56,841 DEBUG Number of same author (SA) in set: 42
+2024-03-05 21:30:56,841 DEBUG Number of different author (DA) in set: 43
+2024-03-05 21:30:56,841 DEBUG Number of documents dropped: 0
+2024-03-05 21:30:56,841 DEBUG Number of unique authors: 85
+2024-03-05 21:30:56,841 DEBUG Number of unique types: 3
+2024-03-05 21:30:56,841 DEBUG Number of unique documents: 85
+2024-03-05 21:30:56,841 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 21:30:56,841 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 21:30:56,841 DEBUG Reading data from ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 21:30:57,110 DEBUG Number of documents in set: 35
+2024-03-05 21:30:57,111 DEBUG Number of same author (SA) in set: 17
+2024-03-05 21:30:57,111 DEBUG Number of different author (DA) in set: 18
+2024-03-05 21:30:57,111 DEBUG Number of documents dropped: 0
+2024-03-05 21:30:57,111 DEBUG Number of unique authors: 35
+2024-03-05 21:30:57,111 DEBUG Number of unique types: 3
+2024-03-05 21:30:57,111 DEBUG Number of unique documents: 35
+2024-03-05 21:30:57,111 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 21:30:57,111 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 21:30:57,113 DEBUG Experiment 1 started...
+2024-03-05 21:30:57,113 DEBUG Extracting features for train...
+2024-03-05 21:31:32,599 DEBUG Extracting features for test...
+2024-03-05 21:31:49,088 DEBUG Fitting to transformer...
+2024-03-05 21:32:13,400 DEBUG Vectorizing train...
+2024-03-05 21:32:26,858 DEBUG Length of vectorized train: 85
+2024-03-05 21:32:26,858 DEBUG Vectorizing test...
+2024-03-05 21:32:34,598 DEBUG Length of vectorized test: 35
+2024-03-05 21:36:38,265 DEBUG Reading data from ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 21:36:38,806 DEBUG Number of documents in set: 85
+2024-03-05 21:36:38,806 DEBUG Number of same author (SA) in set: 42
+2024-03-05 21:36:38,806 DEBUG Number of different author (DA) in set: 43
+2024-03-05 21:36:38,806 DEBUG Number of documents dropped: 0
+2024-03-05 21:36:38,806 DEBUG Number of unique authors: 85
+2024-03-05 21:36:38,806 DEBUG Number of unique types: 3
+2024-03-05 21:36:38,807 DEBUG Number of unique documents: 85
+2024-03-05 21:36:38,807 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 21:36:38,807 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 21:36:38,807 DEBUG Reading data from ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 21:36:39,086 DEBUG Number of documents in set: 35
+2024-03-05 21:36:39,086 DEBUG Number of same author (SA) in set: 17
+2024-03-05 21:36:39,086 DEBUG Number of different author (DA) in set: 18
+2024-03-05 21:36:39,086 DEBUG Number of documents dropped: 0
+2024-03-05 21:36:39,087 DEBUG Number of unique authors: 35
+2024-03-05 21:36:39,087 DEBUG Number of unique types: 3
+2024-03-05 21:36:39,087 DEBUG Number of unique documents: 35
+2024-03-05 21:36:39,087 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 21:36:39,087 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 21:36:39,088 DEBUG Experiment 1 started...
+2024-03-05 21:36:39,089 DEBUG Extracting features for train...
+2024-03-05 21:37:19,486 DEBUG Reading data from ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 21:37:20,044 DEBUG Number of documents in set: 85
+2024-03-05 21:37:20,045 DEBUG Number of same author (SA) in set: 42
+2024-03-05 21:37:20,045 DEBUG Number of different author (DA) in set: 43
+2024-03-05 21:37:20,045 DEBUG Number of documents dropped: 0
+2024-03-05 21:37:20,045 DEBUG Number of unique authors: 85
+2024-03-05 21:37:20,045 DEBUG Number of unique types: 3
+2024-03-05 21:37:20,045 DEBUG Number of unique documents: 85
+2024-03-05 21:37:20,045 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 21:37:20,045 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 21:37:20,045 DEBUG Reading data from ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 21:37:20,306 DEBUG Number of documents in set: 35
+2024-03-05 21:37:20,306 DEBUG Number of same author (SA) in set: 17
+2024-03-05 21:37:20,306 DEBUG Number of different author (DA) in set: 18
+2024-03-05 21:37:20,307 DEBUG Number of documents dropped: 0
+2024-03-05 21:37:20,307 DEBUG Number of unique authors: 35
+2024-03-05 21:37:20,307 DEBUG Number of unique types: 3
+2024-03-05 21:37:20,307 DEBUG Number of unique documents: 35
+2024-03-05 21:37:20,307 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 21:37:20,307 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 21:37:20,308 DEBUG Experiment 1 started...
+2024-03-05 21:37:20,309 DEBUG Extracting features for train...
+2024-03-05 21:37:24,301 DEBUG Extracting features for test...
+2024-03-05 21:37:37,568 DEBUG Fitting to transformer...
+2024-03-05 21:38:04,469 DEBUG Vectorizing train...
+2024-03-05 21:38:17,998 DEBUG Length of vectorized train: 85
+2024-03-05 21:38:17,999 DEBUG Vectorizing test...
+2024-03-05 21:38:26,231 DEBUG Length of vectorized test: 35
+2024-03-05 21:40:25,589 DEBUG Reading data from ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 21:40:26,148 DEBUG Number of documents in set: 85
+2024-03-05 21:40:26,148 DEBUG Number of same author (SA) in set: 42
+2024-03-05 21:40:26,148 DEBUG Number of different author (DA) in set: 43
+2024-03-05 21:40:26,148 DEBUG Number of documents dropped: 0
+2024-03-05 21:40:26,148 DEBUG Number of unique authors: 85
+2024-03-05 21:40:26,148 DEBUG Number of unique types: 3
+2024-03-05 21:40:26,148 DEBUG Number of unique documents: 85
+2024-03-05 21:40:26,149 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 21:40:26,149 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 21:40:26,149 DEBUG Reading data from ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 21:40:26,423 DEBUG Number of documents in set: 35
+2024-03-05 21:40:26,423 DEBUG Number of same author (SA) in set: 17
+2024-03-05 21:40:26,423 DEBUG Number of different author (DA) in set: 18
+2024-03-05 21:40:26,423 DEBUG Number of documents dropped: 0
+2024-03-05 21:40:26,423 DEBUG Number of unique authors: 35
+2024-03-05 21:40:26,423 DEBUG Number of unique types: 3
+2024-03-05 21:40:26,423 DEBUG Number of unique documents: 35
+2024-03-05 21:40:26,423 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 21:40:26,423 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 21:40:26,425 DEBUG Experiment 1 started...
+2024-03-05 21:40:26,425 DEBUG Extracting features for train...
+2024-03-05 21:40:30,819 DEBUG Extracting features for test...
+2024-03-05 21:40:45,400 DEBUG Fitting to transformer...
+2024-03-05 21:41:12,317 DEBUG Vectorizing train...
+2024-03-05 21:41:33,400 DEBUG Reading data from ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 21:41:33,979 DEBUG Number of documents in set: 85
+2024-03-05 21:41:33,979 DEBUG Number of same author (SA) in set: 42
+2024-03-05 21:41:33,979 DEBUG Number of different author (DA) in set: 43
+2024-03-05 21:41:33,979 DEBUG Number of documents dropped: 0
+2024-03-05 21:41:33,979 DEBUG Number of unique authors: 85
+2024-03-05 21:41:33,980 DEBUG Number of unique types: 3
+2024-03-05 21:41:33,980 DEBUG Number of unique documents: 85
+2024-03-05 21:41:33,980 INFO Average number of words in a document: 1139.5264367816092
+2024-03-05 21:41:33,980 INFO Average number of characters in a document: 7357.873563218391
+2024-03-05 21:41:33,980 DEBUG Reading data from ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 21:41:34,320 DEBUG Number of documents in set: 35
+2024-03-05 21:41:34,321 DEBUG Number of same author (SA) in set: 17
+2024-03-05 21:41:34,321 DEBUG Number of different author (DA) in set: 18
+2024-03-05 21:41:34,321 DEBUG Number of documents dropped: 0
+2024-03-05 21:41:34,321 DEBUG Number of unique authors: 35
+2024-03-05 21:41:34,321 DEBUG Number of unique types: 3
+2024-03-05 21:41:34,321 DEBUG Number of unique documents: 35
+2024-03-05 21:41:34,321 INFO Average number of words in a document: 1202.973544973545
+2024-03-05 21:41:34,321 INFO Average number of characters in a document: 8097.216931216931
+2024-03-05 21:41:34,323 DEBUG Experiment 1 started...
+2024-03-05 21:41:34,323 DEBUG Extracting features for train...
+2024-03-05 21:41:38,843 DEBUG Extracting features for test...
+2024-03-05 21:41:52,047 DEBUG Fitting to transformer...
+2024-03-05 21:42:19,958 DEBUG Vectorizing train...
+2024-03-05 21:42:33,216 DEBUG Length of vectorized train: 85
+2024-03-05 21:42:33,216 DEBUG Vectorizing test...
+2024-03-05 21:42:40,781 DEBUG Length of vectorized test: 35
+2024-03-05 21:42:40,781 DEBUG Classifying with Logistic Regression...
+2024-03-05 21:42:41,403 DEBUG Evaluating:
+2024-03-05 21:42:41,416 DEBUG Accuracy: 0.6857142857142857, Precision: 0.6666666666666666, Recall: 0.7058823529411765, F1: 0.6857142857142857
+2024-03-05 22:26:14,049 ERROR File missing: pan20-train-large.jsonl
+2024-03-05 22:26:14,050 ERROR File missing: pan20-test.jsonl
+2024-03-05 22:26:14,050 ERROR File missing: pan20-train-small.jsonl
+2024-03-05 22:26:14,050 ERROR File missing: pan21-test.jsonl
+2024-03-05 22:26:14,050 INFO File found: pan13-test.jsonl
+2024-03-05 22:26:14,050 INFO File found: pan13-train.jsonl
+2024-03-05 22:26:14,050 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:26:14,050 ERROR File missing: pan20-authorship-verification-test-truth.jsonl
+2024-03-05 22:26:14,050 ERROR File missing: pan21-authorship-verification-test-truth.jsonl
+2024-03-05 22:26:14,050 ERROR File missing: pan20-authorship-verification-training-large-truth.jsonl
+2024-03-05 22:26:14,050 ERROR File missing: pan20-authorship-verification-test.jsonl
+2024-03-05 22:26:14,050 ERROR File missing: pan21-authorship-verification-test.jsonl
+2024-03-05 22:26:14,050 ERROR File missing: pan20-authorship-verification-training-small.jsonl
+2024-03-05 22:26:14,050 ERROR File missing: pan20-authorship-verification-training-large.jsonl
+2024-03-05 22:26:14,050 ERROR File missing: pan20-authorship-verification-training-small-truth.jsonl
+2024-03-05 22:26:14,051 ERROR Directory missing: pan13-authorship-verification-training-corpus-2013-02-01
+2024-03-05 22:26:14,051 ERROR Directory missing: pan13-authorship-verification-test-corpus2-2013-05-29
+2024-03-05 22:26:53,506 ERROR File missing: pan20-test.jsonl
+2024-03-05 22:26:53,507 ERROR File missing: pan21-test.jsonl
+2024-03-05 22:26:53,507 ERROR File missing: pan20-train-large.jsonl
+2024-03-05 22:26:53,507 ERROR File missing: pan20-train-small.jsonl
+2024-03-05 22:26:53,507 INFO File found: pan13-test.jsonl
+2024-03-05 22:26:53,507 INFO File found: pan13-train.jsonl
+2024-03-05 22:26:53,507 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:30:35,652 ERROR File missing: pan20-train-small.jsonl
+2024-03-05 22:30:35,653 ERROR File missing: pan20-test.jsonl
+2024-03-05 22:30:35,653 ERROR File missing: pan20-train-large.jsonl
+2024-03-05 22:30:35,653 ERROR File missing: pan21-test.jsonl
+2024-03-05 22:30:35,653 INFO File found: pan13-test.jsonl
+2024-03-05 22:30:35,653 INFO File found: pan13-train.jsonl
+2024-03-05 22:30:35,653 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:33:45,807 INFO Located all dataset files successfully
+2024-03-05 22:34:26,145 ERROR File missing: pan20-test.jsonl
+2024-03-05 22:34:26,146 ERROR File missing: pan21-test.jsonl
+2024-03-05 22:34:26,146 ERROR File missing: pan20-train-small.jsonl
+2024-03-05 22:34:26,146 ERROR File missing: pan20-train-large.jsonl
+2024-03-05 22:34:26,146 INFO File found: pan13-test.jsonl
+2024-03-05 22:34:26,146 INFO File found: pan13-train.jsonl
+2024-03-05 22:34:26,146 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:34:26,150 INFO Located all dataset files successfully
+2024-03-05 22:34:26,258 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 22:34:26,309 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 22:34:26,310 ERROR File missing: pan20-test.jsonl
+2024-03-05 22:34:26,310 ERROR File missing: pan21-test.jsonl
+2024-03-05 22:34:26,310 ERROR File missing: pan20-train-small.jsonl
+2024-03-05 22:34:26,310 ERROR File missing: pan20-train-large.jsonl
+2024-03-05 22:34:26,310 INFO File found: pan13-test.jsonl
+2024-03-05 22:34:26,310 INFO File found: pan13-train.jsonl
+2024-03-05 22:34:26,310 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:36:13,395 ERROR File missing: pan20-test.jsonl
+2024-03-05 22:36:13,396 ERROR File missing: pan21-test.jsonl
+2024-03-05 22:36:13,396 ERROR File missing: pan20-train-small.jsonl
+2024-03-05 22:36:13,396 ERROR File missing: pan20-train-large.jsonl
+2024-03-05 22:36:13,396 INFO File found: pan13-test.jsonl
+2024-03-05 22:36:13,396 INFO File found: pan13-train.jsonl
+2024-03-05 22:36:13,396 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:36:13,401 INFO Located all dataset files successfully
+2024-03-05 22:36:13,506 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 22:36:13,558 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 22:36:13,558 ERROR File missing: pan20-test.jsonl
+2024-03-05 22:36:13,558 ERROR File missing: pan21-test.jsonl
+2024-03-05 22:36:13,558 ERROR File missing: pan20-train-small.jsonl
+2024-03-05 22:36:13,558 ERROR File missing: pan20-train-large.jsonl
+2024-03-05 22:36:13,558 INFO File found: pan13-test.jsonl
+2024-03-05 22:36:13,558 INFO File found: pan13-train.jsonl
+2024-03-05 22:36:13,558 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:37:43,546 ERROR File missing: pan21-test.jsonl
+2024-03-05 22:37:43,547 ERROR File missing: pan20-test.jsonl
+2024-03-05 22:37:43,547 ERROR File missing: pan20-train-small.jsonl
+2024-03-05 22:37:43,547 ERROR File missing: pan20-train-large.jsonl
+2024-03-05 22:37:43,547 INFO File found: pan13-test.jsonl
+2024-03-05 22:37:43,547 INFO File found: pan13-train.jsonl
+2024-03-05 22:37:43,547 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:37:43,550 INFO Located all dataset files successfully
+2024-03-05 22:37:43,661 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 22:37:43,710 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 22:37:43,711 ERROR File missing: pan21-test.jsonl
+2024-03-05 22:37:43,711 ERROR File missing: pan20-test.jsonl
+2024-03-05 22:37:43,711 ERROR File missing: pan20-train-small.jsonl
+2024-03-05 22:37:43,711 ERROR File missing: pan20-train-large.jsonl
+2024-03-05 22:37:43,711 INFO File found: pan13-test.jsonl
+2024-03-05 22:37:43,711 INFO File found: pan13-train.jsonl
+2024-03-05 22:37:43,711 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:39:30,619 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-05 22:39:30,619 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-05 22:39:30,620 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-05 22:39:30,620 ERROR Preprocessed dataset file missing: pan21-test.jsonl
+2024-03-05 22:39:30,620 INFO File found: pan13-test.jsonl
+2024-03-05 22:39:30,620 INFO File found: pan13-train.jsonl
+2024-03-05 22:39:30,620 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:39:30,624 INFO Located all dataset files successfully
+2024-03-05 22:39:30,725 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 22:39:30,773 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 22:39:30,773 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-05 22:39:30,773 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-05 22:39:30,773 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-05 22:39:30,774 ERROR Preprocessed dataset file missing: pan21-test.jsonl
+2024-03-05 22:39:30,774 INFO File found: pan13-test.jsonl
+2024-03-05 22:39:30,774 INFO File found: pan13-train.jsonl
+2024-03-05 22:39:30,774 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:39:56,658 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-05 22:39:56,658 ERROR Preprocessed dataset file missing: pan21-test.jsonl
+2024-03-05 22:39:56,659 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-05 22:39:56,659 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-05 22:39:56,659 INFO File found: pan13-test.jsonl
+2024-03-05 22:39:56,659 INFO File found: pan13-train.jsonl
+2024-03-05 22:39:56,659 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:39:56,664 INFO Located all dataset files successfully
+2024-03-05 22:39:56,786 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 22:39:56,847 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 22:39:56,848 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-05 22:39:56,848 ERROR Preprocessed dataset file missing: pan21-test.jsonl
+2024-03-05 22:39:56,848 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-05 22:39:56,848 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-05 22:39:56,848 INFO File found: pan13-test.jsonl
+2024-03-05 22:39:56,848 INFO File found: pan13-train.jsonl
+2024-03-05 22:39:56,848 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:40:03,226 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-05 22:40:03,226 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-05 22:40:03,226 ERROR Preprocessed dataset file missing: pan21-test.jsonl
+2024-03-05 22:40:03,226 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-05 22:40:03,226 INFO File found: pan13-test.jsonl
+2024-03-05 22:40:03,227 INFO File found: pan13-train.jsonl
+2024-03-05 22:40:03,227 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:40:03,230 INFO Located all dataset files successfully
+2024-03-05 22:40:03,337 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 22:40:03,388 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 22:40:03,388 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-05 22:40:03,388 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-05 22:40:03,388 ERROR Preprocessed dataset file missing: pan21-test.jsonl
+2024-03-05 22:40:03,388 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-05 22:40:03,388 INFO File found: pan13-test.jsonl
+2024-03-05 22:40:03,388 INFO File found: pan13-train.jsonl
+2024-03-05 22:40:03,389 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:40:24,203 ERROR Preprocessed dataset file missing: pan21-test.jsonl
+2024-03-05 22:40:24,203 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-05 22:40:24,203 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-05 22:40:24,203 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-05 22:40:24,204 INFO Preprocessed dataset file found: pan13-test.jsonl
+2024-03-05 22:40:24,204 INFO Preprocessed dataset file found: pan13-train.jsonl
+2024-03-05 22:40:24,204 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:40:24,208 INFO Located all dataset files successfully
+2024-03-05 22:40:24,313 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 22:40:24,365 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 22:40:24,365 ERROR Preprocessed dataset file missing: pan21-test.jsonl
+2024-03-05 22:40:24,366 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-05 22:40:24,366 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-05 22:40:24,366 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-05 22:40:24,366 INFO Preprocessed dataset file found: pan13-test.jsonl
+2024-03-05 22:40:24,366 INFO Preprocessed dataset file found: pan13-train.jsonl
+2024-03-05 22:40:24,366 ERROR Error in loading dataset files from preprocessed directory
+2024-03-05 22:41:14,522 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-05 22:41:14,523 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-05 22:41:14,523 ERROR Preprocessed dataset file missing: pan21-test.jsonl
+2024-03-05 22:41:14,523 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-05 22:41:14,523 INFO Preprocessed dataset file found: pan13-test.jsonl
+2024-03-05 22:41:14,523 INFO Preprocessed dataset file found: pan13-train.jsonl
+2024-03-05 22:41:14,523 WARNING Error in loading dataset files from preprocessed directory
+2024-03-05 22:41:14,527 INFO Located all dataset files successfully
+2024-03-05 22:41:14,640 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 22:41:14,693 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-train.jsonl
+2024-03-05 22:41:14,693 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-05 22:41:14,693 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-05 22:41:14,693 ERROR Preprocessed dataset file missing: pan21-test.jsonl
+2024-03-05 22:41:14,693 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-05 22:41:14,694 INFO Preprocessed dataset file found: pan13-test.jsonl
+2024-03-05 22:41:14,694 INFO Preprocessed dataset file found: pan13-train.jsonl
+2024-03-05 22:41:14,694 WARNING Error in loading dataset files from preprocessed directory
+2024-03-05 22:41:34,109 ERROR Preprocessed dataset file missing: pan21-test.jsonl
+2024-03-05 22:41:34,109 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-05 22:41:34,109 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-05 22:41:34,109 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-05 22:41:34,109 INFO Preprocessed dataset file found: pan13-test.jsonl
+2024-03-05 22:41:34,109 INFO Preprocessed dataset file found: pan13-train.jsonl
+2024-03-05 22:41:34,109 WARNING Error in loading dataset files from preprocessed directory
+2024-03-05 22:41:34,113 INFO Located all dataset files successfully
+2024-03-05 22:41:34,225 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-test.jsonl
+2024-03-05 22:41:34,276 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-train.jsonl
+2024-03-06 08:54:08,576 ERROR Preprocessed dataset file missing: pan21-test.jsonl
+2024-03-06 08:54:08,577 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-06 08:54:08,577 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-06 08:54:08,577 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-06 08:54:08,577 INFO Preprocessed dataset file found: pan13-test.jsonl
+2024-03-06 08:54:08,577 INFO Preprocessed dataset file found: pan13-train.jsonl
+2024-03-06 08:54:08,577 WARNING Error in loading dataset files from preprocessed directory
+2024-03-06 08:54:08,580 INFO Located all dataset files successfully
+2024-03-06 08:54:08,681 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-test.jsonl
+2024-03-06 08:54:08,729 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-train.jsonl
+2024-03-06 08:54:43,393 DEBUG JSON data has been saved to ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 08:57:55,879 DEBUG JSON data has been saved to ../preprocessed_datasets/pan20-train-large.jsonl
+2024-03-06 08:58:14,625 DEBUG JSON data has been saved to ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 08:58:41,651 DEBUG JSON data has been saved to ../preprocessed_datasets/pan21-test.jsonl
+2024-03-06 09:04:25,448 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 09:37:59,807 ERROR Preprocessed dataset file missing: pan21-test.jsonl
+2024-03-06 09:37:59,807 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-06 09:37:59,807 ERROR Preprocessed dataset file missing: pan13-test.jsonl
+2024-03-06 09:37:59,807 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-06 09:37:59,807 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-06 09:37:59,808 ERROR Preprocessed dataset file missing: pan13-train.jsonl
+2024-03-06 09:37:59,808 WARNING Error in loading dataset files from preprocessed directory
+2024-03-06 09:37:59,813 INFO Located all dataset files successfully
+2024-03-06 09:37:59,913 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-test.jsonl
+2024-03-06 09:37:59,960 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-train.jsonl
+2024-03-06 09:39:01,901 DEBUG JSON data has been saved to ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 09:44:22,545 DEBUG JSON data has been saved to ../preprocessed_datasets/pan20-train-large.jsonl
+2024-03-06 09:44:41,135 DEBUG JSON data has been saved to ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 09:45:05,428 DEBUG JSON data has been saved to ../preprocessed_datasets/pan21-test.jsonl
+2024-03-06 10:01:26,392 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 10:05:28,149 DEBUG Number of documents in set: 52601
+2024-03-06 10:05:28,149 DEBUG Number of same author (SA) in set: 27834
+2024-03-06 10:05:28,149 DEBUG Number of different author (DA) in set: 24767
+2024-03-06 10:05:28,149 DEBUG Number of documents dropped: 0
+2024-03-06 10:05:28,149 DEBUG Number of unique authors: 31164
+2024-03-06 10:05:28,149 DEBUG Number of unique types: 30858
+2024-03-06 10:05:28,149 DEBUG Number of unique documents: 52590
+2024-03-06 10:05:28,149 INFO Average number of words in a document: 1959.740099998099
+2024-03-06 10:05:28,150 INFO Average number of characters in a document: 10717.978393946883
+2024-03-06 10:05:28,150 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 10:06:31,051 DEBUG Number of documents in set: 14311
+2024-03-06 10:06:31,052 DEBUG Number of same author (SA) in set: 7786
+2024-03-06 10:06:31,052 DEBUG Number of different author (DA) in set: 6525
+2024-03-06 10:06:31,052 DEBUG Number of documents dropped: 0
+2024-03-06 10:06:31,052 DEBUG Number of unique authors: 9432
+2024-03-06 10:06:31,052 DEBUG Number of unique types: 8380
+2024-03-06 10:06:31,052 DEBUG Number of unique documents: 14311
+2024-03-06 10:06:31,052 INFO Average number of words in a document: 1954.5591852421214
+2024-03-06 10:06:31,052 INFO Average number of characters in a document: 10712.90591153658
+2024-03-06 10:06:31,057 DEBUG Experiment 1 started...
+2024-03-06 10:06:31,057 DEBUG Extracting features for train...
+2024-03-06 10:09:55,965 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 10:12:26,842 DEBUG Number of documents in set: 52601
+2024-03-06 10:12:26,842 DEBUG Number of same author (SA) in set: 27834
+2024-03-06 10:12:26,842 DEBUG Number of different author (DA) in set: 24767
+2024-03-06 10:12:26,842 DEBUG Number of documents dropped: 0
+2024-03-06 10:12:26,842 DEBUG Number of unique authors: 31164
+2024-03-06 10:12:26,842 DEBUG Number of unique types: 30858
+2024-03-06 10:12:26,842 DEBUG Number of unique documents: 52590
+2024-03-06 10:12:26,842 INFO Average number of words in a document: 1959.740099998099
+2024-03-06 10:12:26,842 INFO Average number of characters in a document: 10717.978393946883
+2024-03-06 10:12:26,842 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 10:12:59,976 DEBUG Number of documents in set: 14311
+2024-03-06 10:12:59,976 DEBUG Number of same author (SA) in set: 7786
+2024-03-06 10:12:59,976 DEBUG Number of different author (DA) in set: 6525
+2024-03-06 10:12:59,977 DEBUG Number of documents dropped: 0
+2024-03-06 10:12:59,977 DEBUG Number of unique authors: 9432
+2024-03-06 10:12:59,977 DEBUG Number of unique types: 8380
+2024-03-06 10:12:59,977 DEBUG Number of unique documents: 14311
+2024-03-06 10:12:59,977 INFO Average number of words in a document: 1954.5591852421214
+2024-03-06 10:12:59,977 INFO Average number of characters in a document: 10712.90591153658
+2024-03-06 10:12:59,977 DEBUG Experiment 1 started...
+2024-03-06 10:12:59,977 DEBUG Extracting features for train...
+2024-03-06 10:17:36,223 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 10:21:21,088 DEBUG Number of documents in set: 52601
+2024-03-06 10:21:21,088 DEBUG Number of same author (SA) in set: 27834
+2024-03-06 10:21:21,088 DEBUG Number of different author (DA) in set: 24767
+2024-03-06 10:21:21,088 DEBUG Number of documents dropped: 0
+2024-03-06 10:21:21,088 DEBUG Number of unique authors: 31164
+2024-03-06 10:21:21,088 DEBUG Number of unique types: 30858
+2024-03-06 10:21:21,088 DEBUG Number of unique documents: 52590
+2024-03-06 10:21:21,088 INFO Average number of words in a document: 1959.740099998099
+2024-03-06 10:21:21,089 INFO Average number of characters in a document: 10717.978393946883
+2024-03-06 10:21:21,089 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 10:22:21,606 DEBUG Number of documents in set: 14311
+2024-03-06 10:22:21,606 DEBUG Number of same author (SA) in set: 7786
+2024-03-06 10:22:21,606 DEBUG Number of different author (DA) in set: 6525
+2024-03-06 10:22:21,606 DEBUG Number of documents dropped: 0
+2024-03-06 10:22:21,606 DEBUG Number of unique authors: 9432
+2024-03-06 10:22:21,606 DEBUG Number of unique types: 8380
+2024-03-06 10:22:21,606 DEBUG Number of unique documents: 14311
+2024-03-06 10:22:21,606 INFO Average number of words in a document: 1954.5591852421214
+2024-03-06 10:22:21,606 INFO Average number of characters in a document: 10712.90591153658
+2024-03-06 10:22:21,607 DEBUG Experiment 1 started...
+2024-03-06 10:22:21,607 DEBUG Extracting features for train...
+2024-03-06 10:31:15,716 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 10:33:59,981 DEBUG Number of documents in set: 52601
+2024-03-06 10:33:59,981 DEBUG Number of same author (SA) in set: 27834
+2024-03-06 10:33:59,981 DEBUG Number of different author (DA) in set: 24767
+2024-03-06 10:33:59,981 DEBUG Number of documents dropped: 0
+2024-03-06 10:33:59,981 DEBUG Number of unique authors: 31164
+2024-03-06 10:33:59,981 DEBUG Number of unique types: 30858
+2024-03-06 10:33:59,981 DEBUG Number of unique documents: 52590
+2024-03-06 10:33:59,982 INFO Average number of words in a document: 1959.740099998099
+2024-03-06 10:33:59,982 INFO Average number of characters in a document: 10717.978393946883
+2024-03-06 10:33:59,982 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 10:34:43,874 DEBUG Number of documents in set: 14311
+2024-03-06 10:34:43,874 DEBUG Number of same author (SA) in set: 7786
+2024-03-06 10:34:43,874 DEBUG Number of different author (DA) in set: 6525
+2024-03-06 10:34:43,874 DEBUG Number of documents dropped: 0
+2024-03-06 10:34:43,874 DEBUG Number of unique authors: 9432
+2024-03-06 10:34:43,874 DEBUG Number of unique types: 8380
+2024-03-06 10:34:43,874 DEBUG Number of unique documents: 14311
+2024-03-06 10:34:43,874 INFO Average number of words in a document: 1954.5591852421214
+2024-03-06 10:34:43,874 INFO Average number of characters in a document: 10712.90591153658
+2024-03-06 10:34:43,874 DEBUG Experiment 1 started...
+2024-03-06 10:34:43,875 DEBUG Extracting features for train...
+2024-03-06 11:56:18,339 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 11:59:11,314 DEBUG Number of documents in set: 52601
+2024-03-06 11:59:11,314 DEBUG Number of same author (SA) in set: 27834
+2024-03-06 11:59:11,314 DEBUG Number of different author (DA) in set: 24767
+2024-03-06 11:59:11,314 DEBUG Number of documents dropped: 0
+2024-03-06 11:59:11,314 DEBUG Number of unique authors: 31164
+2024-03-06 11:59:11,315 DEBUG Number of unique types: 30858
+2024-03-06 11:59:11,315 DEBUG Number of unique documents: 52590
+2024-03-06 11:59:11,315 INFO Average number of words in a document: 1959.740099998099
+2024-03-06 11:59:11,315 INFO Average number of characters in a document: 10717.978393946883
+2024-03-06 11:59:11,315 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 11:59:51,018 DEBUG Number of documents in set: 14311
+2024-03-06 11:59:51,018 DEBUG Number of same author (SA) in set: 7786
+2024-03-06 11:59:51,018 DEBUG Number of different author (DA) in set: 6525
+2024-03-06 11:59:51,018 DEBUG Number of documents dropped: 0
+2024-03-06 11:59:51,018 DEBUG Number of unique authors: 9432
+2024-03-06 11:59:51,018 DEBUG Number of unique types: 8380
+2024-03-06 11:59:51,018 DEBUG Number of unique documents: 14311
+2024-03-06 11:59:51,018 INFO Average number of words in a document: 1954.5591852421214
+2024-03-06 11:59:51,018 INFO Average number of characters in a document: 10712.90591153658
+2024-03-06 11:59:51,018 DEBUG Experiment 1 started...
+2024-03-06 11:59:51,018 DEBUG Extracting features for train...
+2024-03-06 12:00:16,025 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 12:03:05,949 DEBUG Number of documents in set: 52601
+2024-03-06 12:03:05,950 DEBUG Number of same author (SA) in set: 27834
+2024-03-06 12:03:05,950 DEBUG Number of different author (DA) in set: 24767
+2024-03-06 12:03:05,950 DEBUG Number of documents dropped: 0
+2024-03-06 12:03:05,950 DEBUG Number of unique authors: 31164
+2024-03-06 12:03:05,950 DEBUG Number of unique types: 30858
+2024-03-06 12:03:05,950 DEBUG Number of unique documents: 52590
+2024-03-06 12:03:05,950 INFO Average number of words in a document: 1959.740099998099
+2024-03-06 12:03:05,950 INFO Average number of characters in a document: 10717.978393946883
+2024-03-06 12:03:05,950 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 12:03:38,759 DEBUG Number of documents in set: 14311
+2024-03-06 12:03:38,759 DEBUG Number of same author (SA) in set: 7786
+2024-03-06 12:03:38,759 DEBUG Number of different author (DA) in set: 6525
+2024-03-06 12:03:38,759 DEBUG Number of documents dropped: 0
+2024-03-06 12:03:38,759 DEBUG Number of unique authors: 9432
+2024-03-06 12:03:38,759 DEBUG Number of unique types: 8380
+2024-03-06 12:03:38,759 DEBUG Number of unique documents: 14311
+2024-03-06 12:03:38,759 INFO Average number of words in a document: 1954.5591852421214
+2024-03-06 12:03:38,759 INFO Average number of characters in a document: 10712.90591153658
+2024-03-06 12:03:38,759 DEBUG Experiment 1 started...
+2024-03-06 12:03:38,759 DEBUG Extracting features for train...
+2024-03-06 12:04:03,163 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 12:07:02,348 DEBUG Number of documents in set: 52601
+2024-03-06 12:07:02,348 DEBUG Number of same author (SA) in set: 27834
+2024-03-06 12:07:02,348 DEBUG Number of different author (DA) in set: 24767
+2024-03-06 12:07:02,348 DEBUG Number of documents dropped: 0
+2024-03-06 12:07:02,348 DEBUG Number of unique authors: 31164
+2024-03-06 12:07:02,348 DEBUG Number of unique types: 30858
+2024-03-06 12:07:02,348 DEBUG Number of unique documents: 52590
+2024-03-06 12:07:02,348 INFO Average number of words in a document: 1959.740099998099
+2024-03-06 12:07:02,348 INFO Average number of characters in a document: 10717.978393946883
+2024-03-06 12:07:02,348 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 12:07:44,319 DEBUG Number of documents in set: 14311
+2024-03-06 12:07:44,319 DEBUG Number of same author (SA) in set: 7786
+2024-03-06 12:07:44,319 DEBUG Number of different author (DA) in set: 6525
+2024-03-06 12:07:44,319 DEBUG Number of documents dropped: 0
+2024-03-06 12:07:44,319 DEBUG Number of unique authors: 9432
+2024-03-06 12:07:44,319 DEBUG Number of unique types: 8380
+2024-03-06 12:07:44,319 DEBUG Number of unique documents: 14311
+2024-03-06 12:07:44,319 INFO Average number of words in a document: 1954.5591852421214
+2024-03-06 12:07:44,319 INFO Average number of characters in a document: 10712.90591153658
+2024-03-06 12:07:44,319 DEBUG Experiment 1 started...
+2024-03-06 12:07:44,319 DEBUG Extracting features for train...
+2024-03-06 12:23:30,323 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 12:26:32,870 DEBUG Number of documents in set: 52601
+2024-03-06 12:26:32,870 DEBUG Number of same author (SA) in set: 27834
+2024-03-06 12:26:32,870 DEBUG Number of different author (DA) in set: 24767
+2024-03-06 12:26:32,870 DEBUG Number of documents dropped: 0
+2024-03-06 12:26:32,870 DEBUG Number of unique authors: 31164
+2024-03-06 12:26:32,870 DEBUG Number of unique types: 30858
+2024-03-06 12:26:32,870 DEBUG Number of unique documents: 52590
+2024-03-06 12:26:32,870 INFO Average number of words in a document: 1959.740099998099
+2024-03-06 12:26:32,870 INFO Average number of characters in a document: 10717.978393946883
+2024-03-06 12:26:32,870 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 12:27:17,158 DEBUG Number of documents in set: 14311
+2024-03-06 12:27:17,158 DEBUG Number of same author (SA) in set: 7786
+2024-03-06 12:27:17,158 DEBUG Number of different author (DA) in set: 6525
+2024-03-06 12:27:17,158 DEBUG Number of documents dropped: 0
+2024-03-06 12:27:17,158 DEBUG Number of unique authors: 9432
+2024-03-06 12:27:17,158 DEBUG Number of unique types: 8380
+2024-03-06 12:27:17,158 DEBUG Number of unique documents: 14311
+2024-03-06 12:27:17,158 INFO Average number of words in a document: 1954.5591852421214
+2024-03-06 12:27:17,158 INFO Average number of characters in a document: 10712.90591153658
+2024-03-06 12:27:17,158 DEBUG Experiment 1 started...
+2024-03-06 12:27:17,158 DEBUG Extracting features for train...
+2024-03-06 12:28:48,213 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 12:32:10,344 DEBUG Number of documents in set: 52601
+2024-03-06 12:32:10,344 DEBUG Number of same author (SA) in set: 27834
+2024-03-06 12:32:10,344 DEBUG Number of different author (DA) in set: 24767
+2024-03-06 12:32:10,344 DEBUG Number of documents dropped: 0
+2024-03-06 12:32:10,344 DEBUG Number of unique authors: 31164
+2024-03-06 12:32:10,345 DEBUG Number of unique types: 30858
+2024-03-06 12:32:10,345 DEBUG Number of unique documents: 52590
+2024-03-06 12:32:10,345 INFO Average number of words in a document: 1959.740099998099
+2024-03-06 12:32:10,345 INFO Average number of characters in a document: 10717.978393946883
+2024-03-06 12:32:10,345 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 12:32:57,916 DEBUG Number of documents in set: 14311
+2024-03-06 12:32:57,917 DEBUG Number of same author (SA) in set: 7786
+2024-03-06 12:32:57,917 DEBUG Number of different author (DA) in set: 6525
+2024-03-06 12:32:57,917 DEBUG Number of documents dropped: 0
+2024-03-06 12:32:57,917 DEBUG Number of unique authors: 9432
+2024-03-06 12:32:57,917 DEBUG Number of unique types: 8380
+2024-03-06 12:32:57,917 DEBUG Number of unique documents: 14311
+2024-03-06 12:32:57,917 INFO Average number of words in a document: 1954.5591852421214
+2024-03-06 12:32:57,917 INFO Average number of characters in a document: 10712.90591153658
+2024-03-06 12:32:57,917 DEBUG Experiment 1 started...
+2024-03-06 12:32:57,917 DEBUG Extracting features for train...
+2024-03-06 12:40:36,228 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 12:41:54,985 DEBUG Number of documents in set: 5000
+2024-03-06 12:41:54,986 DEBUG Number of same author (SA) in set: 5000
+2024-03-06 12:41:54,986 DEBUG Number of different author (DA) in set: 0
+2024-03-06 12:41:54,986 DEBUG Number of documents dropped: 0
+2024-03-06 12:41:54,986 DEBUG Number of unique authors: 799
+2024-03-06 12:41:54,986 DEBUG Number of unique types: 4559
+2024-03-06 12:41:54,986 DEBUG Number of unique documents: 4999
+2024-03-06 12:41:54,986 INFO Average number of words in a document: 1951.7494
+2024-03-06 12:41:54,986 INFO Average number of characters in a document: 10704.0394
+2024-03-06 12:41:54,986 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 12:42:28,347 DEBUG Number of documents in set: 5000
+2024-03-06 12:42:28,348 DEBUG Number of same author (SA) in set: 2732
+2024-03-06 12:42:28,348 DEBUG Number of different author (DA) in set: 2268
+2024-03-06 12:42:28,348 DEBUG Number of documents dropped: 0
+2024-03-06 12:42:28,348 DEBUG Number of unique authors: 3735
+2024-03-06 12:42:28,348 DEBUG Number of unique types: 3677
+2024-03-06 12:42:28,348 DEBUG Number of unique documents: 5000
+2024-03-06 12:42:28,348 INFO Average number of words in a document: 1955.8049
+2024-03-06 12:42:28,348 INFO Average number of characters in a document: 10721.0833
+2024-03-06 12:42:28,348 DEBUG Experiment 1 started...
+2024-03-06 12:42:28,348 DEBUG Extracting features for train...
+2024-03-06 12:44:07,202 DEBUG Extracting features for test...
+2024-03-06 12:45:25,293 DEBUG Fitting to transformer...
+2024-03-06 12:55:33,517 DEBUG Vectorizing train...
+2024-03-06 13:01:06,800 DEBUG Length of vectorized train: 5000
+2024-03-06 13:01:06,800 DEBUG Vectorizing test...
+2024-03-06 13:05:19,283 DEBUG Length of vectorized test: 5000
+2024-03-06 13:05:19,284 DEBUG Classifying with Logistic Regression...
+2024-03-06 13:08:10,441 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 13:08:13,856 DEBUG Number of documents in set: 50
+2024-03-06 13:08:13,856 DEBUG Number of same author (SA) in set: 50
+2024-03-06 13:08:13,856 DEBUG Number of different author (DA) in set: 0
+2024-03-06 13:08:13,856 DEBUG Number of documents dropped: 0
+2024-03-06 13:08:13,857 DEBUG Number of unique authors: 13
+2024-03-06 13:08:13,857 DEBUG Number of unique types: 49
+2024-03-06 13:08:13,857 DEBUG Number of unique documents: 50
+2024-03-06 13:08:13,857 INFO Average number of words in a document: 1923.82
+2024-03-06 13:08:13,857 INFO Average number of characters in a document: 10712.76
+2024-03-06 13:08:13,857 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 13:08:14,595 DEBUG Number of documents in set: 50
+2024-03-06 13:08:14,595 DEBUG Number of same author (SA) in set: 23
+2024-03-06 13:08:14,595 DEBUG Number of different author (DA) in set: 27
+2024-03-06 13:08:14,595 DEBUG Number of documents dropped: 0
+2024-03-06 13:08:14,595 DEBUG Number of unique authors: 50
+2024-03-06 13:08:14,595 DEBUG Number of unique types: 50
+2024-03-06 13:08:14,595 DEBUG Number of unique documents: 50
+2024-03-06 13:08:14,596 INFO Average number of words in a document: 1943.48
+2024-03-06 13:08:14,596 INFO Average number of characters in a document: 10690.56
+2024-03-06 13:08:14,596 DEBUG Experiment 1 started...
+2024-03-06 13:08:14,596 DEBUG Extracting features for train...
+2024-03-06 13:08:16,793 DEBUG Extracting features for test...
+2024-03-06 13:08:19,100 DEBUG Fitting to transformer...
+2024-03-06 13:08:27,992 DEBUG Vectorizing train...
+2024-03-06 13:08:32,513 DEBUG Length of vectorized train: 50
+2024-03-06 13:08:32,514 DEBUG Vectorizing test...
+2024-03-06 13:08:37,007 DEBUG Length of vectorized test: 50
+2024-03-06 13:08:37,007 DEBUG Classifying with Logistic Regression...
+2024-03-06 13:09:59,699 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 13:10:03,120 DEBUG Number of documents in set: 50
+2024-03-06 13:10:03,120 DEBUG Number of same author (SA) in set: 50
+2024-03-06 13:10:03,120 DEBUG Number of different author (DA) in set: 0
+2024-03-06 13:10:03,121 DEBUG Number of documents dropped: 0
+2024-03-06 13:10:03,121 DEBUG Number of unique authors: 13
+2024-03-06 13:10:03,121 DEBUG Number of unique types: 49
+2024-03-06 13:10:03,121 DEBUG Number of unique documents: 50
+2024-03-06 13:10:03,121 INFO Average number of words in a document: 1923.82
+2024-03-06 13:10:03,121 INFO Average number of characters in a document: 10712.76
+2024-03-06 13:10:03,121 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 13:10:03,839 DEBUG Number of documents in set: 50
+2024-03-06 13:10:03,840 DEBUG Number of same author (SA) in set: 23
+2024-03-06 13:10:03,840 DEBUG Number of different author (DA) in set: 27
+2024-03-06 13:10:03,840 DEBUG Number of documents dropped: 0
+2024-03-06 13:10:03,840 DEBUG Number of unique authors: 50
+2024-03-06 13:10:03,840 DEBUG Number of unique types: 50
+2024-03-06 13:10:03,840 DEBUG Number of unique documents: 50
+2024-03-06 13:10:03,840 INFO Average number of words in a document: 1943.48
+2024-03-06 13:10:03,840 INFO Average number of characters in a document: 10690.56
+2024-03-06 13:10:03,841 DEBUG Experiment 1 started...
+2024-03-06 13:10:03,841 DEBUG Extracting features for train...
+2024-03-06 13:10:48,441 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 13:10:51,878 DEBUG Number of documents in set: 50
+2024-03-06 13:10:51,879 DEBUG Number of same author (SA) in set: 50
+2024-03-06 13:10:51,879 DEBUG Number of different author (DA) in set: 0
+2024-03-06 13:10:51,879 DEBUG Number of documents dropped: 0
+2024-03-06 13:10:51,879 DEBUG Number of unique authors: 13
+2024-03-06 13:10:51,879 DEBUG Number of unique types: 49
+2024-03-06 13:10:51,879 DEBUG Number of unique documents: 50
+2024-03-06 13:10:51,879 INFO Average number of words in a document: 1923.82
+2024-03-06 13:10:51,879 INFO Average number of characters in a document: 10712.76
+2024-03-06 13:10:51,880 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 13:10:52,575 DEBUG Number of documents in set: 50
+2024-03-06 13:10:52,575 DEBUG Number of same author (SA) in set: 23
+2024-03-06 13:10:52,575 DEBUG Number of different author (DA) in set: 27
+2024-03-06 13:10:52,575 DEBUG Number of documents dropped: 0
+2024-03-06 13:10:52,575 DEBUG Number of unique authors: 50
+2024-03-06 13:10:52,575 DEBUG Number of unique types: 50
+2024-03-06 13:10:52,575 DEBUG Number of unique documents: 50
+2024-03-06 13:10:52,575 INFO Average number of words in a document: 1943.48
+2024-03-06 13:10:52,576 INFO Average number of characters in a document: 10690.56
+2024-03-06 13:10:52,576 DEBUG Experiment 1 started...
+2024-03-06 13:10:52,576 DEBUG Extracting features for train...
+2024-03-06 13:11:41,381 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 13:11:44,828 DEBUG Number of documents in set: 50
+2024-03-06 13:11:44,828 DEBUG Number of same author (SA) in set: 50
+2024-03-06 13:11:44,828 DEBUG Number of different author (DA) in set: 0
+2024-03-06 13:11:44,828 DEBUG Number of documents dropped: 0
+2024-03-06 13:11:44,828 DEBUG Number of unique authors: 13
+2024-03-06 13:11:44,828 DEBUG Number of unique types: 49
+2024-03-06 13:11:44,828 DEBUG Number of unique documents: 50
+2024-03-06 13:11:44,828 INFO Average number of words in a document: 1923.82
+2024-03-06 13:11:44,828 INFO Average number of characters in a document: 10712.76
+2024-03-06 13:11:44,828 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 13:11:45,587 DEBUG Number of documents in set: 50
+2024-03-06 13:11:45,588 DEBUG Number of same author (SA) in set: 23
+2024-03-06 13:11:45,588 DEBUG Number of different author (DA) in set: 27
+2024-03-06 13:11:45,588 DEBUG Number of documents dropped: 0
+2024-03-06 13:11:45,588 DEBUG Number of unique authors: 50
+2024-03-06 13:11:45,588 DEBUG Number of unique types: 50
+2024-03-06 13:11:45,588 DEBUG Number of unique documents: 50
+2024-03-06 13:11:45,588 INFO Average number of words in a document: 1943.48
+2024-03-06 13:11:45,588 INFO Average number of characters in a document: 10690.56
+2024-03-06 13:11:45,588 DEBUG Experiment 1 started...
+2024-03-06 13:11:45,588 DEBUG Extracting features for train...
+2024-03-06 13:12:29,580 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 13:12:33,019 DEBUG Number of documents in set: 50
+2024-03-06 13:12:33,020 DEBUG Number of same author (SA) in set: 50
+2024-03-06 13:12:33,020 DEBUG Number of different author (DA) in set: 0
+2024-03-06 13:12:33,020 DEBUG Number of documents dropped: 0
+2024-03-06 13:12:33,020 DEBUG Number of unique authors: 13
+2024-03-06 13:12:33,020 DEBUG Number of unique types: 49
+2024-03-06 13:12:33,020 DEBUG Number of unique documents: 50
+2024-03-06 13:12:33,020 INFO Average number of words in a document: 1923.82
+2024-03-06 13:12:33,020 INFO Average number of characters in a document: 10712.76
+2024-03-06 13:12:33,020 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 13:12:33,731 DEBUG Number of documents in set: 50
+2024-03-06 13:12:33,731 DEBUG Number of same author (SA) in set: 23
+2024-03-06 13:12:33,731 DEBUG Number of different author (DA) in set: 27
+2024-03-06 13:12:33,731 DEBUG Number of documents dropped: 0
+2024-03-06 13:12:33,731 DEBUG Number of unique authors: 50
+2024-03-06 13:12:33,731 DEBUG Number of unique types: 50
+2024-03-06 13:12:33,732 DEBUG Number of unique documents: 50
+2024-03-06 13:12:33,732 INFO Average number of words in a document: 1943.48
+2024-03-06 13:12:33,732 INFO Average number of characters in a document: 10690.56
+2024-03-06 13:12:33,732 DEBUG Experiment 1 started...
+2024-03-06 13:12:33,732 DEBUG Extracting features for train...
+2024-03-06 13:14:22,613 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 13:14:25,894 DEBUG Number of documents in set: 50
+2024-03-06 13:14:25,894 DEBUG Number of same author (SA) in set: 50
+2024-03-06 13:14:25,894 DEBUG Number of different author (DA) in set: 0
+2024-03-06 13:14:25,894 DEBUG Number of documents dropped: 0
+2024-03-06 13:14:25,894 DEBUG Number of unique authors: 13
+2024-03-06 13:14:25,894 DEBUG Number of unique types: 49
+2024-03-06 13:14:25,894 DEBUG Number of unique documents: 50
+2024-03-06 13:14:25,895 INFO Average number of words in a document: 1923.82
+2024-03-06 13:14:25,895 INFO Average number of characters in a document: 10712.76
+2024-03-06 13:14:50,469 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 13:14:54,194 DEBUG Number of documents in set: 100
+2024-03-06 13:14:54,194 DEBUG Number of same author (SA) in set: 100
+2024-03-06 13:14:54,194 DEBUG Number of different author (DA) in set: 0
+2024-03-06 13:14:54,194 DEBUG Number of documents dropped: 0
+2024-03-06 13:14:54,194 DEBUG Number of unique authors: 19
+2024-03-06 13:14:54,195 DEBUG Number of unique types: 97
+2024-03-06 13:14:54,195 DEBUG Number of unique documents: 100
+2024-03-06 13:14:54,195 INFO Average number of words in a document: 1937.63
+2024-03-06 13:14:54,195 INFO Average number of characters in a document: 10698.185
+2024-03-06 13:15:07,473 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 13:15:13,971 DEBUG Number of documents in set: 1000
+2024-03-06 13:15:13,972 DEBUG Number of same author (SA) in set: 1000
+2024-03-06 13:15:13,972 DEBUG Number of different author (DA) in set: 0
+2024-03-06 13:15:13,972 DEBUG Number of documents dropped: 0
+2024-03-06 13:15:13,972 DEBUG Number of unique authors: 185
+2024-03-06 13:15:13,972 DEBUG Number of unique types: 932
+2024-03-06 13:15:13,972 DEBUG Number of unique documents: 1000
+2024-03-06 13:15:13,972 INFO Average number of words in a document: 1936.3555
+2024-03-06 13:15:13,972 INFO Average number of characters in a document: 10738.6935
+2024-03-06 13:20:05,825 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-06 13:20:05,826 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-06 13:20:05,826 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-06 13:20:05,826 INFO Preprocessed dataset file found: pan13-test.jsonl
+2024-03-06 13:20:05,826 INFO Preprocessed dataset file found: pan21-test.jsonl
+2024-03-06 13:20:05,826 INFO Preprocessed dataset file found: pan13-train.jsonl
+2024-03-06 13:20:05,826 WARNING Error in loading dataset files from preprocessed directory
+2024-03-06 13:20:06,289 INFO Located all dataset files successfully
+2024-03-06 13:20:07,749 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-test.jsonl
+2024-03-06 13:20:08,406 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-train.jsonl
+2024-03-06 13:21:10,962 DEBUG JSON data has been saved to ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 13:22:25,266 ERROR Preprocessed dataset file missing: pan20-train-small.jsonl
+2024-03-06 13:22:25,267 ERROR Preprocessed dataset file missing: pan20-train-large.jsonl
+2024-03-06 13:22:25,267 ERROR Preprocessed dataset file missing: pan20-test.jsonl
+2024-03-06 13:22:25,267 INFO Preprocessed dataset file found: pan13-test.jsonl
+2024-03-06 13:22:25,267 INFO Preprocessed dataset file found: pan21-test.jsonl
+2024-03-06 13:22:25,267 INFO Preprocessed dataset file found: pan13-train.jsonl
+2024-03-06 13:22:25,267 WARNING Error in loading dataset files from preprocessed directory
+2024-03-06 13:22:25,271 INFO Located all dataset files successfully
+2024-03-06 13:22:25,373 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-test.jsonl
+2024-03-06 13:22:25,420 DEBUG JSON data has been saved to ../preprocessed_datasets/pan13-train.jsonl
+2024-03-06 13:22:46,262 DEBUG JSON data has been saved to ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 13:27:49,132 DEBUG JSON data has been saved to ../preprocessed_datasets/pan20-train-large.jsonl
+2024-03-06 13:28:05,103 DEBUG JSON data has been saved to ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 13:28:36,275 DEBUG JSON data has been saved to ../preprocessed_datasets/pan21-test.jsonl
+2024-03-06 13:35:04,854 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 13:35:17,785 DEBUG Number of documents in set: 50
+2024-03-06 13:35:17,785 DEBUG Number of same author (SA) in set: 25
+2024-03-06 13:35:17,785 DEBUG Number of different author (DA) in set: 25
+2024-03-06 13:35:17,785 DEBUG Number of documents dropped: 0
+2024-03-06 13:35:17,785 DEBUG Number of unique authors: 31164
+2024-03-06 13:35:17,785 DEBUG Number of unique types: 30858
+2024-03-06 13:35:17,785 DEBUG Number of unique documents: 52590
+2024-03-06 13:35:17,785 INFO Average number of words in a document: 1949.32
+2024-03-06 13:35:17,785 INFO Average number of characters in a document: 10669.76
+2024-03-06 13:36:29,416 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 13:37:39,791 DEBUG Number of documents in set: 50
+2024-03-06 13:37:39,791 DEBUG Number of same author (SA) in set: 25
+2024-03-06 13:37:39,791 DEBUG Number of different author (DA) in set: 25
+2024-03-06 13:37:39,791 DEBUG Number of documents dropped: 0
+2024-03-06 13:37:39,791 DEBUG Number of unique authors: 31164
+2024-03-06 13:37:39,792 DEBUG Number of unique types: 30858
+2024-03-06 13:37:39,792 DEBUG Number of unique documents: 52590
+2024-03-06 13:37:39,792 INFO Average number of words in a document: 1926.03
+2024-03-06 13:37:39,792 INFO Average number of characters in a document: 10666.93
+2024-03-06 13:37:39,792 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 13:37:42,732 DEBUG Number of documents in set: 50
+2024-03-06 13:37:42,732 DEBUG Number of same author (SA) in set: 25
+2024-03-06 13:37:42,732 DEBUG Number of different author (DA) in set: 25
+2024-03-06 13:37:42,732 DEBUG Number of documents dropped: 0
+2024-03-06 13:37:42,732 DEBUG Number of unique authors: 9432
+2024-03-06 13:37:42,732 DEBUG Number of unique types: 8380
+2024-03-06 13:37:42,732 DEBUG Number of unique documents: 14311
+2024-03-06 13:37:42,732 INFO Average number of words in a document: 1935.58
+2024-03-06 13:37:42,732 INFO Average number of characters in a document: 10666.05
+2024-03-06 13:37:42,733 DEBUG Experiment 1 started...
+2024-03-06 13:37:42,733 DEBUG Extracting features for train...
+2024-03-06 13:37:45,895 DEBUG Extracting features for test...
+2024-03-06 13:37:48,669 DEBUG Fitting to transformer...
+2024-03-06 13:37:58,130 DEBUG Vectorizing train...
+2024-03-06 13:38:02,797 DEBUG Length of vectorized train: 50
+2024-03-06 13:38:02,797 DEBUG Vectorizing test...
+2024-03-06 13:38:07,438 DEBUG Length of vectorized test: 50
+2024-03-06 13:38:07,439 DEBUG Classifying with Logistic Regression...
+2024-03-06 13:38:09,540 DEBUG Evaluating:
+2024-03-06 13:38:09,556 DEBUG Accuracy: 0.38, Precision: 0.4, Recall: 0.48, F1: 0.43636363636363634
+2024-03-06 13:39:22,601 DEBUG Reading data from ../preprocessed_datasets/pan20-train-small.jsonl
+2024-03-06 13:39:51,265 DEBUG Number of documents in set: 5000
+2024-03-06 13:39:51,265 DEBUG Number of same author (SA) in set: 2500
+2024-03-06 13:39:51,265 DEBUG Number of different author (DA) in set: 2500
+2024-03-06 13:39:51,265 DEBUG Number of documents dropped: 0
+2024-03-06 13:39:51,266 DEBUG Number of unique authors: 31164
+2024-03-06 13:39:51,266 DEBUG Number of unique types: 30858
+2024-03-06 13:39:51,266 DEBUG Number of unique documents: 52590
+2024-03-06 13:39:51,266 INFO Average number of words in a document: 1959.9379
+2024-03-06 13:39:51,266 INFO Average number of characters in a document: 10716.663
+2024-03-06 13:39:51,266 DEBUG Reading data from ../preprocessed_datasets/pan20-test.jsonl
+2024-03-06 13:40:11,046 DEBUG Number of documents in set: 5000
+2024-03-06 13:40:11,046 DEBUG Number of same author (SA) in set: 2500
+2024-03-06 13:40:11,046 DEBUG Number of different author (DA) in set: 2500
+2024-03-06 13:40:11,046 DEBUG Number of documents dropped: 0
+2024-03-06 13:40:11,046 DEBUG Number of unique authors: 9432
+2024-03-06 13:40:11,046 DEBUG Number of unique types: 8380
+2024-03-06 13:40:11,046 DEBUG Number of unique documents: 14311
+2024-03-06 13:40:11,046 INFO Average number of words in a document: 1952.0176
+2024-03-06 13:40:11,046 INFO Average number of characters in a document: 10698.2902
+2024-03-06 13:40:11,047 DEBUG Experiment 1 started...
+2024-03-06 13:40:11,047 DEBUG Extracting features for train...
+2024-03-06 13:42:10,624 DEBUG Extracting features for test...
+2024-03-06 13:43:30,423 DEBUG Fitting to transformer...
+2024-03-06 13:56:14,339 DEBUG Vectorizing train...
+2024-03-06 14:01:47,819 DEBUG Length of vectorized train: 5000
+2024-03-06 14:01:47,819 DEBUG Vectorizing test...
+2024-03-06 14:06:27,453 DEBUG Length of vectorized test: 5000
+2024-03-06 14:06:27,454 DEBUG Classifying with Logistic Regression...
+2024-03-06 14:06:34,669 DEBUG Evaluating:
+2024-03-06 14:06:34,690 DEBUG Accuracy: 0.5688, Precision: 0.5606060606060606, Recall: 0.6364, F1: 0.596103409516673
