@@ -166,15 +166,15 @@ def gunning_fog_index(entry):
     return gf.score
 
 
-def pass_fn(x):
-    return x
+
 
 class CustomTfIdfTransformer(BaseEstimator, TransformerMixin):
     
     def __init__(self, key, analyzer, n=1, vocab=None):
         self.key = key
+        self.pass_fn = lambda x: x
         if self.key == 'pos_tags' or self.key == 'tokens' or self.key == 'pos_tag_chunks' or self.key == 'pos_tag_chunk_subtrees':
-            self.vectorizer = TfidfVectorizer(analyzer=analyzer, min_df=0.1, tokenizer=pass_fn, preprocessor=pass_fn, vocabulary=vocab, norm='l1', ngram_range=(1, n))
+            self.vectorizer = TfidfVectorizer(analyzer=analyzer, min_df=0.1, tokenizer=self.pass_fn, preprocessor=self.pass_fn, vocabulary=vocab, norm='l1', ngram_range=(1, n))
         else:
             self.vectorizer = TfidfVectorizer(analyzer=analyzer, min_df=0.1, vocabulary=vocab, norm='l1', ngram_range=(1, n))
 
@@ -192,7 +192,8 @@ class CustomTfIdfTransformer(BaseEstimator, TransformerMixin):
 class CustomFreqTransformer(BaseEstimator, TransformerMixin):
     
     def __init__(self, analyzer, n=1, vocab=None):
-        self.vectorizer = TfidfVectorizer(tokenizer=pass_fn, preprocessor=pass_fn, vocabulary=vocab, norm=None, ngram_range=(1, n))
+        self.pass_fn = lambda x: x
+        self.vectorizer = TfidfVectorizer(tokenizer=self.pass_fn, preprocessor=self.pass_fn, vocabulary=vocab, norm=None, ngram_range=(1, n))
 
     def fit(self, x, y=None):
         self.vectorizer.fit([entry['tokens'] for entry in x], y)
@@ -544,22 +545,25 @@ for s in samples:
 import pandas as pd
 df = pd.DataFrame(samples)
 df = df.set_index('id')
-
+print("Start split")
 X_design, X_test, y_design, y_test = train_test_split(df, df['label'], stratify=df['label'], random_state=42)
 X_train, X_valid, y_train, y_valid = train_test_split(X_design, y_design, stratify=y_design, random_state=42)
+print("End split")
 
+print("Start picle")
 # Per salvare
 X_test.to_pickle(TEMP_DATA_DIR+"x_test.pkl")
 X_valid.to_pickle(TEMP_DATA_DIR+"x_valid.pkl")
 
 X_train.to_pickle(TEMP_DATA_DIR+"x_train.pkl")
 df.to_pickle(TEMP_DATA_DIR+"df.pkl")
+print("End picle")
 
 start = datetime.datetime.now()
-
+print("Start transformer")
 docs = list(X_train['doc1']) + list(X_train['doc2'])
 transformer = get_writeprints_transformer()
-X = transformer.fit_transform(docs[:len(docs)//2]) # Usiamo 1/2 dei docs per fittare, valori più alti fanno esplodere
+X = transformer.fit_transform(docs[:len(docs)//8]) # Usiamo 1/2 dei docs per fittare, valori più alti fanno esplodere
 scaler = StandardScaler(with_mean=False)
 X = scaler.fit_transform(X)
 
@@ -567,6 +571,7 @@ with open(TEMP_DATA_DIR + 'transformers.p', 'wb') as f:
     pickle.dump((transformer, scaler), f)
 
 end = datetime.datetime.now()
+print("End transformer")
 print("Time: ", (end-start).total_seconds())
 
 start = datetime.datetime.now()

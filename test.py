@@ -536,5 +536,5 @@ class Word2VecVectorizer(BaseEstimator, TransformerMixin):
 #experiment = fe(load_corpus('pan13-train.jsonl'),load_corpus('pan13-test.jsonl'))
 #experiment.run()
 #load_corpus('pan20-train-small.jsonl',50)
-experiment = fe(load_corpus('pan20-train-small.jsonl',5000),load_corpus('pan20-test.jsonl',5000))
+experiment = fe(load_corpus('pan20-train-small.jsonl',40000),load_corpus('pan20-test.jsonl',40000))
 experiment.run()
