@@ -1,0 +1,3 @@
+model,best_score,best_params
+pipeline_SVM,0.6,"{'classifier__C': 0.01, 'classifier__degree': 2, 'classifier__gamma': 'scale', 'classifier__kernel': 'sigmoid', 'feature_extractor__feature_type': 'tfidf', 'feature_extractor__max_features': 500, 'feature_extractor__ngram_range': (3, 3)}"
+pipeline_LR,0.5900000000000001,"{'classifier__C': 0.1, 'classifier__l1_ratio': 0.3333333333333333, 'classifier__penalty': 'elasticnet', 'classifier__solver': 'saga', 'feature_extractor__feature_type': 'BoW', 'feature_extractor__max_features': 500, 'feature_extractor__ngram_range': (3, 3)}"

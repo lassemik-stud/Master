@@ -1,0 +1,4 @@
+model,best_score,best_params
+pipeline_RF,0.6,"{'classifier__max_depth': None, 'classifier__max_features': 'sqrt', 'classifier__min_samples_leaf': 1, 'classifier__min_samples_split': 5, 'classifier__n_estimators': 100, 'feature_extractor__max_features': 3000, 'feature_extractor__ngram_range': (4, 4)}"
+pipeline_SVM,0.6,"{'classifier__C': 0.01, 'classifier__degree': 2, 'classifier__gamma': 'scale', 'classifier__kernel': 'poly', 'feature_extractor__max_features': 3000, 'feature_extractor__ngram_range': (4, 4)}"
+pipeline_LR,0.6,"{'classifier__C': 0.01, 'classifier__l1_ratio': 0.1111111111111111, 'classifier__penalty': 'l1', 'classifier__solver': 'saga', 'feature_extractor__max_features': 3000, 'feature_extractor__ngram_range': (4, 4)}"

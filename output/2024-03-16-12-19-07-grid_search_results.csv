@@ -1,0 +1,2 @@
+model,best_score,best_params,ngram_range,max_features,feature_type,analyzer
+pipeline_SVM,0.72,"{'classifier__C': 0.01, 'classifier__degree': 1, 'classifier__gamma': 'scale', 'classifier__kernel': 'sigmoid'}","(3, 3)",500,BoW,char_wb

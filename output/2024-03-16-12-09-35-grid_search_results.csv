@@ -1,0 +1,2 @@
+model,best_score,best_params
+pipeline_SVM,0.6,"{'classifier__C': 0.01, 'classifier__degree': 1, 'classifier__gamma': 'scale', 'classifier__kernel': 'sigmoid'}"
