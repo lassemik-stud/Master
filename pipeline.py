@@ -21,7 +21,7 @@ from sklearn import svm
 from tqdm import tqdm
 from settings.logging import printLog
 from multiprocessing import Pool, cpu_count
-from pickled import load_or_process_data
+from preprocess import load_or_process_data
 
 nlp = spacy.load('en_core_web_sm')
 

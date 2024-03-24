@@ -1,6 +1,7 @@
 import os
 import pickle
 
+import math
 from itertools import islice
 import random
 from random import sample
@@ -22,25 +23,29 @@ def load_data_from_pickle(filename):
 def data_exists(*filenames):
     return all(os.path.exists(filename) for filename in filenames)
 
-def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False):
+def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1):
     # Define pickle filenames
     root_path = '../pre_data/'
     x_train_pickle = root_path+str(cutoff)+'-x_train.pkl'
     y_train_pickle = root_path+str(cutoff)+'-y_train.pkl'
     x_test_pickle = root_path+str(cutoff)+'-x_test.pkl'
     y_test_pickle = root_path+str(cutoff)+'-y_test.pkl'
+    pcc_test_pickle = root_path+str(cutoff)+'-pcc_test.pkl'
+    pcc_train_pickle = root_path+str(cutoff)+'-pcc_train.pkl'   
     
     # Check if pickle files exist
-    if data_exists(x_train_pickle, y_train_pickle, x_test_pickle, y_test_pickle) or not no_load_flag:
+    if data_exists(x_train_pickle, y_train_pickle, x_test_pickle, y_test_pickle):
         # Load data from pickle files
         x_train = load_data_from_pickle(x_train_pickle)
         y_train = load_data_from_pickle(y_train_pickle)
         x_test = load_data_from_pickle(x_test_pickle)
         y_test = load_data_from_pickle(y_test_pickle)
-        printLog.debug('Data loaded from pickle files')
+        PCC_test_params = load_data_from_pickle(pcc_test_pickle)
+        PCC_train_params = load_data_from_pickle(pcc_train_pickle)
+        printLog.debug('Preprocessed data loaded from pickle files')
     else:
         # Your data processing/loading function here
-        x_train, y_train, x_test, y_test = load_corpus(cutoff,sentence_size)
+        x_train, y_train, x_test, y_test, PCC_train_params, PCC_test_params = load_corpus(_cutoff=cutoff,sentence_size=sentence_size,k=k,d=d)
         printLog.debug(f'sizes: x_train: {len(x_train)}, y_train: {len(y_train)}, x_test: {len(x_test)}, y_test: {len(y_test)}')
         
         # After processing, save the datasets to pickle files
@@ -48,20 +53,19 @@ def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False):
         save_data_to_pickle(y_train, y_train_pickle)
         save_data_to_pickle(x_test, x_test_pickle)
         save_data_to_pickle(y_test, y_test_pickle)
-        printLog.debug('Data saved to pickle files')
+        save_data_to_pickle(PCC_train_params, pcc_train_pickle)
+        save_data_to_pickle(PCC_test_params, pcc_test_pickle)
+        printLog.debug('Preprocessed data saved to pickle files')
     
-    return x_train, y_train, x_test, y_test
-
-def sentences(text, n):
-    sents = [i.text for i in nlp(text).sents]
-    return [' '.join(sents[i:i+n]) for i in range(0, len(sents), n)]
+    return x_train, y_train, x_test, y_test, PCC_train_params, PCC_test_params
 
 def sentences(text, n):
     sents = [i.text for i in nlp(text).sents]
     return [' '.join(sents[i:i+n]) for i in range(0, len(sents), n)]
 
 def process_pair(args):
-    i, pair, y_train, sentence_size = args
+    i, pair, y_train, sentence_size,k,d = args
+ 
     kt = pair[0]
     ut = pair[1]
     s_ut = sentences(ut, sentence_size)
@@ -70,29 +74,59 @@ def process_pair(args):
     x_out = []
     y_out = []
 
-    for sentence_kt in s_kt:
-        for sentence_ut in s_ut:
-            x_out.append([sentence_kt, sentence_ut])
-            y_out.append(y_train[i])
-    
-    return x_out, y_out
+    c = [y_train]*len(s_ut)
 
-def split_text(x_train, y_train, sentence_size):
-    printLog.debug(f'Splitting text - sentence size is {sentence_size}')
+    # ROLLING ATTRIBUTION PARAMETERS
+    N = len(s_ut)
+    #k = 4 
+    #d = 2
+    n = math.ceil((N-k)/(k-d)) + 1
+    l = len(s_kt)*n 
+    w = k-d
+    l_group = len(s_kt)
+
+    # ROLLING SELECTION
+    for j, sentence_kt in enumerate(s_kt):
+        i = 0
+        while i < n*w:
+            flat_list = [item for sublist in s_ut[i:i+k] for item in sublist]
+            x_out.append([sentence_kt, ''.join(flat_list)])
+            y_out.append(0 if any(element == 0 for element in c[i:i+k]) else 1)
+            i+=w
+    
+    PCC_params = {
+        'N': N,
+        'k': k,
+        'd': d,
+        'n': n,
+        'l': l,
+        'w': w,
+        'l_group': l_group
+    }
+    return x_out, y_out, PCC_params
+
+def rolling_selection(x_train, y_train, sentence_size, k=4, d=1):
+    """
+    k - window size\n
+    d - overlap window
+    """
+    printLog.debug(f'Selecting text - sentence size is {sentence_size}')
 
     with Pool() as pool:
-        results = pool.map(process_pair, [(i, pair, y_train, sentence_size) for i, pair in enumerate(x_train)])
+        results = pool.map(process_pair, [(i, pair, y_train[i], sentence_size,k,d) for i, pair in enumerate(x_train)])
 
     x_out = []
     y_out = []
+    PCC_params = []
 
-    for x, y in results:
+    for x, y,PCC_p in results:
         x_out.extend(x)
         y_out.extend(y)
+        PCC_params.append(PCC_p)
 
-    return x_out, y_out
+    return x_out, y_out, PCC_params
 
-def load_corp(x_path, y_path, sentence_size=0, cutoff=0,cc_flag=False):
+def load_corp(x_path, y_path, sentence_size=0, cutoff=0,cc_flag=False,k=4,d=1):
     # Read the ground truth:
     # Read and process y
     y = {}
@@ -135,7 +169,7 @@ def load_corp(x_path, y_path, sentence_size=0, cutoff=0,cc_flag=False):
     printLog.debug(f'Post-processing sizes - x: {len(x_filtered)}, y: {len(y_filtered)}')
 
     if cc_flag: # contract cheating flag
-        x_filtered, y_filtered = split_text(x_filtered, y_filtered, sentence_size)
+        x_filtered, y_filtered, PCC_params = rolling_selection(x_filtered, y_filtered, sentence_size,k=k,d=d)
     printLog.debug(f'Post-splitting sizes - x: {len(x_filtered)}, y: {len(y_filtered)}')
 
     printLog.debug('Tokenizing using spaCy')
@@ -143,19 +177,19 @@ def load_corp(x_path, y_path, sentence_size=0, cutoff=0,cc_flag=False):
         x_filtered = pool.map(spacy_tokenizer, x_filtered)
     printLog.debug('Tokenizing complete')
 
-    return x_filtered, y_filtered
+    return x_filtered, y_filtered, PCC_params
 
-def load_corpus(_cutoff=0,sentence_size=0):
+def load_corpus(_cutoff=0,sentence_size=0,k=4,d=1):
     x_train_path = "../datasets/pan20-authorship-verification-training-small/pan20-authorship-verification-training-small.jsonl"
     y_train_path = "../datasets/pan20-authorship-verification-training-small/pan20-authorship-verification-training-small-truth.jsonl"
     x_test_path = "../datasets/pan20-authorship-verification-test/pan20-authorship-verification-test.jsonl"
     y_test_path = "../datasets/pan20-authorship-verification-test/pan20-authorship-verification-test-truth.jsonl"
 
     printLog.debug('Loading and extracting features')
-    x_train, y_train = load_corp(x_train_path, y_train_path, cutoff=_cutoff,cc_flag=True,sentence_size=sentence_size)
-    x_test, y_test = load_corp(x_test_path, y_test_path,cutoff=_cutoff,cc_flag=True,sentence_size=sentence_size)
+    x_train, y_train, PCC_train_params = load_corp(x_train_path, y_train_path, cutoff=_cutoff,cc_flag=True,sentence_size=sentence_size,k=k,d=d)
+    x_test, y_test, PCC_test_params = load_corp(x_test_path, y_test_path,cutoff=_cutoff,cc_flag=True,sentence_size=sentence_size,k=k,d=d)
     
-    return x_train, y_train, x_test, y_test
+    return x_train, y_train, x_test, y_test, PCC_train_params, PCC_test_params
 
 # Tokenizer function that uses spaCy for lemmatization
 def spacy_tokenizer(pair):
