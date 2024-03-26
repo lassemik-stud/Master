@@ -1,0 +1,17 @@
+x_train, y_train, x_test, y_test, PCC_train_params, PCC_test_params = load_or_process_data(cutoff=100,sentence_size=50,k=4,d=1)
+
+PCC_Pipeline = Pipeline([
+                ('feature_extractor', TextPairFeatureExtractor(ngram_range=(4,4),max_features=1000,feature_type='tfidf',analyzer='char')),
+                ('scaler', StandardScaler()),
+                ('classifier', SVC(C=1, kernel='sigmoid', gamma='scale', degree=1,probability=True))
+            ])
+
+ 
+             precision    recall  f1-score   support
+
+           0       0.76      0.64      0.70        50
+           1       0.69      0.80      0.74        50
+
+    accuracy                           0.72       100
+   macro avg       0.73      0.72      0.72       100
+weighted avg       0.73      0.72      0.72       100

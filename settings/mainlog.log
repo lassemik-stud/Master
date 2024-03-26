@@ -13552,3 +13552,584 @@ weighted avg       0.16      0.40      0.23        10
 2024-03-24 14:26:34,210 DEBUG Classification data loaded from pickle files
 2024-03-24 14:27:24,005 DEBUG Preprocessed data loaded from pickle files
 2024-03-24 14:27:24,006 DEBUG Classification data loaded from pickle files
+2024-03-24 17:14:47,043 DEBUG Loading and extracting features
+2024-03-24 17:14:47,180 DEBUG Size of y 100
+2024-03-24 17:14:53,301 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-24 17:14:53,301 DEBUG Selecting text - sentence size is 50
+2024-03-24 17:14:56,342 DEBUG Post-splitting sizes - x: 2070, y: 2070
+2024-03-24 17:14:56,342 DEBUG Tokenizing using spaCy
+2024-03-24 17:15:07,007 DEBUG Tokenizing complete
+2024-03-24 17:15:07,059 DEBUG Size of y 100
+2024-03-24 17:15:08,743 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-24 17:15:08,743 DEBUG Selecting text - sentence size is 50
+2024-03-24 17:15:12,080 DEBUG Post-splitting sizes - x: 2042, y: 2042
+2024-03-24 17:15:12,081 DEBUG Tokenizing using spaCy
+2024-03-24 17:15:22,692 DEBUG Tokenizing complete
+2024-03-24 17:15:22,696 DEBUG sizes: x_train: 2070, y_train: 2070, x_test: 2042, y_test: 2042
+2024-03-24 17:15:22,756 DEBUG Preprocessed data saved to pickle files
+2024-03-24 17:15:57,476 DEBUG Classification data saved to pickle files
+2024-03-24 17:22:51,517 DEBUG Preprocessed data loaded from pickle files
+2024-03-24 17:22:51,518 DEBUG Classification data loaded from pickle files
+2024-03-25 16:42:51,805 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:42:51,806 DEBUG Classification data loaded from pickle files
+2024-03-25 16:43:53,157 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:43:53,157 DEBUG Classification data loaded from pickle files
+2024-03-25 16:45:03,669 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:45:03,669 DEBUG Classification data loaded from pickle files
+2024-03-25 16:46:30,165 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:46:30,165 DEBUG Classification data loaded from pickle files
+2024-03-25 16:46:56,152 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:46:56,152 DEBUG Classification data loaded from pickle files
+2024-03-25 16:49:39,704 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:49:39,705 DEBUG Classification data loaded from pickle files
+2024-03-25 16:50:34,537 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:50:34,537 DEBUG Classification data loaded from pickle files
+2024-03-25 16:50:49,926 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:50:49,926 DEBUG Classification data loaded from pickle files
+2024-03-25 16:51:13,738 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:51:13,738 DEBUG Classification data loaded from pickle files
+2024-03-25 16:56:30,621 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:56:30,622 DEBUG Classification data loaded from pickle files
+2024-03-25 16:56:50,164 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:56:50,165 DEBUG Classification data loaded from pickle files
+2024-03-25 16:56:56,898 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:56:56,899 DEBUG Classification data loaded from pickle files
+2024-03-25 16:57:45,056 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:57:45,057 DEBUG Classification data loaded from pickle files
+2024-03-25 16:58:01,334 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:58:01,335 DEBUG Classification data loaded from pickle files
+2024-03-25 16:58:58,981 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 16:58:58,982 DEBUG Classification data loaded from pickle files
+2024-03-25 17:00:17,361 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:00:17,362 DEBUG Classification data loaded from pickle files
+2024-03-25 17:00:27,852 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:00:27,853 DEBUG Classification data loaded from pickle files
+2024-03-25 17:00:40,466 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:00:40,467 DEBUG Classification data loaded from pickle files
+2024-03-25 17:00:55,569 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:00:55,570 DEBUG Classification data loaded from pickle files
+2024-03-25 17:01:11,355 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:01:11,356 DEBUG Classification data loaded from pickle files
+2024-03-25 17:01:23,607 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:01:23,607 DEBUG Classification data loaded from pickle files
+2024-03-25 17:05:40,986 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:06:15,304 DEBUG Classification data saved to pickle files
+2024-03-25 17:06:21,469 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:06:56,188 DEBUG Classification data saved to pickle files
+2024-03-25 17:07:00,498 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:07:36,029 DEBUG Classification data saved to pickle files
+2024-03-25 17:07:42,911 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:07:42,911 DEBUG Classification data loaded from pickle files
+2024-03-25 17:07:47,041 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:07:47,042 DEBUG Classification data loaded from pickle files
+2024-03-25 17:08:03,186 DEBUG Loading and extracting features
+2024-03-25 17:08:03,322 DEBUG Size of y 200
+2024-03-25 17:08:09,507 DEBUG Post-processing sizes - x: 200, y: 200
+2024-03-25 17:08:09,507 DEBUG Selecting text - sentence size is 50
+2024-03-25 17:08:14,526 DEBUG Post-splitting sizes - x: 3890, y: 3890
+2024-03-25 17:08:14,527 DEBUG Tokenizing using spaCy
+2024-03-25 17:08:34,520 DEBUG Tokenizing complete
+2024-03-25 17:08:34,573 DEBUG Size of y 200
+2024-03-25 17:08:36,293 DEBUG Post-processing sizes - x: 200, y: 200
+2024-03-25 17:08:36,293 DEBUG Selecting text - sentence size is 50
+2024-03-25 17:08:41,728 DEBUG Post-splitting sizes - x: 4420, y: 4420
+2024-03-25 17:08:41,728 DEBUG Tokenizing using spaCy
+2024-03-25 17:09:02,288 DEBUG Tokenizing complete
+2024-03-25 17:09:02,295 DEBUG sizes: x_train: 3890, y_train: 3890, x_test: 4420, y_test: 4420
+2024-03-25 17:09:02,412 DEBUG Preprocessed data saved to pickle files
+2024-03-25 17:10:34,207 DEBUG Classification data saved to pickle files
+2024-03-25 17:11:03,313 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:11:03,314 DEBUG Classification data loaded from pickle files
+2024-03-25 17:12:20,543 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:12:20,543 DEBUG Classification data loaded from pickle files
+2024-03-25 17:13:24,569 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:13:24,570 DEBUG Classification data loaded from pickle files
+2024-03-25 17:14:15,541 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:14:15,541 DEBUG Classification data loaded from pickle files
+2024-03-25 17:15:16,930 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:15:16,930 DEBUG Classification data loaded from pickle files
+2024-03-25 17:16:06,721 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:16:06,722 DEBUG Classification data loaded from pickle files
+2024-03-25 17:20:38,994 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:20:38,995 DEBUG Classification data loaded from pickle files
+2024-03-25 17:28:11,781 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:28:11,781 DEBUG Classification data loaded from pickle files
+2024-03-25 17:29:22,751 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:29:22,752 DEBUG Classification data loaded from pickle files
+2024-03-25 17:29:33,395 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:29:33,396 DEBUG Classification data loaded from pickle files
+2024-03-25 17:30:28,777 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:30:28,777 DEBUG Classification data loaded from pickle files
+2024-03-25 17:41:27,241 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:41:27,242 DEBUG Classification data loaded from pickle files
+2024-03-25 17:42:45,552 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:42:45,552 DEBUG Classification data loaded from pickle files
+2024-03-25 17:43:20,559 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:43:20,559 DEBUG Classification data loaded from pickle files
+2024-03-25 17:44:32,355 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:44:32,356 DEBUG Classification data loaded from pickle files
+2024-03-25 17:45:06,527 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:45:06,527 DEBUG Classification data loaded from pickle files
+2024-03-25 17:52:48,967 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:52:48,968 DEBUG Classification data loaded from pickle files
+2024-03-25 17:54:25,767 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:54:25,767 DEBUG Classification data loaded from pickle files
+2024-03-25 17:56:20,112 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:56:20,113 DEBUG Classification data loaded from pickle files
+2024-03-25 17:57:14,473 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 17:57:14,473 DEBUG Classification data loaded from pickle files
+2024-03-25 18:05:56,859 DEBUG Loading and extracting features
+2024-03-25 18:05:56,993 DEBUG Size of y 200
+2024-03-25 18:06:03,154 DEBUG Post-processing sizes - x: 200, y: 200
+2024-03-25 18:06:03,154 DEBUG Selecting text - sentence size is 50
+2024-03-25 18:06:09,214 DEBUG Post-splitting sizes - x: 3931, y: 3931
+2024-03-25 18:06:09,214 DEBUG Tokenizing using spaCy
+2024-03-25 18:06:28,350 DEBUG Tokenizing complete
+2024-03-25 18:06:28,398 DEBUG Size of y 200
+2024-03-25 18:06:30,074 DEBUG Post-processing sizes - x: 200, y: 200
+2024-03-25 18:06:30,075 DEBUG Selecting text - sentence size is 50
+2024-03-25 18:06:35,038 DEBUG Post-splitting sizes - x: 4420, y: 4420
+2024-03-25 18:06:35,038 DEBUG Tokenizing using spaCy
+2024-03-25 18:06:55,650 DEBUG Tokenizing complete
+2024-03-25 18:06:55,657 DEBUG sizes: x_train: 3931, y_train: 3931, x_test: 4420, y_test: 4420
+2024-03-25 18:06:55,765 DEBUG Preprocessed data saved to pickle files
+2024-03-25 18:08:31,305 DEBUG Classification data saved to pickle files
+2024-03-25 18:08:54,068 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:09:16,956 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:10:21,756 DEBUG Loading and extracting features
+2024-03-25 18:10:21,893 DEBUG Size of y 200
+2024-03-25 18:10:28,058 DEBUG Post-processing sizes - x: 200, y: 200
+2024-03-25 18:10:28,059 DEBUG Selecting text - sentence size is 50
+2024-03-25 18:10:35,649 DEBUG Post-splitting sizes - x: 4062, y: 4062
+2024-03-25 18:10:35,650 DEBUG Tokenizing using spaCy
+2024-03-25 18:10:55,729 DEBUG Tokenizing complete
+2024-03-25 18:10:55,776 DEBUG Size of y 200
+2024-03-25 18:10:57,461 DEBUG Post-processing sizes - x: 200, y: 200
+2024-03-25 18:10:57,461 DEBUG Selecting text - sentence size is 50
+2024-03-25 18:11:02,512 DEBUG Post-splitting sizes - x: 4420, y: 4420
+2024-03-25 18:11:02,512 DEBUG Tokenizing using spaCy
+2024-03-25 18:11:23,368 DEBUG Tokenizing complete
+2024-03-25 18:11:23,375 DEBUG sizes: x_train: 4062, y_train: 4062, x_test: 4420, y_test: 4420
+2024-03-25 18:11:23,494 DEBUG Preprocessed data saved to pickle files
+2024-03-25 18:13:05,215 DEBUG Classification data saved to pickle files
+2024-03-25 18:13:33,535 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:13:33,535 DEBUG Classification data loaded from pickle files
+2024-03-25 18:16:59,884 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:16:59,884 DEBUG Classification data loaded from pickle files
+2024-03-25 18:19:39,722 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:19:39,723 DEBUG Classification data loaded from pickle files
+2024-03-25 18:25:22,447 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:25:22,448 DEBUG Classification data loaded from pickle files
+2024-03-25 18:25:53,491 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:25:53,491 DEBUG Classification data loaded from pickle files
+2024-03-25 18:33:38,855 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:33:38,855 DEBUG Classification data loaded from pickle files
+2024-03-25 18:34:16,096 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:34:16,097 DEBUG Classification data loaded from pickle files
+2024-03-25 18:34:31,306 DEBUG Loading and extracting features
+2024-03-25 18:34:31,443 DEBUG Size of y 100
+2024-03-25 18:34:37,589 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 18:34:37,589 DEBUG Selecting text - sentence size is 50
+2024-03-25 18:34:40,457 DEBUG Post-splitting sizes - x: 2017, y: 2017
+2024-03-25 18:34:40,457 DEBUG Tokenizing using spaCy
+2024-03-25 18:34:51,326 DEBUG Tokenizing complete
+2024-03-25 18:34:51,382 DEBUG Size of y 100
+2024-03-25 18:34:53,067 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 18:34:53,068 DEBUG Selecting text - sentence size is 50
+2024-03-25 18:34:56,417 DEBUG Post-splitting sizes - x: 2042, y: 2042
+2024-03-25 18:34:56,417 DEBUG Tokenizing using spaCy
+2024-03-25 18:35:07,312 DEBUG Tokenizing complete
+2024-03-25 18:35:07,318 DEBUG sizes: x_train: 2017, y_train: 2017, x_test: 2042, y_test: 2042
+2024-03-25 18:35:07,382 DEBUG Preprocessed data saved to pickle files
+2024-03-25 18:35:41,249 DEBUG Classification data saved to pickle files
+2024-03-25 18:35:46,384 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:35:46,385 DEBUG Classification data loaded from pickle files
+2024-03-25 18:36:13,997 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:36:13,997 DEBUG Classification data loaded from pickle files
+2024-03-25 18:36:21,209 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:36:21,210 DEBUG Classification data loaded from pickle files
+2024-03-25 18:36:27,379 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:36:27,379 DEBUG Classification data loaded from pickle files
+2024-03-25 18:36:35,293 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:36:35,294 DEBUG Classification data loaded from pickle files
+2024-03-25 18:36:41,852 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:36:41,853 DEBUG Classification data loaded from pickle files
+2024-03-25 18:36:47,503 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:36:47,503 DEBUG Classification data loaded from pickle files
+2024-03-25 18:36:59,908 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:36:59,909 DEBUG Classification data loaded from pickle files
+2024-03-25 18:37:06,885 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:37:06,886 DEBUG Classification data loaded from pickle files
+2024-03-25 18:37:13,381 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:37:13,381 DEBUG Classification data loaded from pickle files
+2024-03-25 18:37:22,817 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:37:22,817 DEBUG Classification data loaded from pickle files
+2024-03-25 18:37:31,486 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:37:31,486 DEBUG Classification data loaded from pickle files
+2024-03-25 18:38:10,399 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:38:17,441 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:38:51,887 DEBUG Classification data saved to pickle files
+2024-03-25 18:39:10,417 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:39:44,049 DEBUG Classification data saved to pickle files
+2024-03-25 18:41:12,253 DEBUG Loading and extracting features
+2024-03-25 18:41:12,390 DEBUG Size of y 100
+2024-03-25 18:41:18,508 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 18:41:18,508 DEBUG Selecting text - sentence size is 30
+2024-03-25 18:41:21,541 DEBUG Post-splitting sizes - x: 4823, y: 4823
+2024-03-25 18:41:21,542 DEBUG Tokenizing using spaCy
+2024-03-25 18:41:40,939 DEBUG Tokenizing complete
+2024-03-25 18:41:40,985 DEBUG Size of y 100
+2024-03-25 18:41:42,661 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 18:41:42,661 DEBUG Selecting text - sentence size is 30
+2024-03-25 18:41:45,879 DEBUG Post-splitting sizes - x: 4900, y: 4900
+2024-03-25 18:41:45,880 DEBUG Tokenizing using spaCy
+2024-03-25 18:42:03,610 DEBUG Tokenizing complete
+2024-03-25 18:42:03,616 DEBUG sizes: x_train: 4823, y_train: 4823, x_test: 4900, y_test: 4900
+2024-03-25 18:42:03,727 DEBUG Preprocessed data saved to pickle files
+2024-03-25 18:43:41,084 DEBUG Classification data saved to pickle files
+2024-03-25 18:50:09,026 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:50:09,027 DEBUG Classification data loaded from pickle files
+2024-03-25 18:58:43,950 DEBUG Loading and extracting features
+2024-03-25 18:58:43,951 DEBUG Loading and extracting features
+2024-03-25 18:58:43,951 DEBUG Loading and extracting features
+2024-03-25 18:58:44,024 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 18:58:44,095 DEBUG Size of y 100
+2024-03-25 18:58:44,095 DEBUG Size of y 100
+2024-03-25 18:58:44,097 DEBUG Size of y 100
+2024-03-25 18:58:50,205 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 18:58:50,205 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 18:58:50,205 DEBUG Selecting text - sentence size is 30
+2024-03-25 18:58:50,205 DEBUG Selecting text - sentence size is 30
+2024-03-25 18:58:50,261 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 18:58:50,262 DEBUG Selecting text - sentence size is 30
+2024-03-25 19:00:22,155 DEBUG Classification data saved to pickle files
+2024-03-25 19:02:40,748 DEBUG Loading and extracting features
+2024-03-25 19:02:40,749 DEBUG Loading and extracting features
+2024-03-25 19:02:40,749 DEBUG Loading and extracting features
+2024-03-25 19:02:40,817 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 19:02:40,818 DEBUG Classification data loaded from pickle files
+2024-03-25 19:02:40,888 DEBUG Size of y 100
+2024-03-25 19:02:40,888 DEBUG Size of y 100
+2024-03-25 19:02:40,891 DEBUG Size of y 100
+2024-03-25 19:02:47,078 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:02:47,078 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:02:47,079 DEBUG Selecting text - sentence size is 30
+2024-03-25 19:02:47,079 DEBUG Selecting text - sentence size is 30
+2024-03-25 19:02:47,121 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:02:47,122 DEBUG Selecting text - sentence size is 30
+2024-03-25 19:02:54,522 DEBUG Post-splitting sizes - x: 4010, y: 4010
+2024-03-25 19:02:54,523 DEBUG Tokenizing using spaCy
+2024-03-25 19:02:54,811 DEBUG Post-splitting sizes - x: 5879, y: 5879
+2024-03-25 19:02:54,811 DEBUG Tokenizing using spaCy
+2024-03-25 19:02:55,280 DEBUG Post-splitting sizes - x: 10824, y: 10824
+2024-03-25 19:02:55,281 DEBUG Tokenizing using spaCy
+2024-03-25 19:03:42,709 DEBUG Tokenizing complete
+2024-03-25 19:03:42,829 DEBUG Size of y 100
+2024-03-25 19:03:45,597 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:03:45,598 DEBUG Selecting text - sentence size is 30
+2024-03-25 19:03:55,623 DEBUG Post-splitting sizes - x: 4196, y: 4196
+2024-03-25 19:03:55,624 DEBUG Tokenizing using spaCy
+2024-03-25 19:03:57,390 DEBUG Tokenizing complete
+2024-03-25 19:03:57,614 DEBUG Size of y 100
+2024-03-25 19:04:02,269 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:04:02,270 DEBUG Selecting text - sentence size is 30
+2024-03-25 19:04:17,302 DEBUG Post-splitting sizes - x: 6397, y: 6397
+2024-03-25 19:04:17,302 DEBUG Tokenizing using spaCy
+2024-03-25 19:04:27,174 DEBUG Tokenizing complete
+2024-03-25 19:04:27,182 DEBUG sizes: x_train: 4010, y_train: 4010, x_test: 4196, y_test: 4196
+2024-03-25 19:04:27,308 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:04:30,166 DEBUG Tokenizing complete
+2024-03-25 19:04:30,242 DEBUG Size of y 100
+2024-03-25 19:04:32,173 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:04:32,173 DEBUG Selecting text - sentence size is 30
+2024-03-25 19:04:39,450 DEBUG Post-splitting sizes - x: 10991, y: 10991
+2024-03-25 19:04:39,450 DEBUG Tokenizing using spaCy
+2024-03-25 19:04:53,297 DEBUG Tokenizing complete
+2024-03-25 19:04:53,303 DEBUG sizes: x_train: 5879, y_train: 5879, x_test: 6397, y_test: 6397
+2024-03-25 19:04:53,509 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:05:24,897 DEBUG Tokenizing complete
+2024-03-25 19:05:24,903 DEBUG sizes: x_train: 10824, y_train: 10824, x_test: 10991, y_test: 10991
+2024-03-25 19:05:25,158 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:06:08,839 DEBUG Classification data saved to pickle files
+2024-03-25 19:07:07,933 DEBUG Classification data saved to pickle files
+2024-03-25 19:08:41,991 DEBUG Loading and extracting features
+2024-03-25 19:08:41,991 DEBUG Loading and extracting features
+2024-03-25 19:08:41,992 DEBUG Loading and extracting features
+2024-03-25 19:08:41,992 DEBUG Loading and extracting features
+2024-03-25 19:08:41,992 DEBUG Loading and extracting features
+2024-03-25 19:08:41,993 DEBUG Loading and extracting features
+2024-03-25 19:08:41,993 DEBUG Loading and extracting features
+2024-03-25 19:08:41,993 DEBUG Loading and extracting features
+2024-03-25 19:08:41,992 DEBUG Loading and extracting features
+2024-03-25 19:08:41,995 DEBUG Loading and extracting features
+2024-03-25 19:08:41,995 DEBUG Loading and extracting features
+2024-03-25 19:08:41,996 DEBUG Loading and extracting features
+2024-03-25 19:08:41,996 DEBUG Loading and extracting features
+2024-03-25 19:08:41,996 DEBUG Loading and extracting features
+2024-03-25 19:08:41,996 DEBUG Loading and extracting features
+2024-03-25 19:08:41,997 DEBUG Loading and extracting features
+2024-03-25 19:08:41,997 DEBUG Loading and extracting features
+2024-03-25 19:08:42,055 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 19:08:42,056 DEBUG Classification data loaded from pickle files
+2024-03-25 19:08:42,067 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 19:08:42,068 DEBUG Classification data loaded from pickle files
+2024-03-25 19:08:42,089 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 19:08:42,090 DEBUG Classification data loaded from pickle files
+2024-03-25 19:08:42,132 DEBUG Size of y 100
+2024-03-25 19:08:42,134 DEBUG Size of y 100
+2024-03-25 19:08:42,134 DEBUG Size of y 100
+2024-03-25 19:08:42,137 DEBUG Size of y 100
+2024-03-25 19:08:42,137 DEBUG Size of y 100
+2024-03-25 19:08:42,137 DEBUG Size of y 100
+2024-03-25 19:08:42,139 DEBUG Size of y 100
+2024-03-25 19:08:42,139 DEBUG Size of y 100
+2024-03-25 19:08:42,139 DEBUG Size of y 100
+2024-03-25 19:08:42,139 DEBUG Size of y 100
+2024-03-25 19:08:42,141 DEBUG Size of y 100
+2024-03-25 19:08:42,141 DEBUG Size of y 100
+2024-03-25 19:08:42,141 DEBUG Size of y 100
+2024-03-25 19:08:42,141 DEBUG Size of y 100
+2024-03-25 19:08:42,142 DEBUG Size of y 100
+2024-03-25 19:08:42,143 DEBUG Size of y 100
+2024-03-25 19:08:42,158 DEBUG Size of y 100
+2024-03-25 19:08:42,159 DEBUG Preprocessed data loaded from pickle files
+2024-03-25 19:08:48,150 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,150 DEBUG Selecting text - sentence size is 30
+2024-03-25 19:08:48,252 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,253 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:08:48,286 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,286 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,286 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:08:48,286 DEBUG Selecting text - sentence size is 30
+2024-03-25 19:08:48,330 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,330 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:08:48,332 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,332 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:08:48,342 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,342 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:08:48,341 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,342 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:08:48,361 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,361 DEBUG Selecting text - sentence size is 30
+2024-03-25 19:08:48,370 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,370 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:08:48,375 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,375 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,375 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:08:48,375 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:08:48,418 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,418 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,418 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,419 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:08:48,419 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:08:48,419 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:08:48,428 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,428 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:08:48,442 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:08:48,444 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:09:27,220 DEBUG Post-splitting sizes - x: 12741, y: 12741
+2024-03-25 19:09:27,242 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:30,194 DEBUG Post-splitting sizes - x: 2388, y: 2388
+2024-03-25 19:09:30,194 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:30,707 DEBUG Post-splitting sizes - x: 6088, y: 6088
+2024-03-25 19:09:30,707 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:30,938 DEBUG Post-splitting sizes - x: 1835, y: 1835
+2024-03-25 19:09:30,938 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:30,939 DEBUG Post-splitting sizes - x: 3781, y: 3781
+2024-03-25 19:09:30,939 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:31,589 DEBUG Post-splitting sizes - x: 3935, y: 3935
+2024-03-25 19:09:31,589 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:31,681 DEBUG Post-splitting sizes - x: 1676, y: 1676
+2024-03-25 19:09:31,684 DEBUG Post-splitting sizes - x: 2879, y: 2879
+2024-03-25 19:09:31,685 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:31,688 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:31,708 DEBUG Post-splitting sizes - x: 3219, y: 3219
+2024-03-25 19:09:31,708 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:31,709 DEBUG Post-splitting sizes - x: 1525, y: 1525
+2024-03-25 19:09:31,709 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:31,717 DEBUG Post-splitting sizes - x: 7015, y: 7015
+2024-03-25 19:09:31,717 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:31,722 DEBUG Post-splitting sizes - x: 2730, y: 2730
+2024-03-25 19:09:31,722 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:31,778 DEBUG Post-splitting sizes - x: 5678, y: 5678
+2024-03-25 19:09:31,779 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:31,783 DEBUG Post-splitting sizes - x: 4674, y: 4674
+2024-03-25 19:09:31,784 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:31,796 DEBUG Post-splitting sizes - x: 2932, y: 2932
+2024-03-25 19:09:31,796 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:31,871 DEBUG Post-splitting sizes - x: 2692, y: 2692
+2024-03-25 19:09:31,871 DEBUG Tokenizing using spaCy
+2024-03-25 19:09:33,692 DEBUG Post-splitting sizes - x: 2152, y: 2152
+2024-03-25 19:09:33,693 DEBUG Tokenizing using spaCy
+2024-03-25 19:12:23,908 DEBUG Tokenizing complete
+2024-03-25 19:12:24,681 DEBUG Size of y 100
+2024-03-25 19:12:58,757 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:12:58,800 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:13:11,935 DEBUG Tokenizing complete
+2024-03-25 19:13:12,079 DEBUG Size of y 100
+2024-03-25 19:13:30,424 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:13:30,461 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:13:30,696 DEBUG Tokenizing complete
+2024-03-25 19:13:30,878 DEBUG Size of y 100
+2024-03-25 19:13:36,623 DEBUG Tokenizing complete
+2024-03-25 19:13:43,061 DEBUG Size of y 100
+2024-03-25 19:13:56,653 DEBUG Tokenizing complete
+2024-03-25 19:13:59,953 DEBUG Size of y 100
+2024-03-25 19:14:00,360 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:14:00,361 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:14:05,914 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:14:05,923 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:14:09,341 DEBUG Tokenizing complete
+2024-03-25 19:14:10,883 DEBUG Size of y 100
+2024-03-25 19:14:17,697 DEBUG Post-splitting sizes - x: 1587, y: 1587
+2024-03-25 19:14:17,698 DEBUG Tokenizing using spaCy
+2024-03-25 19:14:20,522 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:14:20,523 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:14:21,865 DEBUG Tokenizing complete
+2024-03-25 19:14:22,153 DEBUG Size of y 100
+2024-03-25 19:14:28,227 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:14:28,227 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:14:34,335 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:14:34,336 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:14:37,230 DEBUG Tokenizing complete
+2024-03-25 19:14:37,272 DEBUG Post-splitting sizes - x: 2042, y: 2042
+2024-03-25 19:14:37,273 DEBUG Tokenizing using spaCy
+2024-03-25 19:14:37,598 DEBUG Size of y 100
+2024-03-25 19:14:47,499 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:14:47,510 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:14:47,546 DEBUG Tokenizing complete
+2024-03-25 19:14:47,800 DEBUG Size of y 100
+2024-03-25 19:14:52,529 DEBUG Tokenizing complete
+2024-03-25 19:14:52,543 DEBUG Tokenizing complete
+2024-03-25 19:14:52,750 DEBUG Size of y 100
+2024-03-25 19:14:52,860 DEBUG Size of y 100
+2024-03-25 19:14:54,872 DEBUG Post-splitting sizes - x: 1781, y: 1781
+2024-03-25 19:14:54,873 DEBUG Tokenizing using spaCy
+2024-03-25 19:14:55,243 DEBUG Tokenizing complete
+2024-03-25 19:14:55,466 DEBUG Size of y 100
+2024-03-25 19:14:56,888 DEBUG Post-splitting sizes - x: 3140, y: 3140
+2024-03-25 19:14:56,889 DEBUG Tokenizing using spaCy
+2024-03-25 19:14:58,996 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:14:59,098 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:14:59,462 DEBUG Tokenizing complete
+2024-03-25 19:14:59,755 DEBUG Size of y 100
+2024-03-25 19:15:01,723 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:15:01,724 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:15:04,839 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:15:04,901 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:15:07,448 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:15:07,467 DEBUG Selecting text - sentence size is 30
+2024-03-25 19:15:08,321 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:15:08,322 DEBUG Selecting text - sentence size is 50
+2024-03-25 19:15:09,905 DEBUG Tokenizing complete
+2024-03-25 19:15:10,111 DEBUG Size of y 100
+2024-03-25 19:15:12,945 DEBUG Post-splitting sizes - x: 2427, y: 2427
+2024-03-25 19:15:12,945 DEBUG Tokenizing using spaCy
+2024-03-25 19:15:13,110 DEBUG Post-splitting sizes - x: 2784, y: 2784
+2024-03-25 19:15:13,112 DEBUG Tokenizing using spaCy
+2024-03-25 19:15:21,083 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:15:21,084 DEBUG Selecting text - sentence size is 30
+2024-03-25 19:15:25,491 DEBUG Post-splitting sizes - x: 2512, y: 2512
+2024-03-25 19:15:25,491 DEBUG Tokenizing using spaCy
+2024-03-25 19:15:45,377 DEBUG Post-splitting sizes - x: 3457, y: 3457
+2024-03-25 19:15:45,378 DEBUG Tokenizing using spaCy
+2024-03-25 19:15:51,528 DEBUG Tokenizing complete
+2024-03-25 19:15:52,674 DEBUG Size of y 100
+2024-03-25 19:15:57,496 DEBUG Post-splitting sizes - x: 3794, y: 3794
+2024-03-25 19:15:57,496 DEBUG Tokenizing using spaCy
+2024-03-25 19:15:58,874 DEBUG Post-splitting sizes - x: 2054, y: 2054
+2024-03-25 19:15:58,875 DEBUG Tokenizing using spaCy
+2024-03-25 19:16:07,307 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:16:07,348 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:16:08,303 DEBUG Post-splitting sizes - x: 3968, y: 3968
+2024-03-25 19:16:08,303 DEBUG Tokenizing using spaCy
+2024-03-25 19:16:08,552 DEBUG Post-splitting sizes - x: 5390, y: 5390
+2024-03-25 19:16:08,553 DEBUG Tokenizing using spaCy
+2024-03-25 19:16:14,987 DEBUG Post-splitting sizes - x: 3022, y: 3022
+2024-03-25 19:16:14,987 DEBUG Tokenizing using spaCy
+2024-03-25 19:16:16,733 DEBUG Tokenizing complete
+2024-03-25 19:16:16,812 DEBUG Size of y 100
+2024-03-25 19:16:18,150 DEBUG Tokenizing complete
+2024-03-25 19:16:18,194 DEBUG sizes: x_train: 1525, y_train: 1525, x_test: 1587, y_test: 1587
+2024-03-25 19:16:18,755 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:16:19,564 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:16:19,565 DEBUG Selecting text - sentence size is 40
+2024-03-25 19:16:25,786 DEBUG Post-splitting sizes - x: 7076, y: 7076
+2024-03-25 19:16:25,787 DEBUG Tokenizing using spaCy
+2024-03-25 19:16:58,563 DEBUG Tokenizing complete
+2024-03-25 19:16:58,584 DEBUG sizes: x_train: 1835, y_train: 1835, x_test: 2042, y_test: 2042
+2024-03-25 19:17:00,409 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:17:03,385 DEBUG Post-splitting sizes - x: 6476, y: 6476
+2024-03-25 19:17:03,386 DEBUG Tokenizing using spaCy
+2024-03-25 19:17:24,221 DEBUG Post-splitting sizes - x: 5527, y: 5527
+2024-03-25 19:17:24,222 DEBUG Tokenizing using spaCy
+2024-03-25 19:17:36,053 DEBUG Tokenizing complete
+2024-03-25 19:17:36,061 DEBUG sizes: x_train: 1676, y_train: 1676, x_test: 1781, y_test: 1781
+2024-03-25 19:17:38,752 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:17:55,851 DEBUG Tokenizing complete
+2024-03-25 19:17:55,875 DEBUG sizes: x_train: 2879, y_train: 2879, x_test: 3140, y_test: 3140
+2024-03-25 19:17:58,334 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:18:05,409 DEBUG Tokenizing complete
+2024-03-25 19:18:05,495 DEBUG sizes: x_train: 2730, y_train: 2730, x_test: 2784, y_test: 2784
+2024-03-25 19:18:08,283 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:18:16,199 DEBUG Tokenizing complete
+2024-03-25 19:18:17,475 DEBUG Size of y 100
+2024-03-25 19:18:26,541 DEBUG Tokenizing complete
+2024-03-25 19:18:26,550 DEBUG sizes: x_train: 2692, y_train: 2692, x_test: 2427, y_test: 2427
+2024-03-25 19:18:27,053 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:18:39,507 DEBUG Post-processing sizes - x: 100, y: 100
+2024-03-25 19:18:39,509 DEBUG Selecting text - sentence size is 30
+2024-03-25 19:18:47,919 DEBUG Tokenizing complete
+2024-03-25 19:18:47,929 DEBUG sizes: x_train: 2388, y_train: 2388, x_test: 2512, y_test: 2512
+2024-03-25 19:18:50,079 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:19:43,121 DEBUG Post-splitting sizes - x: 12232, y: 12232
+2024-03-25 19:19:43,123 DEBUG Tokenizing using spaCy
+2024-03-25 19:19:46,676 DEBUG Tokenizing complete
+2024-03-25 19:19:46,685 DEBUG sizes: x_train: 3219, y_train: 3219, x_test: 3457, y_test: 3457
+2024-03-25 19:19:47,849 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:19:54,604 DEBUG Tokenizing complete
+2024-03-25 19:19:54,610 DEBUG sizes: x_train: 2152, y_train: 2152, x_test: 2054, y_test: 2054
+2024-03-25 19:19:55,401 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:20:00,623 DEBUG Tokenizing complete
+2024-03-25 19:20:00,630 DEBUG sizes: x_train: 3935, y_train: 3935, x_test: 3968, y_test: 3968
+2024-03-25 19:20:00,962 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:20:05,473 DEBUG Tokenizing complete
+2024-03-25 19:20:05,481 DEBUG sizes: x_train: 3781, y_train: 3781, x_test: 3794, y_test: 3794
+2024-03-25 19:20:06,749 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:20:07,395 DEBUG Tokenizing complete
+2024-03-25 19:20:07,404 DEBUG sizes: x_train: 2932, y_train: 2932, x_test: 3022, y_test: 3022
+2024-03-25 19:20:07,977 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:20:09,526 DEBUG Tokenizing complete
+2024-03-25 19:20:09,533 DEBUG sizes: x_train: 5678, y_train: 5678, x_test: 5390, y_test: 5390
+2024-03-25 19:20:10,213 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:20:22,158 DEBUG Tokenizing complete
+2024-03-25 19:20:22,163 DEBUG sizes: x_train: 6088, y_train: 6088, x_test: 6476, y_test: 6476
+2024-03-25 19:20:22,376 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:20:23,125 DEBUG Tokenizing complete
+2024-03-25 19:20:23,130 DEBUG sizes: x_train: 7015, y_train: 7015, x_test: 7076, y_test: 7076
+2024-03-25 19:20:23,567 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:20:31,146 DEBUG Tokenizing complete
+2024-03-25 19:20:31,152 DEBUG sizes: x_train: 4674, y_train: 4674, x_test: 5527, y_test: 5527
+2024-03-25 19:20:31,514 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:20:51,135 DEBUG Classification data saved to pickle files
+2024-03-25 19:20:55,912 DEBUG Tokenizing complete
+2024-03-25 19:20:55,917 DEBUG sizes: x_train: 12741, y_train: 12741, x_test: 12232, y_test: 12232
+2024-03-25 19:20:56,258 DEBUG Preprocessed data saved to pickle files
+2024-03-25 19:21:02,201 DEBUG Classification data saved to pickle files
+2024-03-25 19:21:02,394 DEBUG Classification data saved to pickle files
+2024-03-25 19:21:13,268 DEBUG Classification data saved to pickle files
+2024-03-25 19:21:15,808 DEBUG Classification data saved to pickle files
+2024-03-25 19:21:16,886 DEBUG Classification data saved to pickle files
+2024-03-25 19:21:17,401 DEBUG Classification data saved to pickle files
+2024-03-25 19:21:27,996 DEBUG Classification data saved to pickle files
+2024-03-25 19:21:28,457 DEBUG Classification data saved to pickle files
+2024-03-25 19:21:37,478 DEBUG Classification data saved to pickle files
+2024-03-25 19:21:47,458 DEBUG Classification data saved to pickle files
+2024-03-25 19:21:51,876 DEBUG Classification data saved to pickle files
+2024-03-25 19:22:08,161 DEBUG Classification data saved to pickle files
+2024-03-25 19:22:26,109 DEBUG Classification data saved to pickle files
+2024-03-25 19:22:27,090 DEBUG Classification data saved to pickle files
+2024-03-25 19:22:40,872 DEBUG Classification data saved to pickle files
+2024-03-25 19:23:37,536 DEBUG Classification data saved to pickle files
+2024-03-25 19:26:36,488 DEBUG Classification data saved to pickle files
+2024-03-26 09:29:44,977 DEBUG Running 32 iterations

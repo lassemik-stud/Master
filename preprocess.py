@@ -26,12 +26,12 @@ def data_exists(*filenames):
 def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1):
     # Define pickle filenames
     root_path = '../pre_data/'
-    x_train_pickle = root_path+str(cutoff)+'-x_train.pkl'
-    y_train_pickle = root_path+str(cutoff)+'-y_train.pkl'
-    x_test_pickle = root_path+str(cutoff)+'-x_test.pkl'
-    y_test_pickle = root_path+str(cutoff)+'-y_test.pkl'
-    pcc_test_pickle = root_path+str(cutoff)+'-pcc_test.pkl'
-    pcc_train_pickle = root_path+str(cutoff)+'-pcc_train.pkl'   
+    x_train_pickle = root_path+str(cutoff)+str(sentence_size)+str(k)+str(d)+'-x_train.pkl'
+    y_train_pickle = root_path+str(cutoff)+str(sentence_size)+str(k)+str(d)+'-y_train.pkl'
+    x_test_pickle = root_path+str(cutoff)+str(sentence_size)+str(k)+str(d)+'-x_test.pkl'
+    y_test_pickle = root_path+str(cutoff)+str(sentence_size)+str(k)+str(d)+'-y_test.pkl'
+    pcc_test_pickle = root_path+str(cutoff)+str(sentence_size)+str(k)+str(d)+'-pcc_test.pkl'
+    pcc_train_pickle = root_path+str(cutoff)+str(sentence_size)+str(k)+str(d)+'-pcc_train.pkl'   
     
     # Check if pickle files exist
     if data_exists(x_train_pickle, y_train_pickle, x_test_pickle, y_test_pickle):
@@ -167,7 +167,7 @@ def load_corp(x_path, y_path, sentence_size=0, cutoff=0,cc_flag=False,k=4,d=1):
     y_filtered = [int(y[id]) for id in y if id in x_dict]
 
     printLog.debug(f'Post-processing sizes - x: {len(x_filtered)}, y: {len(y_filtered)}')
-
+    y_filtered_old = y_filtered
     if cc_flag: # contract cheating flag
         x_filtered, y_filtered, PCC_params = rolling_selection(x_filtered, y_filtered, sentence_size,k=k,d=d)
     printLog.debug(f'Post-splitting sizes - x: {len(x_filtered)}, y: {len(y_filtered)}')
