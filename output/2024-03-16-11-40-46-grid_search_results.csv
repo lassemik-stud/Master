@@ -1,2 +1,0 @@
-model,best_score,best_params
-pipeline_SVM,0.6900000000000001,"{'classifier__C': 0.01, 'classifier__degree': 1, 'classifier__gamma': 'scale', 'classifier__kernel': 'sigmoid', 'feature_extractor__analyzer': 'word', 'feature_extractor__feature_type': 'tfidf', 'feature_extractor__max_features': 1000, 'feature_extractor__ngram_range': (2, 2)}"

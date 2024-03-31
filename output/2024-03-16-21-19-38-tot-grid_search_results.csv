@@ -1,5 +1,0 @@
-model,best_score,best_params,ngram_range,max_features,feature_type,analyzer,samples
-pipeline_SVM,0.6,"{'classifier__C': 1, 'classifier__degree': 1, 'classifier__gamma': 'scale', 'classifier__kernel': 'sigmoid'}","(1, 1)",1000,tfidf,char,10
-pipeline_LR,0.5,"{'classifier__C': 0.01, 'classifier__l1_ratio': 0.0, 'classifier__max_iter': 1000, 'classifier__penalty': 'l1', 'classifier__solver': 'saga'}","(1, 1)",1000,tfidf,char,10
-pipeline_SVM,0.9,"{'classifier__C': 1, 'classifier__degree': 1, 'classifier__gamma': 'scale', 'classifier__kernel': 'sigmoid'}","(1, 1)",1000,tfidf,word,10
-pipeline_LR,0.5,"{'classifier__C': 0.01, 'classifier__l1_ratio': 0.0, 'classifier__max_iter': 1000, 'classifier__penalty': 'l1', 'classifier__solver': 'saga'}","(1, 1)",1000,tfidf,word,10

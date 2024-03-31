@@ -1,158 +1,264 @@
-from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.pipeline import Pipeline
-from sklearn.ensemble import RandomForestClassifier
-import numpy as np
+
 from sklearn.metrics import classification_report
 import pandas as pd
 import pickle
+import time
+from datetime import timedelta
 from concurrent.futures import ProcessPoolExecutor
 
-from sklearn.svm import SVC
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import GridSearchCV
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn import svm
+from sklearn.preprocessing import MinMaxScaler
 
-import tqdm
+import itertools
+from sklearn.svm import SVC
+
+from sklearn.preprocessing import StandardScaler
+
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import LogisticRegression
+from sklearn.feature_selection import SelectKBest, chi2
+
+
 from settings.logging import printLog
 from multiprocessing import Pool, cpu_count
 
+
+import warnings
+from sklearn.exceptions import DataConversionWarning
+warnings.filterwarnings(action='ignore', category=DataConversionWarning)
+warnings.filterwarnings(action='ignore', category=UserWarning)
+
 from feature_extraction import TextPairFeatureExtractor
 from preprocess import load_or_process_data, save_data_to_pickle, load_data_from_pickle, data_exists
-threashold = 0.5
-c_value = 0.01
-on_change_value = 0.5
-cutoff=100
-sentence_size = 30
-k=5
-d=2
+from evaluation import evaluations
+from experiments.base_experiment import experiement_tfidf_bow, experiement_word_embeddings, experiement_dependency
+from experiments.ra_experiment import experiement_tfidf_bow_ra, experiement_dependency_ra, experiement_word_embeddings_ra
 
+def run_pipeline_wrapper(args):
+    return run_pipeline(*args)
 
-def round_by_threashold(value,c):
-    global threashold
-    if c - on_change_value > value:
-        threashold+=c_value
-    elif c < value - on_change_value:
-        threashold-=c_value
-    return 1 if value > threashold else 0
-def run_pipeline(args):
-    feature_extractor_ngram_range, feature_extractor_max_features, feature_type,feature_analyzer,sentence_size,samples,k,d,svc_c,svc_degree = args
-    cutoff=samples
-    if k < d: 
-        print(f'k={k} is less than d={d}, skipping')
-        return 0
+def run_pipeline(PCC_Pipeline:Pipeline, x_train, y_train, x_test, y_test, arg, classifier_name, PCC_test_params):
+    feature_type = arg.get('feature_type')
+    PCC_Pipeline.fit(x_train, y_train)
+    y_pred_proba = PCC_Pipeline.predict_proba(x_test)
+    evaluations(y_test, y_pred_proba[:, 1], arg, classifier_name, PCC_test_params)
 
-    x_train, y_train, x_test, y_test, PCC_train_params, PCC_test_params = load_or_process_data(cutoff=cutoff,sentence_size=sentence_size,k=k,d=d)
+def svm(svm_combination, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params):
+    svm_c = svm_combination.get('svm_c')
+    svm_degree = svm_combination.get('svm_degree')
 
-    # Initialize the pipeline
-    PCC_Pipeline = Pipeline([
-                    ('feature_extractor', TextPairFeatureExtractor(ngram_range=feature_extractor_ngram_range,max_features=feature_extractor_max_features,feature_type='tfidf',analyzer='char')),
+    PCC_Pipeline_SVM = (Pipeline([
+                    ('feature_extractor', TextPairFeatureExtractorPrepopulated),
+                    ('feature_selection',SelectKBest(chi2, k=100)),
                     ('scaler', StandardScaler()),
-                    ('classifier', SVC(C=svc_c, kernel='sigmoid', gamma='scale', degree=svc_degree, probability=True))
-                ])
+                    ('classifier', SVC(C=svm_c, kernel='sigmoid', gamma='scale', degree=svm_degree, probability=True))
+                ]))
+    
+    current_arg = arg.copy()
+    svm_parameters = {
+        'svm_c': svm_c,
+        'svm_degree': svm_degree
+    }
+    current_arg.update({
+        'svm_parameters' : svm_parameters,
+        'lr_parameters': 0,
+        'NaiveBayes_parameters': 0,
+    })
+    run_pipeline(PCC_Pipeline_SVM, x_train, y_train, x_test, y_test, current_arg, 'SVM', PCC_test_params)
 
-    # Preload the data if it has been processed before
-    root_path = '../pre_data/'
-    path = f'{root_path}-svc_c-{svc_c}-{svc_degree}-{str(cutoff)}-{str(sentence_size)}-{k}-{d}-ft-{feature_type}-fa{feature_analyzer}-ngram-{str(feature_extractor_ngram_range[0])}-{str(feature_extractor_ngram_range[1])}-{feature_extractor_max_features}-y_pred.pkl'
-    if data_exists(path):
-        y_pred = load_data_from_pickle(path)
-        printLog.debug('Classification data loaded from pickle files')
-    else:
-        PCC_Pipeline.fit(x_train, y_train)
-        y_pred = PCC_Pipeline.predict_proba(x_test)
-        save_data_to_pickle(y_pred, path)
-        printLog.debug('Classification data saved to pickle files')
+def svm_wrapper(args):
+    return svm(*args)
 
-    map_test_pairs_to_c = []
+def lr(lr_combination, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params):
+    lr_c = lr_combination.get('lr_c')
+    lr_penalty = lr_combination.get('lr_penalty')
+    lr_solver = lr_combination.get('lr_solver')
+    lr_l1_ratio = lr_combination.get('lr_l1_ratio')
+    lr_max_iter = lr_combination.get('lr_max_iter')
 
-    pcc_i = 0
-    y_test_pred = []
-    y_test_transformed = []
+    PCC_Pipeline_LR=(Pipeline([
+                    ('feature_extractor', TextPairFeatureExtractorPrepopulated),
+                    ('feature_selection',SelectKBest(chi2, k=100)),
+                    ('scaler', StandardScaler()),
+                    ('classifier', LogisticRegression(C=lr_c, penalty=lr_penalty, solver=lr_solver, l1_ratio=lr_l1_ratio, max_iter=lr_max_iter))
+                ]))
 
-    for pair_i, element in enumerate(PCC_test_params):
+    current_arg = arg.copy()
+    lr_parameters = {
+        'lr_c': lr_c,
+        'lr_penalty': lr_penalty,
+        'lr_solver': lr_solver,
+        'lr_l1_ratio': lr_l1_ratio,
+        'lr_max_iter': lr_max_iter
+    }
+    current_arg.update({
+        'svm_parameters' : 0,
+        'lr_parameters': lr_parameters,
+        'NaiveBayes_parameters': 0,
+    })
+    run_pipeline(PCC_Pipeline_LR, x_train, y_train, x_test, y_test, current_arg, 'LR', PCC_test_params)
+
+
+def lr_wrapper(args):
+    return lr(*args)
+
+def naiveBayes_wrapper(args):
+    return naiveBayes(*args)
+
+def naiveBayes(NaiveBayes_combination, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params):
+    nb_alpha = NaiveBayes_combination.get('nb_alpha')
+    nb_fit_prior = NaiveBayes_combination.get('nb_fit_prior')
+    PCC_Pipeline_NB = (Pipeline([
+                    ('feature_extractor', TextPairFeatureExtractorPrepopulated),
+                    ('feature_selection',SelectKBest(chi2, k=100)),
+                    ('scaler', MinMaxScaler()),
+                    ('classifier', MultinomialNB(alpha=nb_alpha, fit_prior=nb_fit_prior))
+    ]))
+
+    current_arg = arg.copy()
+    naiveBayes_parameters = {
+        'nb_alpha': nb_alpha,
+        'nb_fit_prior': nb_fit_prior
+    }
+    current_arg.update({
+        'svm_parameters' : 0,
+        'lr_parameters': 0,
+        'NaiveBayes_parameters': naiveBayes_parameters,
+    })
+
+    run_pipeline(PCC_Pipeline_NB, x_train, y_train, x_test, y_test, current_arg, 'NaiveBayes', PCC_test_params)
+
+def run_svm(clf_svm_flag, svm_combinations, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params):
+    if clf_svm_flag:
+        printLog.debug(f'Running SVM with {len(svm_combinations)} combinations')
+        with Pool() as p:
+            p.map(svm_wrapper, [(svm_combination, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params) for svm_combination in svm_combinations])
+
+def run_lr(clf_lr_flag, lr_combinations, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params):
+    if clf_lr_flag:
+        printLog.debug(f'Running LR with {len(lr_combinations)} combinations')
+        with Pool() as p:
+            p.map(lr_wrapper, [(lr_combination, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params) for lr_combination in lr_combinations])
+
+def run_nb(clf_nb_flag, NaiveBayes_combinations, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params):
+    if clf_nb_flag:
+        printLog.debug(f'Running Naive Bayes with {len(NaiveBayes_combinations)} combinations')
+        with Pool() as p:
+            p.map(naiveBayes_wrapper, [(NaiveBayes_combination, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params) for NaiveBayes_combination in NaiveBayes_combinations])
+
+
+def prepare_pipeline(arg):
+    # Overall parameters
+    cutoff = arg.get('samples')
+
+    # Feature extraction parameters
+    feature_extractor_ngram_range = arg.get('feature_extractor_ngram_range')
+    feature_extractor_max_features = arg.get('feature_extractor_max_features')
+    feature_type = arg.get('feature_type')
+    feature_analyzer = arg.get('feature_analyzer')
+    special_char = arg.get('special_char')
+    word_length_dist = arg.get('word_length_dist')
+    include_vocab_richness = arg.get('include_vocab_richness')
+    TextPairFeatureExtractorPrepopulated = TextPairFeatureExtractor(
+                                    ngram_range=feature_extractor_ngram_range,
+                                    max_features=feature_extractor_max_features,
+                                    feature_type=feature_type,
+                                    analyzer=feature_analyzer,
+                                    special_chars=special_char,
+                                    word_length_dist=word_length_dist,
+                                    include_vocab_richness=include_vocab_richness)
+
+    # Classifier parameters
+    clfs = arg.get('clf')
+    clf_svm_flag = clfs.get('SVM')
+    clf_lr_flag = clfs.get('LR')
+    clf_nb_flag = clfs.get('NaiveBayes')
+
+    svm_parameters = arg.get('svm_parameters')
+
+    svm_combinations = [dict(zip(svm_parameters, v)) for v in itertools.product(*svm_parameters.values())] if svm_parameters else None
+    
+    lr_parameters = arg.get('lr_parameters')
+    lr_combinations = [dict(zip(lr_parameters, v)) for v in itertools.product(*lr_parameters.values())] if lr_parameters else None
+
+    NaiveBayes_parameters = arg.get('NaiveBayes_parameters')
+    NaiveBayes_combinations = [dict(zip(NaiveBayes_parameters, v)) for v in itertools.product(*NaiveBayes_parameters.values())] if NaiveBayes_parameters else None
+
+    # Rolling selection parameters
+    ra = arg.get('ra')
         
-        c_size = int(element['l'])
-        y_out = ([sublist[1] for sublist in y_pred[pcc_i:pcc_i+c_size]])
+    sentence_size = arg.get('ra_sentence_size') if ra else None
+    k = arg.get('ra_k') if ra else None
+    d = arg.get('ra_d') if ra else None
+
+    x_train, y_train, x_test, y_test, PCC_train_params, PCC_test_params = load_or_process_data(cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg)
+    printLog.debug(f'sizes: x_train: {len(x_train)}, y_train: {len(y_train)}, x_test: {len(x_test)}, y_test: {len(y_test)}')
+
+    # Initialize the pipelines
+    # if clf_svm_flag:
+    #     for svm_i, svm_combination in enumerate(svm_combinations):
+    #         printLog.debug(f'Running SVM with combination {svm_i+1} of {len(svm_combinations)}')
+    #         svm(svm_combination, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params)
+
+    with ProcessPoolExecutor() as executor:
+        executor.submit(run_svm, clf_svm_flag, svm_combinations, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params)
+        executor.submit(run_lr, clf_lr_flag, lr_combinations, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params)
+        executor.submit(run_nb, clf_nb_flag, NaiveBayes_combinations, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params)
+
+def run_experiment(arguments, _type):
+    durations = []
+    printLog.debug(f'Running {_type}-experiment with {len(arguments)} combinations')
+    for i, argument in enumerate(arguments):
+        start_time = time.time()
         
-        y_truth = y_test[pcc_i:pcc_i+c_size]
-        #print(y_truth)
+        printLog.info(f'{100*(i+1)/len(arguments):.2f} % --> Running {_type}-experiment {i+1} of {len(arguments)}')
+        prepare_pipeline(argument)
         
-
-        n = element['n']
-        k = element['k']
-        d = element['d']
-        l = element['l']
-        N = element['N']
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        durations.append(elapsed_time)
         
-        l_group = element['l_group']
-
-        N_theoretical = (n-1)*(k-d) + k
+        avg_time = sum(durations) / len(durations)
+        remaining_experiments = len(arguments) - (i + 1)
+        estimated_time_left = avg_time * remaining_experiments
         
-        N_val = [[] for _ in range(N_theoretical)]
-
-        count_c = 0
-        for elements in range(int(l/n)):
-            j = 0
-            for element in range(n):
-                for i in range(k):
-                    N_val[j].append(y_out[count_c])
-                    j+=1
-                
-                count_c+=1
-                j-=d
+        # Convert estimated time left to clock format
+        eta = str(timedelta(seconds=int(estimated_time_left)))
         
-        #print(f'RESULTS FOR {pair_i}')
-        sum_c = []
-        length = 0
-        for i, part in enumerate(N_val[:N]):
-            array_sum = sum(part)
-            length = len(part)
-            result = array_sum if array_sum == 0 else array_sum / length
-            sum_c.append(result)
-            #print(f'--> {round(result,2)} - {y_truth[i]}')
-        #print("-----------------------")
-        #print(len(y_truth), len(y_test),pcc_i, c_size, N)
-        y_test_pred.append(round_by_threashold(sum(sum_c)/length,y_truth[0]))
-        y_test_transformed.append(y_truth[0])
+        printLog.info(f'Experiment {i+1} took {elapsed_time:.2f} seconds. Estimated time left: {eta} (H:M:S).')
         
-        #print("-----------------------")
+tfidf_arguments = experiement_tfidf_bow()
+word_embeddings_arguments = experiement_word_embeddings()
+dependency_arguments = experiement_dependency()
 
+tfidf_ra_arguments = experiement_tfidf_bow_ra()
+word_embeddings_arguments_ra = experiement_word_embeddings_ra()
+dependency_arguments_ra = experiement_dependency_ra()
 
+run_experiment(tfidf_ra_arguments, 'tfidf-ra')
+run_experiment(word_embeddings_arguments_ra, 'word_embeddings-ra')
+run_experiment(dependency_arguments_ra, 'dependency-ra')
 
-        pcc_i+=c_size
-    res = classification_report(y_test_transformed, y_test_pred)
-    print(res)
-   
-    with open(f'/home/lasse/Master/results/report-s{samples}-se{sentence_size}-fa{feature_analyzer}-ft-{feature_type}-fng{feature_extractor_ngram_range[0]}{feature_extractor_ngram_range[1]}-fm{feature_extractor_max_features}-k{k}-d{d}-svm-c{svc_c}-d{svc_degree}.txt', 'w') as f:
-        f.write(res)
+#run_experiment(word_embeddings_arguments, 'word_embeddings')
+#run_experiment(dependency_arguments, 'dependency')
 
-feature_extractor_ngram_range = [(4,4)]
-feature_extractor_max_features = [1000]
-feature_type = ['tfidf']
-feature_analyzer = ['char']
-sentence_size = [30, 40, 50, 100]
-samples = [100]
-k = [4, 5]
-d = [1, 2, 3, 4]
-svc_c = [1,10,100]
-svc_degree = [1]
-
-args = [
-    (first, second, third, fourth, fifth, sixth, seventh, eighth)
-    for first in feature_extractor_ngram_range
-    for second in feature_extractor_max_features
-    for third in feature_type
-    for fourth in feature_analyzer
-    for fifth in sentence_size
-    for sixth in samples
-    for seventh in k
-    for eighth in d
-]
-
-printLog.debug(f'Running {len(args)} iterations')
-# Create a pool of workers
-with ProcessPoolExecutor() as executor:
-    executor.map(run_pipeline, args)
+#for arg in arguments:
+    
+    #prepare_pipeline(arg)
+ #   exit()
+    
+        # # Preload the data if it has been processed before
+        # #root_path = '../pre_data/'
+        # #path = f'{root_path}-svc_c-{svc_c}-{svc_degree}-{str(cutoff)}-{str(sentence_size)}-{k}-{d}-ft-{feature_type}-fa{feature_analyzer}-ngram-{str(feature_extractor_ngram_range[0])}-{str(feature_extractor_ngram_range[1])}-{feature_extractor_max_features}-y_pred.pkl'
+        # #if data_exists(path):
+        # #    y_pred = load_data_from_pickle(path)
+        # #    printLog.debug('Classification data loaded from pickle files')
+        # #else:
+        # PCC_Pipeline.fit(x_train, y_train)
+        # y_pred_proba = PCC_Pipeline.predict_proba(x_test)
+        # y_pred = PCC_Pipeline.predict(x_test)
+        # #    save_data_to_pickle(y_pred, path)
+        # #   printLog.debug('Classification data saved to pickle files')
+        
+        # evaluations(y_test, y_pred_proba[:, 1], arg)
+        # #distribution_plot(y_test, y_pred_proba[:, 1], arg)

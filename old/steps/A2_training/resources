@@ -1,0 +1,6 @@
+# impostor method implementation: https://github.com/computationalstylistics/stylo/blob/master/man/perform.impostors.Rd
+# impostor https://github.com/ML-D00M/navalny-NLP/blob/main/Navalny_NLP_stylometry_analysys.md#general-impostors
+
+# https://rdrr.io/cran/stylo/man/imposters.html by EDER
+
+# rolling stylometry https://computationalstylistics.github.io/blog/rolling_stylometry/
