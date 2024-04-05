@@ -2,6 +2,9 @@ import spacy
 import numpy as np
 from nltk.util import ngrams
 
+from transformers import AutoTokenizer, AutoModel
+import torch
+
 # Load spaCy's English language model
 nlp = spacy.load('en_core_web_sm')
 
@@ -33,6 +36,17 @@ def calculate_vocabulary_richness(text):
     ttr = len(types) / len(words)
     return ttr
 
+def get_mbert_embedding(text, tokenizer, model):
+    """
+    Generate an M-BERT embedding for the input text.
+    """
+    inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=512)
+    with torch.no_grad():
+        outputs = model(**inputs)
+    embeddings = outputs.last_hidden_state
+    pooled_embedding = torch.mean(embeddings, dim=1)
+    return pooled_embedding[0].numpy()
+
 def spacy_tokenizer(arg):
     pair = arg[0]
     arguments = arg[1]
@@ -45,6 +59,7 @@ def spacy_tokenizer(arg):
     tfidf_bow_flag = True if feature_type in ['tfidf', 'BoW'] else False
     embedding_flag = True if feature_type == 'word_embeddings' else False
     dependencies_flag = True if feature_type == 'dependency' else False
+    bert_m_flag = True if feature_type == 'bert_m' else False
     pos_tags_flag = True if feature_type == 'dependency' else False
     word_length_dist_flag = True if word_length_dist else False
     vocab_richness_flag = True if include_vocab_richness else False
@@ -65,8 +80,18 @@ def spacy_tokenizer(arg):
     vocab_richness_kt = calculate_vocabulary_richness(kt) if vocab_richness_flag else 0
     vocab_richness_ut = calculate_vocabulary_richness(ut) if vocab_richness_flag else 0
 
+    # Embeddings - Word embeddings with spaCy
     embedding_kt = np.mean([token.vector for token in doc_kt if not token.is_punct and not token.is_space], axis=0) if embedding_flag else 0
     embedding_ut = np.mean([token.vector for token in doc_ut if not token.is_punct and not token.is_space], axis=0) if embedding_flag else 0
+
+    # BERT-M - embeddings 
+    if bert_m_flag:
+        tokenizer = AutoTokenizer.from_pretrained("bert-base-multilingual-cased")
+        model = AutoModel.from_pretrained("bert-base-multilingual-cased")
+        bert_m_kt = get_mbert_embedding(kt, tokenizer, model)
+        bert_m_ut = get_mbert_embedding(ut, tokenizer, model)
+    else:
+        bert_m_kt = bert_m_ut = 0
 
     kt_token = {
         'dependencies':     [token.dep_ for token in doc_kt] if dependencies_flag else 0,
@@ -74,7 +99,8 @@ def spacy_tokenizer(arg):
         'lemma':            " ".join([token.lemma_ for token in doc_kt]) if tfidf_bow_flag else 0,
         'word_length_dist': word_length_dist_kt,
         'vocab_richness':   vocab_richness_kt,
-        'embedding':        embedding_kt  
+        'embedding':        embedding_kt,
+        'bert_m' :          bert_m_kt
     }
 
     ut_token = {
@@ -83,7 +109,8 @@ def spacy_tokenizer(arg):
         'lemma':            " ".join([token.lemma_ for token in doc_ut]) if tfidf_bow_flag else 0,
         'word_length_dist': word_length_dist_ut,
         'vocab_richness':   vocab_richness_ut,
-        'embedding':        embedding_ut  
+        'embedding':        embedding_ut,
+        'bert_m' :          bert_m_ut  
     }
 
     return [kt_token, ut_token]

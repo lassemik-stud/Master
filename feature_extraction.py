@@ -35,7 +35,7 @@ class TextPairFeatureExtractor(BaseEstimator, TransformerMixin):
             # Define a fixed list of dependency and POS tags you expect to see
             self.feature_tags = ['nsubj', 'dobj', 'ROOT', 'NOUN', 'VERB', 'ADJ', 'ADV', 'PRON', 'DET', 'ADP', 'NUM', 'CONJ', 'PUNCT', 'PART', 'SCONJ', 'SYM', 'X', 'INTJ',]
             self.vectorizer = None  # Not using a traditional vectorizer for dependency features   
-        elif self.feature_type == 'word_embeddings':
+        elif self.feature_type == 'word_embeddings' or self.feature_type == 'bert_m':
             self.vectorizer = None 
         else:
             printLog.error(f"Unsupported feature type: {self.feature_type}")
@@ -79,6 +79,14 @@ class TextPairFeatureExtractor(BaseEstimator, TransformerMixin):
 
                 #emb_diff = np.linalg.norm(pair[0]['embedding'] - pair[1]['embedding'])
                 #feature_vecs.append(np.array([emb_diff])) 
+            elif self.feature_type == 'bert_m':
+                emb1 = pair[0]['bert_m']
+                ebt2 = pair[1]['bert_m']
+                cos_sim = cosine_similarity(emb1, emb2)
+                cos_sim_value = cos_sim[0,0]
+                cos_dis = 1 - cos_sim_value
+                feature_vecs.append(np.array([cos_dis]).flatten())
+                
             if self.word_length_dist:
                 wld_diff = np.abs(np.array(pair[0]['word_length_dist']) - np.array(pair[1]['word_length_dist']))
                 feature_vecs.append(wld_diff.flatten())

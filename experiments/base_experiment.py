@@ -8,11 +8,11 @@ clf = {
     }
 
 svm_parameters = {
-            'svm_c': [0.1,0.05,1,5,10],
-            'svm_degree': [1,2,3,4]
+            'svm_c': [1],
+            'svm_degree': [1,2]
         }
 lr_parameters = {
-            'lr_c': [0.01, 0.1, 1, 10],
+            'lr_c': [1],
             'lr_penalty': ['elasticnet'],
             'lr_solver': ['saga'],
             'lr_l1_ratio': np.linspace(0, 1, 10),
@@ -30,7 +30,7 @@ ra_d = [1]
 ra_sentence_size = [30]
 
 parameters_tfidf_bow = {
-        'feature_extractor_ngram_range': [(3,4),(3,3),(4,4),(5,5),(4,5)],
+        'feature_extractor_ngram_range': [(3,3),(4,4)],
         'feature_extractor_max_features': [1000],
         'feature_type': ['tfidf','BoW'],
         'feature_analyzer': ['word', 'char', 'char_wb'],
