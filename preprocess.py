@@ -32,11 +32,13 @@ def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1,arg
     include_vocab_richness = arg.get('include_vocab_richness')
 
     ra = arg.get('ra')
+    ra_pcc_rate = arg.get('ra_number_of_ra_inserts')
+    ra_part_size = arg.get('ra_PCC_part_size')
 
     feature_param = str(feature_type) + str(special_chars) + str(word_length_dist) + str(include_vocab_richness)
-    ra_param = str(ra)+str(k)+str(d)+str(sentence_size)
+    ra_param = str(ra)+str(k)+str(d)+str(sentence_size)+str(ra_pcc_rate)+str(ra_part_size)
     
-    root_path = '../pre_data/'
+    root_path = '/mnt/data/pre_data/'
     x_train_pickle = root_path+str(cutoff)+str(feature_param)+str(ra_param)+'-x_train.pkl'
     y_train_pickle = root_path+str(cutoff)+str(feature_param)+str(ra_param)+'-y_train.pkl'
     x_test_pickle = root_path+str(cutoff)+str(feature_param)+str(ra_param)+'-x_test.pkl'
@@ -71,7 +73,8 @@ def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1,arg
         # Your data processing/loading function here
         x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, PCC_train_params, PCC_test_params = load_corpus(_cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg)
         #x_train, y_train, x_test, y_test, PCC_train_params, PCC_test_params = load_corpus(_cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg)
-        printLog.debug(f'sizes: x_train: {len(x_train)}, y_train: {len(y_train)}, x_test: {len(x_test)}, y_test: {len(y_test)}, raw_c_train: {len(raw_c_train)}, raw_c_test: {len(raw_c_test)}')
+        if ra:
+            printLog.debug(f'sizes: x_train: {len(x_train)}, y_train: {len(y_train)}, x_test: {len(x_test)}, y_test: {len(y_test)}, raw_c_train: {len(raw_c_train)}, raw_c_test: {len(raw_c_test)}')
         
         # After processing, save the datasets to pickle files
         save_data_to_pickle(x_train, x_train_pickle)
@@ -181,7 +184,7 @@ def load_corp(x_path, y_path, PCC_samples_path, sentence_size=0, cutoff=0,cc_fla
     # Read and process y
     y = {}
     author = {}
-    pcc_rate = 0.3
+    pcc_rate = arg.get('ra_number_of_ra_inserts')
     
     for line in open(y_path):
         y_json_output = json.loads(line.strip())
@@ -207,8 +210,6 @@ def load_corp(x_path, y_path, PCC_samples_path, sentence_size=0, cutoff=0,cc_fla
         random.shuffle(items)
         y = dict(items)
 
-    
-
     # Initialize x dictionary
     x_dict = {}
     author_dict = {}
@@ -223,11 +224,9 @@ def load_corp(x_path, y_path, PCC_samples_path, sentence_size=0, cutoff=0,cc_fla
     author_filtered = [author_dict[id] for id in y if id in x_dict]
     y_filtered = [int(y[id]) for id in y if id in x_dict]
 
-
     flattened_list_author = [item for sublist in author_filtered for item in sublist]
     unique_list_author = list(set(flattened_list_author))
-    
-        
+         
     PCC_samples = []
 
     for line in open(PCC_samples_path):
@@ -265,12 +264,12 @@ def load_corpus(_cutoff=0,sentence_size=0,k=4,d=1,arg=None):
     # y_train_path = "../datasets/pan20-authorship-verification-training-small/pan20-authorship-verification-training-small-truth.jsonl"
     # x_test_path = "../datasets/pan20-authorship-verification-test/pan20-authorship-verification-test.jsonl"
     # y_test_path = "../datasets/pan20-authorship-verification-test/pan20-authorship-verification-test-truth.jsonl"
-    x_train_path = "../datasets/pan20-created/pan20-train-pairs-1000555.jsonl"
-    y_train_path = "../datasets/pan20-created/pan20-train-truth-1000555.jsonl"
-    PCC_train_samples = "../datasets/pan20-created/pan20-train-all-different-authors.jsonl"
-    x_test_path = "../datasets/pan20-created/pan20-test-pairs-1000555.jsonl"
-    y_test_path = "../datasets/pan20-created/pan20-test-truth-1000555.jsonl"
-    PCC_test_samples = "../datasets/pan20-created/pan20-test-all-different-authors.jsonl"
+    x_train_path = "/mnt/data/datasets/pan20-created/pan20-train-pairs-1000555.jsonl"
+    y_train_path = "/mnt/data/datasets/pan20-created/pan20-train-truth-1000555.jsonl"
+    PCC_train_samples = "/mnt/data/datasets/pan20-created/pan20-train-all-different-authors.jsonl"
+    x_test_path = "/mnt/data/datasets/pan20-created/pan20-test-pairs-1000555.jsonl"
+    y_test_path = "/mnt/data/datasets/pan20-created/pan20-test-truth-1000555.jsonl"
+    PCC_test_samples = "/mnt/data/datasets/pan20-created/pan20-test-all-different-authors.jsonl"
 
     printLog.debug('Loading and extracting features')
     x_train, y_train, raw_c_train, PCC_train_params = load_corp(x_train_path, y_train_path, PCC_train_samples, cutoff=_cutoff,cc_flag=ra,sentence_size=sentence_size,k=k,d=d,arg=arg)

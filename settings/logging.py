@@ -28,7 +28,7 @@ class PrintLog:
         self.criticalHandler = logging.Formatter(Fore.GREEN + '%(asctime)s' + Fore.LIGHTBLACK_EX + ' - %(levelname)s - ' + Fore.RED + ' %(message)s' + Style.RESET_ALL)
 
         # Add file handler and set format
-        self.fileHandler = logging.FileHandler('settings/mainlog.log')
+        self.fileHandler = logging.FileHandler('/mnt/data/Master/settings/mainlog.log')
         self.fileHandler.setFormatter(self.fileLogFormat)
 
         # Add handlers to logger

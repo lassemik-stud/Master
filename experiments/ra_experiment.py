@@ -8,20 +8,20 @@ clf = {
     }
 
 svm_parameters = {
-            'svm_c': [0.001], #, 0.1, 1, 10],
-            'svm_degree': [1] #,2,3]
+            'svm_c': [0.001, 0.1, 1, 10],
+            'svm_degree': [1,2,3]
         }
 lr_parameters = {
-            'lr_c': [0.01],# 0.1, 1, 10],
+            'lr_c': [0.01, 0.1, 1, 10],
             'lr_penalty': ['elasticnet'],
             'lr_solver': ['saga'],
-            'lr_l1_ratio': [0], #np.linspace(0, 1, 10),
+            'lr_l1_ratio': np.linspace(0, 1, 10),
             'lr_max_iter': [2000]
         }
 
 naiveBayes_parameters = {
-            'nb_alpha': [0.01],# 0.1, 0.5, 1.0, 2.0],
-            'nb_fit_prior': [True] #, False]
+            'nb_alpha': [0.01, 0.1, 0.5, 1.0, 2.0],
+            'nb_fit_prior': [True, False]
         }
 
 # BASE PARAMETERS
@@ -34,8 +34,29 @@ ra_PCC_part_size = [1,2,3,4]      # number of parts of sentence size inserted in
 
 
 special_char = [True, False]
-word_length_dist = [True, False]
+word_length_dist = [False]
 include_vocab_richness = [True, False]
+
+parameters_tfidf_bow_test = {
+        'feature_extractor_ngram_range': [(4,4)],
+        'feature_extractor_max_features': [1000],
+        'feature_type': ['tfidf'],
+        'feature_analyzer': ['char'],
+        'samples': samples,
+        'special_char': [True],
+        'word_length_dist': word_length_dist,
+        'include_vocab_richness': [False],
+        
+        'svm_parameters' : svm_parameters,
+        'lr_parameters': lr_parameters,
+        'NaiveBayes_parameters': naiveBayes_parameters,
+        'clf': clf,
+        'ra' : ra,
+        'ra_k' : ra_k,
+        'ra_d' : ra_d,
+        'ra_sentence_size' : ra_sentence_size,
+        'ra_PCC_part_size' : ra_PCC_part_size
+    }
 
 parameters_tfidf_bow = {
         'feature_extractor_ngram_range': [(4,4),(5,5)],

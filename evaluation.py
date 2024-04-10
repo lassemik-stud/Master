@@ -26,7 +26,7 @@ def evaluation_metrics(y_test, y_pred_proba):
     else:
         # Calculate precision, recall, and thresholds from the predicted probabilities
         precision, recall, thresholds = precision_recall_curve(y_test, y_pred_proba)
-
+        
         # Calculate F1 scores for each threshold
         epsilon = 1e-10
         f1_scores = 2 * (precision * recall) / (precision + recall + epsilon)
@@ -43,8 +43,12 @@ def evaluation_metrics(y_test, y_pred_proba):
         best_precision = precision[ix]
         best_recall = recall[ix]
 
-        # Apply the best threshold to predict classes
-        y_pred_optimal = (y_pred_proba >= best_threshold).astype(int)
+        
+
+        if len(set(y_pred_proba))== 2: 
+            y_pred_optimal = y_pred_proba
+        else:
+            y_pred_optimal = (y_pred_proba >= best_threshold).astype(int)
 
         # Confusion matrix
         tn, fp, fn, tp = confusion_matrix(y_test, y_pred_optimal).ravel()
@@ -62,20 +66,15 @@ def evaluation_metrics(y_test, y_pred_proba):
         return best_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc
 
 def evaluations(y_test, y_pred_proba, args, classifier_name, PCC_test_params, raw_c_test):
-    printLog.debug("EVALUATION FUNCTION")
+
     ra = args.get('ra')
     if ra: 
-        printLog.debug("RA is true")
         y_test, y_pred_proba, raw_y_test_pred, raw_y = tranform_ra(PCC_test_params,y_test,y_pred_proba, raw_c_test)
-    printLog.debug("RA TRANSFORMED")
     best_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc = evaluation_metrics(y_test, y_pred_proba)
-    printLog.debug("EVALUATION METRICS")
     if ra: 
-        printLog.debug("RA - EVALUATION")
         pcc_simple_test, pcc_simple_pred, pcc_intermediate_pred, pcc_intermediate_test, pcc_advanced = evaluate_pcc(raw_y, raw_y_test_pred, PCC_test_params, best_threshold)
         best_threshold_pcc_simple, best_f1_score_pcc_simple, fnr_pcc_simple, tnr_pcc_simple, tpr_pcc_simple, fpr_pcc_simple, best_precision_pcc_simple, best_recall_pcc_simple, tn_pcc_simple, fp_pcc_simple, fn_pcc_simple, tp_pcc_simple, auroc_pcc_simple = evaluation_metrics(pcc_simple_test, pcc_simple_pred)
         best_threshold_pcc_intermediate, best_f1_score_pcc_intermediate, fnr_pcc_intermediate, tnr_pcc_intermediate, tpr_pcc_intermediate, fpr_pcc_intermediate, best_precision_pcc_intermediate, best_recall_pcc_intermediate, tn_pcc_intermediate, fp_pcc_intermediate, fn_pcc_intermediate, tp_pcc_intermediate, auroc_pcc_intermediate = evaluation_metrics(pcc_intermediate_test, pcc_intermediate_pred)
-        printLog.debug("FINISHED RA EVALUATION")
         correct_location_of_PCC = pcc_advanced.count(1)
         false_location_of_PCC = pcc_advanced.count(0)
         pcc_results = {
@@ -143,10 +142,9 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, PCC_test_params, ra
     'auroc': convert_to_serializable(auroc),
     'pcc_results': pcc_results
     }
-    printLog.debug("EVALUATION DICT: ")
+
     # Ensure the 'evaluation' directory exists or adjust the path as needed
-    with open('results/evaluation-2.jsonl', 'a') as f:
-        print(f"WROTE TO FILE")
+    with open('results/evaluation-ra.jsonl', 'a') as f:
         f.write(json.dumps(evaluation_dict) + '\n')
 
 def distribution_plot(y_test, y_pred_proba, arg):

@@ -81,11 +81,13 @@ class TextPairFeatureExtractor(BaseEstimator, TransformerMixin):
                 #feature_vecs.append(np.array([emb_diff])) 
             elif self.feature_type == 'bert_m':
                 emb1 = pair[0]['bert_m']
-                ebt2 = pair[1]['bert_m']
-                cos_sim = cosine_similarity(emb1, emb2)
-                cos_sim_value = cos_sim[0,0]
-                cos_dis = 1 - cos_sim_value
-                feature_vecs.append(np.array([cos_dis]).flatten())
+                emb2 = pair[1]['bert_m']
+                feat_diff = np.abs(emb1 - emb2)
+                # cos_sim = cosine_similarity(emb1, emb2)
+                # cos_sim_value = cos_sim[0,0]
+                # cos_dis = 1 - cos_sim_value
+                # feature_vecs.append(np.array([cos_dis]).flatten())
+                feature_vecs.append(np.array(feat_diff).flatten())
                 
             if self.word_length_dist:
                 wld_diff = np.abs(np.array(pair[0]['word_length_dist']) - np.array(pair[1]['word_length_dist']))
