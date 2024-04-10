@@ -8,8 +8,8 @@ clf = {
     }
 
 svm_parameters = {
-            'svm_c': [0.1,0.05,1,5,10],
-            'svm_degree': [1,2,3,4]
+            'svm_c': [0.001, 0.1, 1, 10],
+            'svm_degree': [1,2,3]
         }
 lr_parameters = {
             'lr_c': [0.01, 0.1, 1, 10],
@@ -30,13 +30,13 @@ ra_d = [1]
 ra_sentence_size = [30]
 
 parameters_tfidf_bow = {
-        'feature_extractor_ngram_range': [(3,4),(3,3),(4,4),(5,5),(4,5)],
+        'feature_extractor_ngram_range': [(1,1),(2,2),(3,3),(4,4),(5,5),(1,2),(2,3),(3,4),(4,5)],
         'feature_extractor_max_features': [1000],
         'feature_type': ['tfidf','BoW'],
         'feature_analyzer': ['word', 'char', 'char_wb'],
         'samples': [1000],
         'special_char': [True, False],
-        'word_length_dist': [True, False],
+        'word_length_dist': [False],
         'include_vocab_richness': [True, False],
         
         'svm_parameters' : svm_parameters,
@@ -53,7 +53,7 @@ parameters_dependency = {
         'feature_type': ['dependency'],
         'samples': [1000],
         'special_char': [True, False],
-        'word_length_dist': [True, False],
+        'word_length_dist': [False],
         'include_vocab_richness': [True, False],
         
         'svm_parameters' : svm_parameters,
@@ -69,7 +69,23 @@ parameters_dependency = {
 parameters_word_embeddings = {
         'feature_type': ['word_embeddings'],
         'samples': [1000],
-        'word_length_dist': [True, False],
+        'word_length_dist': [False],
+        'include_vocab_richness': [True, False],
+        
+        'svm_parameters' : svm_parameters,
+        'lr_parameters': lr_parameters,
+        'NaiveBayes_parameters': naiveBayes_parameters,
+        'clf': clf,
+        'ra' : ra,
+        'ra_k' : ra_k,
+        'ra_d' : ra_d,
+        'ra_sentence_size' : ra_sentence_size
+    }
+
+parameters_bert = {
+        'feature_type': ['bert_m'],
+        'samples': [1000],
+        'word_length_dist': [False],
         'include_vocab_richness': [True, False],
         
         'svm_parameters' : svm_parameters,
@@ -93,6 +109,9 @@ def base_experiment(parameters):
             combination[k] = v
 
     return combinations
+
+def experiemtn_bert_m():
+    return base_experiment(parameters_bert)
 
 def experiement_tfidf_bow():
     return base_experiment(parameters_tfidf_bow)
