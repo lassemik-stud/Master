@@ -17,20 +17,39 @@ def generate_pairs(same_author_data, different_author_data):
     same_pairs = []
     different_pairs = []
     i = 0
-    
-    while len(same_author_data) > i:
-        same_pairs.append({
-            'fandoms': same_author_data[i]['fandoms'],
-            'pair': [same_author_data[i]['text'], same_author_data[i+1]['text']]
-        })
-        i += 2
 
-        different_pairs.append({
-            'fandoms': different_author_data[i]['fandoms'],
-            'pair': [same_author_data[i]['text'], different_author_data[i]['text']],
-            'different_author' : different_author_data[i]['author']
-        })
-        i += 1
+    for i in range(len(same_author_data)):
+        for j in range(i+1, len(same_author_data)):
+            if i == j: 
+                continue
+            same_pairs.append({
+                'fandoms': same_author_data[i]['fandoms'],
+                'pair': [same_author_data[i]['text'], same_author_data[j]['text']]
+            })
+
+    for i in range(len(same_author_data)):
+        for j in range(len(different_author_data)):
+            if i == j: 
+                continue
+            different_pairs.append({
+                'fandoms': different_author_data[j]['fandoms'],
+                'pair': [same_author_data[i]['text'], different_author_data[j]['text']],
+                'different_author' : different_author_data[j]['author']
+            })
+
+    # while len(same_author_data) > i:
+    #     same_pairs.append({
+    #         'fandoms': same_author_data[i]['fandoms'],
+    #         'pair': [same_author_data[i]['text'], same_author_data[i+1]['text']]
+    #     })
+    #     i += 2
+
+    #     different_pairs.append({
+    #         'fandoms': different_author_data[i]['fandoms'],
+    #         'pair': [same_author_data[i]['text'], different_author_data[i]['text']],
+    #         'different_author' : different_author_data[i]['author']
+    #     })
+    #     i += 1
             
     return same_pairs, different_pairs
 
@@ -48,6 +67,7 @@ def main(author_id_list, truth_path, text_path, _type):
         new_truth_entries = []
         
         # Generate entries for same authorship
+        
         for pair in same_pairs:
             entry_id = str(uuid.uuid4())
             fandoms = pair['fandoms']
@@ -56,6 +76,7 @@ def main(author_id_list, truth_path, text_path, _type):
             new_truth_entries.append({"id": entry_id, "same": True, "authors": [author_id, author_id]})
         
         # Generate entries for different authorship
+    
         for pair in different_pairs:
             entry_id = str(uuid.uuid4())
             fandoms = pair['fandoms']
@@ -65,9 +86,9 @@ def main(author_id_list, truth_path, text_path, _type):
             new_truth_entries.append({"id": entry_id, "same": False, "authors": [author_id, str(different_author)]})
         
         # Write new JSONL files
-        write_jsonl_file(f"../datasets/pan20-created/pan20-{_type}-pairs-{author_id}.jsonl", new_text_entries)
-        write_jsonl_file(f"../datasets/pan20-created/pan20-{_type}-truth-{author_id}.jsonl", new_truth_entries)
-        path = f'../datasets/pan20-created/pan20-{_type}-all-different-authors.jsonl'
+        write_jsonl_file(f"../datasets/pan20-created-test/pan20-{_type}-pairs-{author_id}.jsonl", new_text_entries)
+        write_jsonl_file(f"../datasets/pan20-created-test/pan20-{_type}-truth-{author_id}.jsonl", new_truth_entries)
+        path = f'../datasets/pan20-created-test/pan20-{_type}-all-different-authors.jsonl'
         if not os.path.exists(path):
             write_jsonl_file(path, all_different_authors)
         print(f"{(author_i + 1)} | {len(author_id_list)} \t Finished generating {_type} pairs for author {author_id}")
@@ -104,13 +125,13 @@ def filter_texts_by_author_id(author_id, truth_data, text_data):
     # For simplicity, we might just slice to ensure we don't exceed the number of available texts
     # This assumes there's a substantial mix to potentially have enough for the 10 different author pairs
     different_author_split = different_author[:len(same_author)]
-    
     return same_author, different_author_split, different_author
 
-x_train_path = "/mnt/data/datasets/pan20-authorship-verification-training-small/pan20-authorship-verification-training-small.jsonl"
-y_train_path = "/mnt/data/datasets/pan20-authorship-verification-training-small/pan20-authorship-verification-training-small-truth.jsonl"
-x_test_path = "/mnt/data/datasets/pan20-authorship-verification-test/pan20-authorship-verification-test.jsonl"
-y_test_path = "/mnt/data/datasets/pan20-authorship-verification-test/pan20-authorship-verification-test-truth.jsonl"
+root = '/home/lasse'
+x_train_path = f"{root}/datasets/pan20-authorship-verification-training-small/pan20-authorship-verification-training-small.jsonl"
+y_train_path = f"{root}/datasets/pan20-authorship-verification-training-small/pan20-authorship-verification-training-small-truth.jsonl"
+x_test_path = f"{root}/datasets/pan20-authorship-verification-test/pan20-authorship-verification-test.jsonl"
+y_test_path = f"{root}/datasets/pan20-authorship-verification-test/pan20-authorship-verification-test-truth.jsonl"
 
 if __name__ == "__main__":
     author_id_list = [

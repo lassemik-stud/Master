@@ -1,5 +1,6 @@
 import itertools
 import numpy as np
+name = 'ra_experiment'
 
 clf = {
         'SVM' : [True],
@@ -11,6 +12,12 @@ svm_parameters = {
             'svm_c': [0.001, 0.1, 1, 10],
             'svm_degree': [1,2,3]
         }
+
+svm_parameters_word_embeddings = {
+            'svm_c': [10],
+            'svm_degree': [1] # 1,2,3 has the same results
+        }
+
 lr_parameters = {
             'lr_c': [0.01, 0.1, 1, 10],
             'lr_penalty': ['elasticnet'],
@@ -23,6 +30,10 @@ naiveBayes_parameters = {
             'nb_alpha': [0.01, 0.1, 0.5, 1.0, 2.0],
             'nb_fit_prior': [True, False]
         }
+
+# AUTHOR PARAMS
+author_id = [0, 974478]
+author_id = [str(id) for id in author_id]
 
 # BASE PARAMETERS
 ra = [True]
@@ -38,6 +49,7 @@ word_length_dist = [False]
 include_vocab_richness = [True, False]
 
 parameters_tfidf_bow_test = {
+        'name' : [name],
         'feature_extractor_ngram_range': [(4,4)],
         'feature_extractor_max_features': [1000],
         'feature_type': ['tfidf'],
@@ -59,6 +71,7 @@ parameters_tfidf_bow_test = {
     }
 
 parameters_tfidf_bow = {
+        'name' : [name],
         'feature_extractor_ngram_range': [(4,4),(5,5)],
         'feature_extractor_max_features': [1000],
         'feature_type': ['tfidf','BoW'],
@@ -80,6 +93,7 @@ parameters_tfidf_bow = {
     }
 
 parameters_dependency = {
+        'name' : [name],
         'feature_type': ['dependency'],
         'samples': samples,
         'special_char': special_char,
@@ -98,12 +112,13 @@ parameters_dependency = {
     }
 
 parameters_word_embeddings = {
+        'name' : [name],
         'feature_type': ['word_embeddings'],
         'samples': samples,
         'word_length_dist': word_length_dist,
         'include_vocab_richness': include_vocab_richness,
         
-        'svm_parameters' : svm_parameters,
+        'svm_parameters' : svm_parameters_word_embeddings,
         'lr_parameters': lr_parameters,
         'NaiveBayes_parameters': naiveBayes_parameters,
         'clf': clf,
@@ -115,6 +130,7 @@ parameters_word_embeddings = {
     }
 
 parameters_bert = {
+        'name' : [name],
         'feature_type': ['bert_m'],
         'samples': samples,
         'word_length_dist': word_length_dist,

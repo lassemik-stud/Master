@@ -1,6 +1,8 @@
 import itertools
 import numpy as np
 
+name = 'experiment_troubleshooting'
+
 clf = {
         'SVM' : [True],
         'LR' : [True],
@@ -8,8 +10,9 @@ clf = {
     }
 
 svm_parameters = {
-            'svm_c': [0.1],
-            'svm_degree': [1]
+            'svm_kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
+            'svm_c': [0.1,1,10],
+            'svm_degree': [1,2,3]
         }
 lr_parameters = {
             'lr_c': [0.01, 0.1, 1, 10],
@@ -38,6 +41,7 @@ word_length_dist = [False]
 include_vocab_richness = [False]
 
 parameters_tfidf_bow = {
+        'name' : [name],
         'feature_extractor_ngram_range': [(4,4)],
         'feature_extractor_max_features': [1000],
         'feature_type': ['tfidf'],
@@ -60,6 +64,7 @@ parameters_tfidf_bow = {
     }
 
 parameters_dependency = {
+        'name' : [name],
         'feature_type': ['dependency'],
         'samples': samples,
         'special_char': special_char,
@@ -78,6 +83,7 @@ parameters_dependency = {
     }
 
 parameters_word_embeddings = {
+        'name' : [name],
         'feature_type': ['word_embeddings'],
         'samples': samples,
         'word_length_dist': word_length_dist,

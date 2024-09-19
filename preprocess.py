@@ -24,8 +24,9 @@ def load_data_from_pickle(filename):
 def data_exists(*filenames):
     return all(os.path.exists(filename) for filename in filenames)
 
-def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1,arg=None):
+def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1,arg=None,author_id=0):
     # Define pickle filenames
+    printLog.debug(f'Selected AUTHOR {author_id}')
     feature_type = arg.get('feature_type')
     special_chars = arg.get('special_chars')
     word_length_dist = arg.get('word_length_dist')
@@ -35,19 +36,22 @@ def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1,arg
     ra_pcc_rate = arg.get('ra_number_of_ra_inserts')
     ra_part_size = arg.get('ra_PCC_part_size')
 
+    dataset = 'pan20-super'
+
     feature_param = str(feature_type) + str(special_chars) + str(word_length_dist) + str(include_vocab_richness)
     ra_param = str(ra)+str(k)+str(d)+str(sentence_size)+str(ra_pcc_rate)+str(ra_part_size)
+    dataset_param = str(dataset)+str(author_id)
     
-    root_path = '/mnt/data/pre_data/'
-    x_train_pickle = root_path+str(cutoff)+str(feature_param)+str(ra_param)+'-x_train.pkl'
-    y_train_pickle = root_path+str(cutoff)+str(feature_param)+str(ra_param)+'-y_train.pkl'
-    x_test_pickle = root_path+str(cutoff)+str(feature_param)+str(ra_param)+'-x_test.pkl'
-    y_test_pickle = root_path+str(cutoff)+str(feature_param)+str(ra_param)+'-y_test.pkl'
+    root_path = '/home/lasse/pre_data/'
+    x_train_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-x_train.pkl'
+    y_train_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-y_train.pkl'
+    x_test_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-x_test.pkl'
+    y_test_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-y_test.pkl'
     if ra:
-        pcc_test_pickle = root_path+str(cutoff)+str(feature_param)+str(ra_param)+'-pcc_test.pkl' 
-        pcc_train_pickle = root_path+str(cutoff)+str(feature_param)+str(ra_param)+'-pcc_train.pkl' 
-        raw_c_test_pickle = root_path+str(cutoff)+str(feature_param)+str(ra_param)+'-raw_c_test.pkl'
-        raw_c_train_pickle = root_path+str(cutoff)+str(feature_param)+str(ra_param)+'-raw_c_train.pkl'
+        pcc_test_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-pcc_test.pkl' 
+        pcc_train_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-pcc_train.pkl' 
+        raw_c_test_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-raw_c_test.pkl'
+        raw_c_train_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-raw_c_train.pkl'
     #print(pcc_test_pickle)
     #print(pcc_train_pickle)
     
@@ -71,7 +75,7 @@ def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1,arg
         printLog.debug('Preprocessed data loaded from pickle files')
     else:
         # Your data processing/loading function here
-        x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, PCC_train_params, PCC_test_params = load_corpus(_cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg)
+        x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, PCC_train_params, PCC_test_params = load_corpus(_cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg,author_id=author_id)
         #x_train, y_train, x_test, y_test, PCC_train_params, PCC_test_params = load_corpus(_cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg)
         if ra:
             printLog.debug(f'sizes: x_train: {len(x_train)}, y_train: {len(y_train)}, x_test: {len(x_test)}, y_test: {len(y_test)}, raw_c_train: {len(raw_c_train)}, raw_c_test: {len(raw_c_test)}')
@@ -199,7 +203,7 @@ def load_corp(x_path, y_path, PCC_samples_path, sentence_size=0, cutoff=0,cc_fla
 
         # Ensure there are enough True and False items
         if len(true_items) < cutoff_half or len(false_items) < cutoff_half:
-            print("Not enough True or False items to meet the cutoff.")
+            printLog.error(f"Not enough True or False items to meet the cutoff. True Items: {len(true_items)}, False Items: {len(false_items)}, Cutoff half: {cutoff_half}")
             exit()
 
         sampled_true_items = sample(true_items, cutoff_half)
@@ -258,18 +262,22 @@ def load_corp(x_path, y_path, PCC_samples_path, sentence_size=0, cutoff=0,cc_fla
 
     return x_filtered, y_filtered, raw_c, PCC_params
 
-def load_corpus(_cutoff=0,sentence_size=0,k=4,d=1,arg=None):
+def load_corpus(_cutoff=0,sentence_size=0,k=4,d=1,arg=None,author_id=0):
     ra = arg.get('ra')
-    # x_train_path = "../datasets/pan20-authorship-verification-training-small/pan20-authorship-verification-training-small.jsonl"
-    # y_train_path = "../datasets/pan20-authorship-verification-training-small/pan20-authorship-verification-training-small-truth.jsonl"
-    # x_test_path = "../datasets/pan20-authorship-verification-test/pan20-authorship-verification-test.jsonl"
-    # y_test_path = "../datasets/pan20-authorship-verification-test/pan20-authorship-verification-test-truth.jsonl"
-    x_train_path = "/mnt/data/datasets/pan20-created/pan20-train-pairs-1000555.jsonl"
-    y_train_path = "/mnt/data/datasets/pan20-created/pan20-train-truth-1000555.jsonl"
-    PCC_train_samples = "/mnt/data/datasets/pan20-created/pan20-train-all-different-authors.jsonl"
-    x_test_path = "/mnt/data/datasets/pan20-created/pan20-test-pairs-1000555.jsonl"
-    y_test_path = "/mnt/data/datasets/pan20-created/pan20-test-truth-1000555.jsonl"
-    PCC_test_samples = "/mnt/data/datasets/pan20-created/pan20-test-all-different-authors.jsonl"
+    root = '/home/lasse'
+    if author_id == '0':
+        x_train_path = f"{root}/datasets/pan20-authorship-verification-training-small/pan20-authorship-verification-training-small.jsonl"
+        y_train_path = f"{root}/datasets/pan20-authorship-verification-training-small/pan20-authorship-verification-training-small-truth.jsonl"
+        x_test_path = f"{root}/datasets/pan20-authorship-verification-test/pan20-authorship-verification-test.jsonl"
+        y_test_path = f"{root}/datasets/pan20-authorship-verification-test/pan20-authorship-verification-test-truth.jsonl"
+    else:
+        x_train_path = f"{root}/datasets/pan20-created-test/pan20-train-pairs-{author_id}.jsonl"
+        y_train_path = f"{root}/datasets/pan20-created-test/pan20-train-truth-{author_id}.jsonl"
+        x_test_path = f"{root}/datasets/pan20-created-test/pan20-test-pairs-{author_id}.jsonl"
+        y_test_path = f"{root}/datasets/pan20-created-test/pan20-test-truth-{author_id}.jsonl"
+
+    PCC_train_samples = f"{root}/datasets/pan20-created/pan20-train-all-different-authors.jsonl"
+    PCC_test_samples = f"{root}/datasets/pan20-created/pan20-test-all-different-authors.jsonl"
 
     printLog.debug('Loading and extracting features')
     x_train, y_train, raw_c_train, PCC_train_params = load_corp(x_train_path, y_train_path, PCC_train_samples, cutoff=_cutoff,cc_flag=ra,sentence_size=sentence_size,k=k,d=d,arg=arg)

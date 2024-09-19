@@ -31,7 +31,7 @@ warnings.filterwarnings(action='ignore', category=UserWarning)
 from feature_extraction import TextPairFeatureExtractor
 from preprocess import load_or_process_data, save_data_to_pickle, load_data_from_pickle, data_exists
 from evaluation import evaluations
-from experiments.base_experiment import experiement_tfidf_bow, experiement_word_embeddings, experiement_dependency, experiemtn_bert_m
+from experiments.base_experiment import experiement_tfidf_bow, experiement_word_embeddings, experiement_dependency, experiment_bert
 from experiments.ra_experiment import experiement_tfidf_bow_ra, experiement_dependency_ra, experiement_word_embeddings_ra, experiment_bert_ra
 from experiments.experiment_troubleshooting import th_experiement_tfidf_bow_ra
 
@@ -48,18 +48,20 @@ def run_pipeline(PCC_Pipeline:Pipeline, x_train, y_train, x_test, y_test, arg, c
 def svm(svm_combination, TextPairFeatureExtractorPrepopulated, x_train, y_train, x_test, y_test, arg, PCC_test_params, raw_c_test):
     svm_c = svm_combination.get('svm_c')
     svm_degree = svm_combination.get('svm_degree')
+    svm_kernel = svm_combination.get('svm_kernel')
 
     PCC_Pipeline_SVM = (Pipeline([
                     ('feature_extractor', TextPairFeatureExtractorPrepopulated),
                     ('feature_selection',SelectKBest(chi2, k=100)),
                     ('scaler', StandardScaler()),
-                    ('classifier', SVC(C=svm_c, kernel='sigmoid', gamma='scale', degree=svm_degree, probability=True))
+                    ('classifier', SVC(C=svm_c, kernel=svm_kernel, gamma='scale', degree=svm_degree, probability=True))
                 ]))
     
     current_arg = arg.copy()
     svm_parameters = {
         'svm_c': svm_c,
-        'svm_degree': svm_degree
+        'svm_degree': svm_degree,
+        'svm_kernel' : svm_kernel
     }
     current_arg.update({
         'svm_parameters' : svm_parameters,
@@ -99,7 +101,6 @@ def lr(lr_combination, TextPairFeatureExtractorPrepopulated, x_train, y_train, x
         'NaiveBayes_parameters': 0,
     })
     run_pipeline(PCC_Pipeline_LR, x_train, y_train, x_test, y_test, current_arg, 'LR', PCC_test_params, raw_c_test)
-
 
 def lr_wrapper(args):
     return lr(*args)
@@ -150,6 +151,9 @@ def run_nb(clf_nb_flag, NaiveBayes_combinations, TextPairFeatureExtractorPrepopu
 
 
 def prepare_pipeline(arg):
+
+    author_id = arg.get('author_id')
+
     # Overall parameters
     cutoff = arg.get('samples')
 
@@ -194,12 +198,11 @@ def prepare_pipeline(arg):
     d = arg.get('ra_d') if ra else None
     pcc_rate = arg.get('ra_number_of_ra_inserts') if ra else None
     pcc_part_size = arg.get('ra_PCC_part_size') if ra else None
-
-    x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, PCC_train_params, PCC_test_params = load_or_process_data(cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg)
+  
+    x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, PCC_train_params, PCC_test_params = load_or_process_data(cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg, author_id=author_id)
     printLog.debug(f'x_t: {len(x_train)}, y_t: {len(y_train)}, x_t: {len(x_test)}, y_t: {len(y_test)}, r_c_t: {len(raw_c_train)}, r_c_t: {len(raw_c_test)}')
     if ra: 
-        
-        printLog.debug(f'k: {k}, d: {d}, s_s: {sentence_size}, pcc_r: {pcc_rate}, pcc_part_size: {pcc_part_size}')
+        printLog.debug(f'k: {k}, d: {d}, s_s: {sentence_size}, pcc_r: {pcc_rate}, pcc_part_size: {pcc_part_size}, author_id: {author_id}')
     # Initialize the pipelines
     # if clf_svm_flag:
     #     for svm_i, svm_combination in enumerate(svm_combinations):
@@ -244,22 +247,22 @@ def run_experiment(arguments, _type):
         printLog.info(f'Experiment {i+1} took {elapsed_time:.2f} seconds. Estimated time left: {eta} (H:M:S).')
 
 
-th_experiement_tfidf_bow_ra = th_experiement_tfidf_bow_ra()
-tfidf_arguments = experiement_tfidf_bow()
-word_embeddings_arguments = experiement_word_embeddings()
-dependency_arguments = experiement_dependency()
-bert_arguments = experiemtn_bert_m()
+#th_experiement_tfidf_bow_ra = th_experiement_tfidf_bow_ra('experiment_prod_pan20')
+tfidf_arguments = experiement_tfidf_bow('experiment_prod_pan20-super')
+word_embeddings_arguments = experiement_word_embeddings('experiment_prod_pan20-super')
+dependency_arguments = experiement_dependency('experiment_prod_pan20-super')
+#bert_arguments = experiemtn_bert_m()
 
 tfidf_ra_arguments = experiement_tfidf_bow_ra()
 word_embeddings_arguments_ra = experiement_word_embeddings_ra()
 dependency_arguments_ra = experiement_dependency_ra()
 bert_arguments_ra = experiment_bert_ra()
 
-run_experiment(th_experiement_tfidf_bow_ra, 'th_tfidf_ra')
+#run_experiment(th_experiement_tfidf_bow_ra, 'th_tfidf_ra')
 
-# run_experiment(tfidf_arguments, 'tfidf')
-# run_experiment(word_embeddings_arguments, 'word_embeddings')
-# run_experiment(dependency_arguments, 'dependency')
+run_experiment(tfidf_arguments, 'tfidf-base-experiment')
+run_experiment(word_embeddings_arguments, 'word_embeddings')
+#run_experiment(dependency_arguments, 'dependency')
 
 # #run_experiment(bert_arguments_ra, 'bert-ra')
 # run_experiment(tfidf_ra_arguments, 'tfidf-ra')

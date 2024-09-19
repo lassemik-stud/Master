@@ -6,6 +6,11 @@ import json
 import datetime
 from settings.logging import printLog
 
+import numpy as np
+from sklearn.metrics import precision_recall_curve, confusion_matrix, roc_auc_score, roc_curve
+from scipy.optimize import brentq
+from scipy.interpolate import interp1d
+
 def evaluation_metrics(y_test, y_pred_proba): 
     if len(set(y_test)) <= 1: 
         best_threshold = "N/A"
@@ -48,7 +53,13 @@ def evaluation_metrics(y_test, y_pred_proba):
         if len(set(y_pred_proba))== 2: 
             y_pred_optimal = y_pred_proba
         else:
-            y_pred_optimal = (y_pred_proba >= best_threshold).astype(int)
+            fpr, tpr, threshold_roc = roc_curve(y_test, y_pred_proba)
+            fnr = 1 - tpr
+
+            # Find the EER
+            eer_threshold = threshold_roc[np.nanargmin(np.abs(fpr - fnr))]
+            eer = brentq(lambda x : 1. - x - interp1d(fpr, tpr)(x), 0., 1.)
+            y_pred_optimal = (y_pred_proba >= eer_threshold).astype(int)
 
         # Confusion matrix
         tn, fp, fn, tp = confusion_matrix(y_test, y_pred_optimal).ravel()
@@ -66,7 +77,7 @@ def evaluation_metrics(y_test, y_pred_proba):
         return best_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc
 
 def evaluations(y_test, y_pred_proba, args, classifier_name, PCC_test_params, raw_c_test):
-
+    name = args.get('name')
     ra = args.get('ra')
     if ra: 
         y_test, y_pred_proba, raw_y_test_pred, raw_y = tranform_ra(PCC_test_params,y_test,y_pred_proba, raw_c_test)
@@ -144,7 +155,8 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, PCC_test_params, ra
     }
 
     # Ensure the 'evaluation' directory exists or adjust the path as needed
-    with open('results/evaluation-ra.jsonl', 'a') as f:
+    author_id = args.get('author_id')
+    with open(f'results/{str(name)}-{author_id}.jsonl', 'a') as f:
         f.write(json.dumps(evaluation_dict) + '\n')
 
 def distribution_plot(y_test, y_pred_proba, arg):
