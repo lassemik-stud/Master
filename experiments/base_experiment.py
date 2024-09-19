@@ -3,7 +3,7 @@ import numpy as np
 
 name = 'default'
 
-# base experiment that 
+# base experiment that does something
 
 clf = {
         'SVM' : [True],
