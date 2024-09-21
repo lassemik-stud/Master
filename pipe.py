@@ -30,7 +30,7 @@ def run_pipeline_wrapper(args):
     return run_pipeline(*args)
 
 def run_pipeline(pipeline:Pipeline, x_train, y_train, x_test, y_test, arg, classifier_name, pcc_test_param, raw_c_test):
-    feature_type = arg.get('feature_type')
+    #feature_type = arg.get('feature_type')
     pipeline.fit(x_train, y_train)
     y_pred_proba = pipeline.predict_proba(x_test)
     evaluations(y_test, y_pred_proba[:, 1], arg, classifier_name, pcc_test_param, raw_c_test)
