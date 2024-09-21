@@ -1,9 +1,9 @@
 import spacy
 import numpy as np
-from nltk.util import ngrams
-
-from transformers import AutoTokenizer, AutoModel
 import torch
+# from nltk.util import ngrams
+from transformers import AutoTokenizer, AutoModel
+
 
 # Load spaCy's English language model
 nlp = spacy.load('en_core_web_sm')
@@ -52,7 +52,7 @@ def spacy_tokenizer(arg):
     arguments = arg[1]
 
     feature_type = arguments.get('feature_type')
-    special_chars = arguments.get('special_chars')
+    #special_chars = arguments.get('special_chars')
     word_length_dist = arguments.get('word_length_dist')
     include_vocab_richness = arguments.get('include_vocab_richness')
 
@@ -60,10 +60,10 @@ def spacy_tokenizer(arg):
     embedding_flag = True if feature_type == 'word_embeddings' else False
     dependencies_flag = True if feature_type == 'dependency' else False
     bert_m_flag = True if feature_type == 'bert_m' else False
-    pos_tags_flag = True if feature_type == 'dependency' else False
+    #pos_tags_flag = True if feature_type == 'dependency' else False
     word_length_dist_flag = True if word_length_dist else False
     vocab_richness_flag = True if include_vocab_richness else False
-    special_chars_flag = True if special_chars else False
+    #special_chars_flag = True if special_chars else False
 
     kt = pair[0]
     ut = pair[1]

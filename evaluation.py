@@ -1,15 +1,16 @@
-import numpy as np
-from sklearn.metrics import precision_recall_curve, f1_score, roc_auc_score, confusion_matrix
-import matplotlib.pyplot as plt
-import seaborn as sns
 import json 
 import datetime
-from settings.logging import printLog
-
 import numpy as np
-from sklearn.metrics import precision_recall_curve, confusion_matrix, roc_auc_score, roc_curve
-from scipy.optimize import brentq
-from scipy.interpolate import interp1d
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# from scipy.optimize import brentq
+# from scipy.interpolate import interp1d
+
+from sklearn.metrics import precision_recall_curve, roc_auc_score, confusion_matrix, roc_curve#,f1_score
+#from settings.logging import printLog
+
+from settings.static_values import RESULTS_PATH
 
 def evaluation_metrics(y_test, y_pred_proba): 
     if len(set(y_test)) <= 1: 
@@ -58,7 +59,7 @@ def evaluation_metrics(y_test, y_pred_proba):
 
             # Find the EER
             eer_threshold = threshold_roc[np.nanargmin(np.abs(fpr - fnr))]
-            eer = brentq(lambda x : 1. - x - interp1d(fpr, tpr)(x), 0., 1.)
+            # eer = brentq(lambda x : 1. - x - interp1d(fpr, tpr)(x), 0., 1.)
             y_pred_optimal = (y_pred_proba >= eer_threshold).astype(int)
 
         # Confusion matrix
@@ -76,18 +77,18 @@ def evaluation_metrics(y_test, y_pred_proba):
 
         return best_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc
 
-def evaluations(y_test, y_pred_proba, args, classifier_name, PCC_test_params, raw_c_test):
+def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, raw_c_test):
     name = args.get('name')
     ra = args.get('ra')
     if ra: 
-        y_test, y_pred_proba, raw_y_test_pred, raw_y = tranform_ra(PCC_test_params,y_test,y_pred_proba, raw_c_test)
+        y_test, y_pred_proba, raw_y_test_pred, raw_y = tranform_ra(pcc_test_params,y_test,y_pred_proba, raw_c_test)
     best_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc = evaluation_metrics(y_test, y_pred_proba)
     if ra: 
-        pcc_simple_test, pcc_simple_pred, pcc_intermediate_pred, pcc_intermediate_test, pcc_advanced = evaluate_pcc(raw_y, raw_y_test_pred, PCC_test_params, best_threshold)
+        pcc_simple_test, pcc_simple_pred, pcc_intermediate_pred, pcc_intermediate_test, pcc_advanced = evaluate_pcc(raw_y, raw_y_test_pred, pcc_test_params, best_threshold)
         best_threshold_pcc_simple, best_f1_score_pcc_simple, fnr_pcc_simple, tnr_pcc_simple, tpr_pcc_simple, fpr_pcc_simple, best_precision_pcc_simple, best_recall_pcc_simple, tn_pcc_simple, fp_pcc_simple, fn_pcc_simple, tp_pcc_simple, auroc_pcc_simple = evaluation_metrics(pcc_simple_test, pcc_simple_pred)
         best_threshold_pcc_intermediate, best_f1_score_pcc_intermediate, fnr_pcc_intermediate, tnr_pcc_intermediate, tpr_pcc_intermediate, fpr_pcc_intermediate, best_precision_pcc_intermediate, best_recall_pcc_intermediate, tn_pcc_intermediate, fp_pcc_intermediate, fn_pcc_intermediate, tp_pcc_intermediate, auroc_pcc_intermediate = evaluation_metrics(pcc_intermediate_test, pcc_intermediate_pred)
-        correct_location_of_PCC = pcc_advanced.count(1)
-        false_location_of_PCC = pcc_advanced.count(0)
+        correct_location_of_pcc = pcc_advanced.count(1)
+        false_location_of_pcc = pcc_advanced.count(0)
         pcc_results = {
             'simple': {
                 'best_threshold': convert_to_serializable(best_threshold_pcc_simple),
@@ -124,8 +125,8 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, PCC_test_params, ra
                 'auroc': convert_to_serializable(auroc_pcc_intermediate)
             },
             'advanced' : {
-                'correct_location_of_PCC': convert_to_serializable(correct_location_of_PCC),
-                'false_location_of_PCC': convert_to_serializable(false_location_of_PCC)
+                'correct_location_of_pcc': convert_to_serializable(correct_location_of_pcc),
+                'false_location_of_pcc': convert_to_serializable(false_location_of_pcc)
             }
         }
     else: 
@@ -156,7 +157,7 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, PCC_test_params, ra
 
     # Ensure the 'evaluation' directory exists or adjust the path as needed
     author_id = args.get('author_id')
-    with open(f'results/{str(name)}-{author_id}.jsonl', 'a') as f:
+    with open(f'{RESULTS_PATH}{str(name)}-{author_id}.jsonl', 'a', encoding='utf-8') as f:
         f.write(json.dumps(evaluation_dict) + '\n')
 
 def distribution_plot(y_test, y_pred_proba, arg):
@@ -196,7 +197,7 @@ def distribution_plot(y_test, y_pred_proba, arg):
     # Close the plot to free memory
     plt.close()
 
-def check_for_simple_PCC(array):
+def check_for_simple_pcc(array):
     """
     SIMPLE PCC
     evaluate if there is PCC in the set.
@@ -220,13 +221,13 @@ def check_cheating_position(array):
     except ValueError:
         return 1  # No cheating
 
-def check_advanced_PCC(array1, array2):
+def check_advanced_pcc(array1, array2):
     return 1 if array1 == array2 else 0
 
 def threashold_func(list, threashold):
     return [1 if x >= threashold else 0 for x in list]
 
-def evaluate_pcc(y_test, y_pred, PCC_test_params, threashold):
+def evaluate_pcc(y_test, y_pred, pcc_test_params, threashold):
     pcc_simple_pred = []
     pcc_simple_test = []
 
@@ -238,15 +239,15 @@ def evaluate_pcc(y_test, y_pred, PCC_test_params, threashold):
     for pcc_i, pair in enumerate(y_test):
         local_y_pred = threashold_func(y_pred[pcc_i], threashold)
         local_y_test = threashold_func(y_test[pcc_i], threashold)
-        simple_pcc_pred = check_for_simple_PCC(local_y_pred)
-        simple_pcc_test = check_for_simple_PCC(local_y_test)
+        simple_pcc_pred = check_for_simple_pcc(local_y_pred)
+        simple_pcc_test = check_for_simple_pcc(local_y_test)
         pcc_simple_pred.append(simple_pcc_pred)
         pcc_simple_test.append(simple_pcc_test)
 
         if simple_pcc_pred == 0 or simple_pcc_test == 0:
             pcc_intermediate_pred.append(local_y_pred)
             pcc_intermediate_test.append(local_y_test)
-            pcc_advanced.append(check_advanced_PCC(local_y_pred, local_y_test))
+            pcc_advanced.append(check_advanced_pcc(local_y_pred, local_y_test))
 
     flat_pcc_intermediate_test = [item for sublist in pcc_intermediate_test for item in (sublist if isinstance(sublist, list) else [sublist])]
     flat_pcc_intermediate_pred = [item for sublist in pcc_intermediate_pred for item in (sublist if isinstance(sublist, list) else [sublist])]
@@ -254,11 +255,11 @@ def evaluate_pcc(y_test, y_pred, PCC_test_params, threashold):
 
     return pcc_simple_test, pcc_simple_pred, flat_pcc_intermediate_pred, flat_pcc_intermediate_test, pcc_advanced
 
-def evaluate_pcc_intermediate_test(y_test, y_pred, PCC_test_params):
+def evaluate_pcc_intermediate_test(y_test, y_pred, pcc_test_params):
     pcc_intermediate_pred = []
     pcc_intermediate_test = []
 
-    for pair_i, element in enumerate(PCC_test_params):
+    for pair_i, element in enumerate(pcc_test_params):
         length_c = element['N']
         pcc_intermediate_pred.append(sum(y_pred[pair_i:pair_i+length_c])/length_c)
         pcc_intermediate_test.append(sum(y_test[pair_i:pair_i+length_c])/length_c)
@@ -266,7 +267,7 @@ def evaluate_pcc_intermediate_test(y_test, y_pred, PCC_test_params):
     return pcc_intermediate_test, pcc_intermediate_pred
 
 
-def tranform_ra(PCC_test_params,y_test,y_pred, raw_c_test):
+def tranform_ra(pcc_test_params,y_test,y_pred, raw_c_test):
 
     pcc_i = 0
     pcc_raw_counter = 0
@@ -274,11 +275,11 @@ def tranform_ra(PCC_test_params,y_test,y_pred, raw_c_test):
     y_test_transformed = []
     raw_y_test_pred = []
     raw_y = []
-    for pair_i, element in enumerate(PCC_test_params):
+    for pair_i, element in enumerate(pcc_test_params):
 
         c_size = int(element['l'])
-        N_size = int(element['N'])
-        raw_c_local = raw_c_test[pcc_raw_counter:pcc_raw_counter+N_size]
+        n_size = int(element['N'])
+        raw_c_local = raw_c_test[pcc_raw_counter:pcc_raw_counter+n_size]
         y_out = y_pred[pcc_i:pcc_i+c_size]
         
         y_truth = y_test[pcc_i:pcc_i+c_size]
@@ -292,9 +293,9 @@ def tranform_ra(PCC_test_params,y_test,y_pred, raw_c_test):
         
         l_group = element['l_group']
 
-        N_theoretical = (n-1)*(k-d) + k
+        n_theoretical = (n-1)*(k-d) + k
         
-        N_val = [[] for _ in range(N_theoretical)]
+        N_val = [[] for _ in range(n_theoretical)]
 
         count_c = 0
         for elements in range(int(l/n)):
@@ -332,7 +333,7 @@ def tranform_ra(PCC_test_params,y_test,y_pred, raw_c_test):
         # print("-----------------------")
 
         pcc_i+=c_size
-        pcc_raw_counter+=N_size
+        pcc_raw_counter+=n_size
     
     flat_raw_y = [item for sublist in raw_y for item in sublist]
     flat_raw_y_test_pred = [item for sublist in raw_y_test_pred for item in sublist]

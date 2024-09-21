@@ -1,17 +1,16 @@
 import os
 import pickle
-
 import math
-from itertools import islice
-import random
-from random import sample
 import json 
+import random
 
-from tqdm import tqdm
-from settings.logging import printLog
+from random import sample
 from multiprocessing import Pool, cpu_count
-
+from tqdm import tqdm
 from tokenizer import spacy_tokenizer, sentences
+# from itertools import islice
+
+from settings.logging import printLog
 
 def save_data_to_pickle(data, filename):
     with open(filename, 'wb') as file:
@@ -63,20 +62,20 @@ def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1,arg
         x_test = load_data_from_pickle(x_test_pickle)
         y_test = load_data_from_pickle(y_test_pickle)
         if ra:
-            PCC_test_params = load_data_from_pickle(pcc_test_pickle)
-            PCC_train_params = load_data_from_pickle(pcc_train_pickle) 
+            pcc_test_params = load_data_from_pickle(pcc_test_pickle)
+            pcc_train_params = load_data_from_pickle(pcc_train_pickle) 
             raw_c_train = load_data_from_pickle(raw_c_train_pickle)
             raw_c_test = load_data_from_pickle(raw_c_test_pickle)
         else:
-            PCC_train_params = []
-            PCC_test_params = []
+            pcc_train_params = []
+            pcc_test_params = []
             raw_c_train = []
             raw_c_test = []
         printLog.debug('Preprocessed data loaded from pickle files')
     else:
         # Your data processing/loading function here
-        x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, PCC_train_params, PCC_test_params = load_corpus(_cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg,author_id=author_id)
-        #x_train, y_train, x_test, y_test, PCC_train_params, PCC_test_params = load_corpus(_cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg)
+        x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, pcc_train_params, pcc_test_params = load_corpus(_cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg,author_id=author_id)
+        #x_train, y_train, x_test, y_test, pcc_train_params, pcc_test_params = load_corpus(_cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg)
         if ra:
             printLog.debug(f'sizes: x_train: {len(x_train)}, y_train: {len(y_train)}, x_test: {len(x_test)}, y_test: {len(y_test)}, raw_c_train: {len(raw_c_train)}, raw_c_test: {len(raw_c_test)}')
         
@@ -86,22 +85,22 @@ def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1,arg
         save_data_to_pickle(x_test, x_test_pickle)
         save_data_to_pickle(y_test, y_test_pickle)
         if ra:
-            save_data_to_pickle(PCC_train_params, pcc_train_pickle)
-            save_data_to_pickle(PCC_test_params, pcc_test_pickle)
+            save_data_to_pickle(pcc_train_params, pcc_train_pickle)
+            save_data_to_pickle(pcc_test_params, pcc_test_pickle)
             save_data_to_pickle(raw_c_train, raw_c_train_pickle)
             save_data_to_pickle(raw_c_test, raw_c_test_pickle)
         else:
-            PCC_train_params = []
-            PCC_test_params = []
+            pcc_train_params = []
+            pcc_test_params = []
             raw_c_train = []
             raw_c_test = []
         printLog.debug('Preprocessed data saved to pickle files')
     
-    return x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, PCC_train_params, PCC_test_params
+    return x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, pcc_train_params, pcc_test_params
 
 
 def process_pair(args):
-    i, pair, y_train, cc_array, PCC_samples, sentence_size,k,d,arg = args
+    i, pair, y_train, cc_array, pcc_samples, sentence_size,k,d,arg = args
     
     kt = pair[0]
     ut = pair[1]
@@ -113,7 +112,7 @@ def process_pair(args):
 
     if cc_array:
         Y = int(arg.get('ra_PCC_part_size'))
-        s_pcc_sample = sentences(PCC_samples, sentence_size)
+        s_pcc_sample = sentences(pcc_samples, sentence_size)
         c = [y_train]*len(s_ut)
         
         random_index_c = random.randint(0, len(c) - 1)
@@ -146,7 +145,7 @@ def process_pair(args):
             y_out.append(0 if any(element == 0 for element in c[i:i+k]) else 1)
             i+=w
     
-    PCC_params = {
+    pcc_params = {
         'N': N,
         'k': k,
         'd': d,
@@ -155,9 +154,9 @@ def process_pair(args):
         'w': w,
         'l_group': l_group
     }
-    return x_out, y_out, c, PCC_params
+    return x_out, y_out, c, pcc_params
 
-def rolling_selection(x_train, y_train, cc_array, PCC_samples, sentence_size, k=4, d=1, arg=None):
+def rolling_selection(x_train, y_train, cc_array, pcc_samples, sentence_size, k=4, d=1, arg=None):
     """
     k - window size\n
     d - overlap window
@@ -165,32 +164,32 @@ def rolling_selection(x_train, y_train, cc_array, PCC_samples, sentence_size, k=
     printLog.debug(f'Selecting text - sentence size: {sentence_size}, k: {k}, d: {d}')
 
     # for i, pair in enumerate(x_train):
-    #     process_pair((i, pair, y_train[i], cc_array[i], PCC_samples[i], sentence_size,k,d))
+    #     process_pair((i, pair, y_train[i], cc_array[i], pcc_samples[i], sentence_size,k,d))
 
     with Pool() as pool:
-        results = pool.map(process_pair, [(i, pair, y_train[i], cc_array[i], PCC_samples[i], sentence_size,k,d, arg) for i, pair in enumerate(x_train)])
+        results = pool.map(process_pair, [(i, pair, y_train[i], cc_array[i], pcc_samples[i], sentence_size,k,d, arg) for i, pair in enumerate(x_train)])
 
     x_out = []
     y_out = []
     raw_c = []
-    PCC_params = []
+    pcc_params = []
 
     for x, y, raw_c_value, PCC_p in results:
         x_out.extend(x)
         raw_c.extend(raw_c_value)
         y_out.extend(y)
-        PCC_params.append(PCC_p)
+        pcc_params.append(PCC_p)
 
-    return x_out, y_out, raw_c, PCC_params
+    return x_out, y_out, raw_c, pcc_params
 
-def load_corp(x_path, y_path, PCC_samples_path, sentence_size=0, cutoff=0,cc_flag=False,k=4,d=1,arg=None):
+def load_corp(x_path, y_path, pcc_samples_path, sentence_size=0, cutoff=0,cc_flag=False,k=4,d=1,arg=None):
     # Read the ground truth:
     # Read and process y
     y = {}
     author = {}
     pcc_rate = arg.get('ra_number_of_ra_inserts')
     
-    for line in open(y_path):
+    for line in open(y_path, encoding='utf-8'):
         y_json_output = json.loads(line.strip())
         y[y_json_output['id']] = y_json_output['same']
         author[y_json_output['id']] = y_json_output['authors']
@@ -217,7 +216,7 @@ def load_corp(x_path, y_path, PCC_samples_path, sentence_size=0, cutoff=0,cc_fla
     # Initialize x dictionary
     x_dict = {}
     author_dict = {}
-    for line in tqdm(open(x_path)):
+    for line in tqdm(open(x_path, encoding='utf-8')):
         json_output = json.loads(line.strip())
         if json_output['id'] in y:
             x_dict[json_output['id']] = json_output['pair']
@@ -231,25 +230,25 @@ def load_corp(x_path, y_path, PCC_samples_path, sentence_size=0, cutoff=0,cc_fla
     flattened_list_author = [item for sublist in author_filtered for item in sublist]
     unique_list_author = list(set(flattened_list_author))
          
-    PCC_samples = []
+    pcc_samples = []
 
-    for line in open(PCC_samples_path):
-        PCC_json = json.loads(line.strip())
-        if any(author in str(PCC_json['author']) for author in unique_list_author):
+    for line in open(pcc_samples_path, encoding='utf-8'):
+        pcc_json = json.loads(line.strip())
+        if any(author in str(pcc_json['author']) for author in unique_list_author):
             continue
-        elif len(PCC_samples) >= len(x_filtered):
+        elif len(pcc_samples) >= len(x_filtered):
             break
         else:
-            PCC_samples.append(PCC_json['text'])
+            pcc_samples.append(pcc_json['text'])
 
     cc_array = [1 if classification == 1 and i < len(y_filtered)*(pcc_rate)/2 else 0 for i, classification in enumerate(y_filtered)]
 
     printLog.debug(f'Post-processing sizes - x: {len(x_filtered)}, y: {len(y_filtered)}')
     
     if cc_flag: # contract cheating flag
-        x_filtered, y_filtered, raw_c, PCC_params = rolling_selection(x_filtered, y_filtered, cc_array, PCC_samples, sentence_size,k=k,d=d, arg=arg)
+        x_filtered, y_filtered, raw_c, pcc_params = rolling_selection(x_filtered, y_filtered, cc_array, pcc_samples, sentence_size,k=k,d=d, arg=arg)
     else: 
-        PCC_params = []
+        pcc_params = []
         raw_c = 0
     printLog.debug(f'Post-splitting sizes - x: {len(x_filtered)}, y: {len(y_filtered)}')
 
@@ -260,7 +259,7 @@ def load_corp(x_path, y_path, PCC_samples_path, sentence_size=0, cutoff=0,cc_fla
 
     printLog.debug(f'Size of y {len(y_filtered)}')
 
-    return x_filtered, y_filtered, raw_c, PCC_params
+    return x_filtered, y_filtered, raw_c, pcc_params
 
 def load_corpus(_cutoff=0,sentence_size=0,k=4,d=1,arg=None,author_id=0):
     ra = arg.get('ra')
@@ -276,13 +275,13 @@ def load_corpus(_cutoff=0,sentence_size=0,k=4,d=1,arg=None,author_id=0):
         x_test_path = f"{root}/datasets/pan20-created-test/pan20-test-pairs-{author_id}.jsonl"
         y_test_path = f"{root}/datasets/pan20-created-test/pan20-test-truth-{author_id}.jsonl"
 
-    PCC_train_samples = f"{root}/datasets/pan20-created/pan20-train-all-different-authors.jsonl"
-    PCC_test_samples = f"{root}/datasets/pan20-created/pan20-test-all-different-authors.jsonl"
+    pcc_train_samples = f"{root}/datasets/pan20-created/pan20-train-all-different-authors.jsonl"
+    pcc_test_samples = f"{root}/datasets/pan20-created/pan20-test-all-different-authors.jsonl"
 
     printLog.debug('Loading and extracting features')
-    x_train, y_train, raw_c_train, PCC_train_params = load_corp(x_train_path, y_train_path, PCC_train_samples, cutoff=_cutoff,cc_flag=ra,sentence_size=sentence_size,k=k,d=d,arg=arg)
-    x_test, y_test, raw_c_test, PCC_test_params = load_corp(x_test_path, y_test_path,PCC_test_samples,cutoff=_cutoff,cc_flag=ra,sentence_size=sentence_size,k=k,d=d,arg=arg)
+    x_train, y_train, raw_c_train, pcc_train_params = load_corp(x_train_path, y_train_path, pcc_train_samples, cutoff=_cutoff,cc_flag=ra,sentence_size=sentence_size,k=k,d=d,arg=arg)
+    x_test, y_test, raw_c_test, pcc_test_params = load_corp(x_test_path, y_test_path,pcc_test_samples,cutoff=_cutoff,cc_flag=ra,sentence_size=sentence_size,k=k,d=d,arg=arg)
     
-    return x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, PCC_train_params, PCC_test_params
+    return x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, pcc_train_params, pcc_test_params
 
 

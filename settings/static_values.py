@@ -41,3 +41,5 @@ EXPECTED_DATASETS_FILES_PAN23 = {
     'pan23-train': "pan23_authorship-verification-training-dataset",
     'pan23-test': "pan23-authorship-verification-test-dataset"
 }
+
+RESULTS_PATH = "../results/"

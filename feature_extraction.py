@@ -1,12 +1,13 @@
+from collections import Counter
+
+import numpy as np
+import spacy
+
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
-import numpy as np
-from collections import Counter
-import spacy
-from settings.logging import printLog
-
 from sklearn.metrics.pairwise import cosine_similarity
 
+from settings.logging import printLog
 
 # Initialize spaCy
 nlp = spacy.load("en_core_web_sm")
@@ -26,7 +27,7 @@ class TextPairFeatureExtractor(BaseEstimator, TransformerMixin):
             if special_chars:
                 # Define a regex pattern for special characters
                 # This pattern matches characters that are not alphanumeric (and not spaces)
-                token_pattern = r'(?u)[^\w\s]'
+                # token_pattern = r'(?u)[^\w\s]'
                 self.analyzer = 'char_wb'  # Analyze at the character level within word boundaries
                 
             vectorizer_class = TfidfVectorizer if self.feature_type == 'tfidf' else CountVectorizer
