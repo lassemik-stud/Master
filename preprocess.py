@@ -11,6 +11,7 @@ from tokenizer import spacy_tokenizer, sentences
 # from itertools import islice
 
 from settings.logging import printLog
+from settings.static_values import EXPECTED_PREPROCESSED_DATASETS_FOLDER
 
 def save_data_to_pickle(data, filename):
     with open(filename, 'wb') as file:
@@ -23,10 +24,12 @@ def load_data_from_pickle(filename):
 def data_exists(*filenames):
     return all(os.path.exists(filename) for filename in filenames)
 
-def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1,arg=None,author_id=0):
+def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1,arg=None,author_id=0, dataset='none'):
     # Define pickle filenames
     printLog.debug(f'Selected AUTHOR {author_id}')
     feature_type = arg.get('feature_type')
+    samples_count = arg.get('samples')
+    #feature_extractor_ngram_range=arg.get('feature_extractor_ngram_range') NOT RELEVANT. IS COMPUTED AT FEATURE EXTRACTION STEP.
     special_chars = arg.get('special_chars')
     word_length_dist = arg.get('word_length_dist')
     include_vocab_richness = arg.get('include_vocab_richness')
@@ -35,20 +38,19 @@ def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1,arg
     ra_pcc_rate = arg.get('ra_number_of_ra_inserts')
     ra_part_size = arg.get('ra_PCC_part_size')
 
-    dataset = 'pan20-super'
-
-    feature_param = str(feature_type) + str(special_chars) + str(word_length_dist) + str(include_vocab_richness)
+    feature_param = str(feature_type) + str(special_chars) + str(word_length_dist) + str(include_vocab_richness) + str(samples_count) # + str(feature_extractor_ngram_range[0]) + str(feature_extractor_ngram_range[1])   
     ra_param = str(ra)+str(k)+str(d)+str(sentence_size)+str(ra_pcc_rate)+str(ra_part_size)
     dataset_param = str(dataset)+str(author_id)
     
-    root_path = '/home/lasse/pre_data/'
+    root_path = EXPECTED_PREPROCESSED_DATASETS_FOLDER
+    os.makedirs(EXPECTED_PREPROCESSED_DATASETS_FOLDER, exist_ok=True)
     x_train_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-x_train.pkl'
     y_train_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-y_train.pkl'
     x_test_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-x_test.pkl'
     y_test_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-y_test.pkl'
     if ra:
-        pcc_test_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-pcc_test.pkl' 
-        pcc_train_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-pcc_train.pkl' 
+        pcc_test_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-pcc_test.pkl'
+        pcc_train_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-pcc_train.pkl'
         raw_c_test_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-raw_c_test.pkl'
         raw_c_train_pickle = root_path+str(cutoff)+str(dataset_param)+str(feature_param)+str(ra_param)+'-raw_c_train.pkl'
     #print(pcc_test_pickle)
@@ -262,21 +264,24 @@ def load_corp(x_path, y_path, pcc_samples_path, sentence_size=0, cutoff=0,cc_fla
     return x_filtered, y_filtered, raw_c, pcc_params
 
 def load_corpus(_cutoff=0,sentence_size=0,k=4,d=1,arg=None,author_id=0):
-    ra = arg.get('ra')
-    root = '/home/lasse'
-    if author_id == '0':
-        x_train_path = f"{root}/datasets/pan20-authorship-verification-training-small/pan20-authorship-verification-training-small.jsonl"
-        y_train_path = f"{root}/datasets/pan20-authorship-verification-training-small/pan20-authorship-verification-training-small-truth.jsonl"
-        x_test_path = f"{root}/datasets/pan20-authorship-verification-test/pan20-authorship-verification-test.jsonl"
-        y_test_path = f"{root}/datasets/pan20-authorship-verification-test/pan20-authorship-verification-test-truth.jsonl"
-    else:
-        x_train_path = f"{root}/datasets/pan20-created-test/pan20-train-pairs-{author_id}.jsonl"
-        y_train_path = f"{root}/datasets/pan20-created-test/pan20-train-truth-{author_id}.jsonl"
-        x_test_path = f"{root}/datasets/pan20-created-test/pan20-test-pairs-{author_id}.jsonl"
-        y_test_path = f"{root}/datasets/pan20-created-test/pan20-test-truth-{author_id}.jsonl"
+    dataset = arg.get('dataset')
+    x_train_path = dataset.get('dataset_train_path_pair')
+    y_train_path = dataset.get('dataset_train_path_truth')
+    x_test_path = dataset.get('dataset_test_path_pair')
+    y_test_path = dataset.get('dataset_test_path_truth')
 
-    pcc_train_samples = f"{root}/datasets/pan20-created/pan20-train-all-different-authors.jsonl"
-    pcc_test_samples = f"{root}/datasets/pan20-created/pan20-test-all-different-authors.jsonl"
+    if author_id != '0':
+        x_train_path = x_train_path.replace("AUTHOR", str(author_id))
+        y_train_path = y_train_path.replace("AUTHOR", str(author_id))
+        x_test_path = x_test_path.replace("AUTHOR", str(author_id))
+        y_test_path = y_test_path.replace("AUTHOR", str(author_id))
+    
+    ra = arg.get('ra')
+    if ra:
+        pcc_train_samples = dataset['pcc_train_samples']    # f"{root}/datasets/pan20-created/pan20-train-all-different-authors.jsonl"
+        pcc_test_samples = dataset['pcc_test_samples']      # f"{root}/datasets/pan20-created/pan20-test-all-different-authors.jsonl"
+    else:
+        pcc_train_samples = pcc_test_samples = "../datasets/pan20-created/pan20-train-all-different-authors.jsonl"
 
     printLog.debug('Loading and extracting features')
     x_train, y_train, raw_c_train, pcc_train_params = load_corp(x_train_path, y_train_path, pcc_train_samples, cutoff=_cutoff,cc_flag=ra,sentence_size=sentence_size,k=k,d=d,arg=arg)

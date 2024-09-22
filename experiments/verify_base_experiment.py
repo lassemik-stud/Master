@@ -12,9 +12,9 @@ clf = {
     }
 
 svm_parameters = {
-            'svm_c': [0.01, 0.1, 1, 10],
-            'svm_degree': [1,2,3],
-            'svm_kernel': ['linear', 'poly', 'rbf', 'sigmoid']
+            'svm_c': [ 10],
+            'svm_degree': [2],
+            'svm_kernel': ['rbf']
         }
 lr_parameters = {
             'lr_c': [0.01, 0.1, 1, 10],

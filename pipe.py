@@ -7,13 +7,14 @@ from datetime import timedelta
 from concurrent.futures import ProcessPoolExecutor
 from multiprocessing import Pool#, cpu_count
 
-from settings.logging import printLog
 from feature_extraction import TextPairFeatureExtractor
 from preprocess import load_or_process_data #, save_data_to_pickle, load_data_from_pickle, data_exists
 from evaluation import evaluations
-from experiments.base_experiment import experiement_tfidf_bow, experiement_word_embeddings, experiement_dependency#, experiment_bert
-from experiments.ra_experiment import experiement_tfidf_bow_ra, experiement_dependency_ra, experiement_word_embeddings_ra, experiment_bert_ra
+#from experiments.base_experiment import experiement_tfidf_bow, experiement_word_embeddings, experiement_dependency#, experiment_bert
+#from experiments.ra_experiment import experiement_tfidf_bow_ra, experiement_dependency_ra, experiement_word_embeddings_ra, experiment_bert_ra
 # from experiments.experiment_troubleshooting import th_experiement_tfidf_bow_ra
+
+from experiments.pan20_baseline_0 import experiement_tfidf_bow
 
 # from sklearn.metrics import classification_report
 from sklearn.svm import SVC
@@ -25,6 +26,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.exceptions import DataConversionWarning
 warnings.filterwarnings(action='ignore', category=DataConversionWarning)
 warnings.filterwarnings(action='ignore', category=UserWarning)
+
+from settings.logging import printLog
 
 def run_pipeline_wrapper(args):
     return run_pipeline(*args)
@@ -189,7 +192,7 @@ def prepare_pipeline(arg):
     pcc_rate = arg.get('ra_number_of_ra_inserts') if ra else None
     pcc_part_size = arg.get('ra_PCC_part_size') if ra else None
   
-    x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, pcc_train_params, pcc_test_param = load_or_process_data(cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg, author_id=author_id)
+    x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, pcc_train_params, pcc_test_param = load_or_process_data(cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg, author_id=author_id, dataset='baseline-0')
     printLog.debug(f'x_t: {len(x_train)}, y_t: {len(y_train)}, x_t: {len(x_test)}, y_t: {len(y_test)}, r_c_t: {len(raw_c_train)}, r_c_t: {len(raw_c_test)}')
     if ra: 
         printLog.debug(f'k: {k}, d: {d}, s_s: {sentence_size}, pcc_r: {pcc_rate}, pcc_part_size: {pcc_part_size}, author_id: {author_id}')
@@ -238,20 +241,22 @@ def run_experiment(arguments, _type):
 
 
 #th_experiement_tfidf_bow_ra = th_experiement_tfidf_bow_ra('experiment_prod_pan20')
-tfidf_arguments = experiement_tfidf_bow('experiment_prod_pan20-super')
-word_embeddings_arguments = experiement_word_embeddings('experiment_prod_pan20-super')
-dependency_arguments = experiement_dependency('experiment_prod_pan20-super')
+#tfidf_arguments = experiement_tfidf_bow('experiment_prod_pan20-super')
+#word_embeddings_arguments = experiement_word_embeddings('experiment_prod_pan20-super')
+#dependency_arguments = experiement_dependency('experiment_prod_pan20-super')
 #bert_arguments = experiemtn_bert_m()
 
-tfidf_ra_arguments = experiement_tfidf_bow_ra()
-word_embeddings_arguments_ra = experiement_word_embeddings_ra()
-dependency_arguments_ra = experiement_dependency_ra()
-bert_arguments_ra = experiment_bert_ra()
+##tfidf_ra_arguments = experiement_tfidf_bow_ra()
+#word_embeddings_arguments_ra = experiement_word_embeddings_ra()
+#dependency_arguments_ra = experiement_dependency_ra()
+#bert_arguments_ra = experiment_bert_ra()
 
 #run_experiment(th_experiement_tfidf_bow_ra, 'th_tfidf_ra')
 
-run_experiment(tfidf_arguments, 'tfidf-base-experiment')
-run_experiment(word_embeddings_arguments, 'word_embeddings')
+tfidf_arguments = experiement_tfidf_bow('b0-tfidf-experiment')
+
+run_experiment(tfidf_arguments, 'b0-tfidf-experiment')
+#run_experiment(word_embeddings_arguments, 'word_embeddings')
 #run_experiment(dependency_arguments, 'dependency')
 
 # #run_experiment(bert_arguments_ra, 'bert-ra')

@@ -6,7 +6,8 @@ import os
 import hashlib
 
 DATASET_PATH = '../../datasets/'
-DATASET_CREATE_PATH = 'pan20-test-dataset-2'
+DATASET_CREATE_PATH = 'pan20-dataset-baseline-2'
+# Datset for focusing on one author and then making the dataset as large as possible by adding the text together as many times as posisble
 
 def read_jsonl_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -48,7 +49,7 @@ def main(author_id_list, truth_path, text_path, _type):
     truth_data = read_jsonl_file(truth_path)
     text_data = read_jsonl_file(text_path)
     print("Loading json files | finished")
-    
+
     for author_i, author_id in enumerate(author_id_list):
         
         # Assuming the existence of a function to filter texts by author ID
