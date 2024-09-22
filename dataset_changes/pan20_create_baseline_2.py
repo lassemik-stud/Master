@@ -3,10 +3,10 @@ import uuid
 import random
 import ast
 import os
+import hashlib
 
 DATASET_PATH = '../../datasets/'
-DATASET_CREATE_PATH = 'pan20-test-dataset-1'
-
+DATASET_CREATE_PATH = 'pan20-test-dataset-2'
 
 def read_jsonl_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -40,27 +40,15 @@ def generate_pairs(same_author_data, different_author_data):
                 'pair': [same_author_data[i]['text'], different_author_data[j]['text']],
                 'different_author' : different_author_data[j]['author']
             })
-
-    # while len(same_author_data) > i:
-    #     same_pairs.append({
-    #         'fandoms': same_author_data[i]['fandoms'],
-    #         'pair': [same_author_data[i]['text'], same_author_data[i+1]['text']]
-    #     })
-    #     i += 2
-
-    #     different_pairs.append({
-    #         'fandoms': different_author_data[i]['fandoms'],
-    #         'pair': [same_author_data[i]['text'], different_author_data[i]['text']],
-    #         'different_author' : different_author_data[i]['author']
-    #     })
-    #     i += 1
             
     return same_pairs, different_pairs
 
 def main(author_id_list, truth_path, text_path, _type):
+    print("Loading json files", _type)
     truth_data = read_jsonl_file(truth_path)
     text_data = read_jsonl_file(text_path)
-
+    print("Loading json files | finished")
+    
     for author_i, author_id in enumerate(author_id_list):
         
         # Assuming the existence of a function to filter texts by author ID
@@ -76,8 +64,21 @@ def main(author_id_list, truth_path, text_path, _type):
             entry_id = str(uuid.uuid4())
             fandoms = pair['fandoms']
             pair = pair['pair']
-            new_text_entries.append({"id": entry_id, "fandoms": fandoms, "pair": pair})
-            new_truth_entries.append({"id": entry_id, "same": True, "authors": [author_id, author_id]})
+            
+            # Hash the individual texts using sha1
+            hash1 = hashlib.sha1(pair[0].encode('utf-8')).hexdigest()
+            hash2 = hashlib.sha1(pair[1].encode('utf-8')).hexdigest()
+
+            new_text_entries.append({"id": entry_id, 
+                                     "fandoms": fandoms, 
+                                     "pair": pair})
+            
+            new_truth_entries.append({
+                                    "id": entry_id, 
+                                    "same": True, 
+                                    "authors": [author_id, author_id],
+                                    "hashes": [hash1, hash2]
+                                    })
         
         # Generate entries for different authorship
     
@@ -86,8 +87,18 @@ def main(author_id_list, truth_path, text_path, _type):
             fandoms = pair['fandoms']
             different_author = pair['different_author']
             pair = pair['pair']
+
+            # Hash the individual texts using sha1
+            hash1 = hashlib.sha1(pair[0].encode('utf-8')).hexdigest()
+            hash2 = hashlib.sha1(pair[1].encode('utf-8')).hexdigest()
+
             new_text_entries.append({"id": entry_id, "fandoms": fandoms, "pair": pair})
-            new_truth_entries.append({"id": entry_id, "same": False, "authors": [author_id, str(different_author)]})
+            new_truth_entries.append({
+                                    "id": entry_id, 
+                                    "same": False, 
+                                    "authors": [author_id, str(different_author)],
+                                    "hashes": [hash1, hash2]
+                                    })
         
         # Write new JSONL files
         write_jsonl_file(f"{DATASET_PATH}{DATASET_CREATE_PATH}/pan20-{_type}-pairs-{author_id}.jsonl", new_text_entries)
@@ -137,9 +148,36 @@ x_test_path = f"{DATASET_PATH}pan20-authorship-verification-test/pan20-authorshi
 y_test_path = f"{DATASET_PATH}pan20-authorship-verification-test/pan20-authorship-verification-test-truth.jsonl"
 os.makedirs(DATASET_PATH+DATASET_CREATE_PATH, exist_ok=True)
 
+# Load JSONL files into arrays
+def load_jsonl(file_path):
+    data = []
+    with open(file_path, 'r') as file:
+        for line in file:
+            data.append(json.loads(line))
+    return data
+
+def verify_dataset(author_id_list):
+    c_unwanted_match = 0
+    for author_id in author_id_list:
+        pan20_train_truth = load_jsonl(f"{DATASET_PATH}{DATASET_CREATE_PATH}/pan20-train-truth-{author_id}.jsonl")
+        pan20_test_truth = load_jsonl(f"{DATASET_PATH}{DATASET_CREATE_PATH}/pan20-test-truth-{author_id}.jsonl")
+        pan20_train_hashes = [entry['hashes'] for entry in pan20_train_truth]
+        pan20_test_hashes = [entry['hashes'] for entry in pan20_test_truth]
+
+        # Compare the hashes
+        for train_hash in pan20_train_hashes:
+            if tuple(train_hash) in pan20_test_hashes:
+                print(f"Unwanted Match found: {train_hash}")
+                c_unwanted_match +=1
+                
+    if c_unwanted_match == 0:
+        print(" ** Verification of dataset completed. Checked if hashes of texts in training is in testing. None found (as expected)")
+
+
 if __name__ == "__main__":
     with open('pan20_similar_authors.txt', 'r', encoding='utf-8') as file:
         author_id_list = [line.strip() for line in file if line.strip()]
     
     main(author_id_list=author_id_list, truth_path=y_train_path, text_path=x_train_path, _type='train')
     main(author_id_list=author_id_list, truth_path=y_test_path,  text_path=x_test_path,  _type='test')
+    verify_dataset(author_id_list=author_id_list)
