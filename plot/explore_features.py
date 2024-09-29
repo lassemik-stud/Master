@@ -44,7 +44,7 @@ for entry in data:
     special_char_and_include_vocab_rich = map_special_char_and_inc_vocab_richness(special_char, include_vocab_richness)
 
     # Check for None values
-    if ngram_range is None or feature_analyzer is None or extra is None:
+    if ngram_range is None or feature_analyzer is None or special_char_and_include_vocab_rich is None:
         print(f"Skipping entry due to None values: {entry}")
         print(entry['input_args']['feature_analyzer'])
         print(entry['input_args']['feature_extractor_ngram_range'])

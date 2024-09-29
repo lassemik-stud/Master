@@ -78,11 +78,18 @@ def evaluation_metrics(y_test, y_pred_proba):
         return best_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc
 
 def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, raw_c_test):
+    distribution_plot_v = args.get('distribution_plot')
+    
     name = args.get('name')
     ra = args.get('ra')
     if ra: 
         y_test, y_pred_proba, raw_y_test_pred, raw_y = tranform_ra(pcc_test_params,y_test,y_pred_proba, raw_c_test)
     best_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc = evaluation_metrics(y_test, y_pred_proba)
+    print(distribution_plot_v)
+    if distribution_plot_v:
+        if bool(distribution_plot_v):
+            distribution_plot(y_test, y_pred_proba, args, best_threshold)
+    
     if ra: 
         pcc_simple_test, pcc_simple_pred, pcc_intermediate_pred, pcc_intermediate_test, pcc_advanced = evaluate_pcc(raw_y, raw_y_test_pred, pcc_test_params, best_threshold)
         best_threshold_pcc_simple, best_f1_score_pcc_simple, fnr_pcc_simple, tnr_pcc_simple, tpr_pcc_simple, fpr_pcc_simple, best_precision_pcc_simple, best_recall_pcc_simple, tn_pcc_simple, fp_pcc_simple, fn_pcc_simple, tp_pcc_simple, auroc_pcc_simple = evaluation_metrics(pcc_simple_test, pcc_simple_pred)
@@ -160,39 +167,29 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, ra
     with open(f'{RESULTS_PATH}{str(name)}-{author_id}.jsonl', 'a', encoding='utf-8') as f:
         f.write(json.dumps(evaluation_dict) + '\n')
 
-def distribution_plot(y_test, y_pred_proba, arg):
-
+def distribution_plot(y_test, y_pred_proba, args, best_threshold):
+    name = args.get('name')
+    author_id = args.get('author_id')
     # Define the figure
     plt.figure(figsize=(10, 6))
 
     # Plot the distributions
     sns.histplot([prob for prob, actual in zip(y_pred_proba, y_test) if actual == 0], stat='density', kde=True, color='red', label='Different Author')
     sns.histplot([prob for prob, actual in zip(y_pred_proba, y_test) if actual == 1], stat='density', kde=True, color='blue', label='Same Author')
+    
+    # Add the vertical line for the best threshold
+    plt.axvline(x=best_threshold, color='black', linestyle='--', label=f'Best Threshold: {best_threshold:.3f}') 
 
     # Add titles and labels
     plt.title('Predicted Probability Distribution by Actual Class')
     plt.xlabel('Predicted Probability of Same Authorship')
-    plt.ylabel('Density')
+    plt.ylabel('Number of samples')
 
     # Adding the legend
     plt.legend(title='Actual Class')
 
-    clf = arg.get('clf')
-    feature_type = arg.get('feature_type')
-    feature_analyzer = arg.get('feature_analyzer')
-    feature_extractor_ngram_range = arg.get('feature_extractor_ngram_range')
-    ngram_1 = feature_extractor_ngram_range[0] if feature_extractor_ngram_range else 0
-    ngram_2 = feature_extractor_ngram_range[1] if feature_extractor_ngram_range else 0
-    feature_extractor_max_features = arg.get('feature_extractor_max_features')
-    samples = arg.get('samples')
-    svc_c = arg.get('svc_c')
-    svc_degree = arg.get('svc_degree')
-    special_char = arg.get('special_char')
-    word_length_dist = arg.get('word_length_dist')
-    include_vocab_richness = arg.get('include_vocab_richness')
-
     # Ensure the 'plot' directory exists or adjust the path as needed
-    plt.savefig(f'plot/{samples}{clf}{svc_c}{svc_degree}{feature_type}{feature_analyzer}{ngram_1}{ngram_2}{feature_extractor_max_features}{special_char}{word_length_dist}{include_vocab_richness}class_probability_distribution.pdf', bbox_inches='tight')
+    plt.savefig(f'{RESULTS_PATH}/plot/{str(name)}-{author_id}-class_probability_distribution.pdf', bbox_inches='tight')
 
     # Close the plot to free memory
     plt.close()

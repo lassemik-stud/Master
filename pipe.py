@@ -15,6 +15,7 @@ from evaluation import evaluations
 # from experiments.experiment_troubleshooting import th_experiement_tfidf_bow_ra
 
 from experiments.pan20_baseline_0 import experiement_tfidf_bow
+from experiments.pan20_baseline_0_single_experiment import single_experiment
 
 # from sklearn.metrics import classification_report
 from sklearn.svm import SVC
@@ -125,23 +126,22 @@ def naive_bayes(naive_bayes_combination, text_pair_feature_extractor_prepopulate
     run_pipeline(pipeline_nb, x_train, y_train, x_test, y_test, current_arg, 'NaiveBayes', pcc_test_param, raw_c_test)
 
 def run_svm(clf_svm_flag, svm_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test):
-    if clf_svm_flag:
-        printLog.debug(f'Running SVM with {len(svm_combinations)} combinations')
+    if bool(clf_svm_flag[0]):
+        printLog.debug(f'Running SVM with {len(svm_combinations)} combination(s)')
         with Pool() as p:
             p.map(svm_wrapper, [(svm_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param,raw_c_test) for svm_combination in svm_combinations])
 
 def run_lr(clf_lr_flag, lr_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test):
-    if clf_lr_flag:
-        printLog.debug(f'Running LR with {len(lr_combinations)} combinations')
+    if bool(clf_lr_flag[0]):
+        printLog.debug(f'Running LR with {len(lr_combinations)} combination(s)')
         with Pool() as p:
             p.map(lr_wrapper, [(lr_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test) for lr_combination in lr_combinations])
 
 def run_nb(clf_nb_flag, naive_bayes_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test):
-    if clf_nb_flag:
-        printLog.debug(f'Running Naive Bayes with {len(naive_bayes_combinations)} combinations')
+    if bool(clf_nb_flag[0]):
+        printLog.debug(f'Running Naive Bayes with {len(naive_bayes_combinations)} combination(s)')
         with Pool() as p:
             p.map(naive_bayes_wrapper, [(naive_bayes_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param,raw_c_test) for naive_bayes_combination in naive_bayes_combinations])
-
 
 def prepare_pipeline(arg):
 
@@ -180,7 +180,7 @@ def prepare_pipeline(arg):
     lr_parameters = arg.get('lr_parameters')
     lr_combinations = [dict(zip(lr_parameters, v)) for v in itertools.product(*lr_parameters.values())] if lr_parameters else None
 
-    naive_bayes_parameters = arg.get('naive_bayes_parameters')
+    naive_bayes_parameters = arg.get('NaiveBayes_parameters')
     naive_bayes_combinations = [dict(zip(naive_bayes_parameters, v)) for v in itertools.product(*naive_bayes_parameters.values())] if naive_bayes_parameters else None
 
     # Rolling selection parameters
@@ -202,10 +202,10 @@ def prepare_pipeline(arg):
     #         printLog.debug(f'Running SVM with combination {svm_i+1} of {len(svm_combinations)}')
     #         svm(svm_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
-    # if clf_lr_flag:
-    #     for lr_i, lr_combination in enumerate(lr_combinations):
-    #         printLog.debug(f'Running LR with combination {lr_i+1} of {len(lr_combinations)}')
-    #         lr(lr_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    #if clf_lr_flag:
+    #    for lr_i, lr_combination in enumerate(lr_combinations):
+    #        printLog.debug(f'Running LR with combination {lr_i+1} of {len(lr_combinations)}')
+    #        lr(lr_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
     # if clf_nb_flag:
     #     for nb_i, naive_bayes_combination in enumerate(naive_bayes_combinations):
@@ -219,7 +219,7 @@ def prepare_pipeline(arg):
 
 def run_experiment(arguments, _type):
     durations = []
-    printLog.debug(f'Running {_type}-experiment with {len(arguments)} combinations')
+    printLog.debug(f'Running {_type}-experiment with {len(arguments)} combination(s)')
     for i, argument in enumerate(arguments):
         start_time = time.time()
        
@@ -239,6 +239,9 @@ def run_experiment(arguments, _type):
         
         printLog.info(f'Experiment {i+1} took {elapsed_time:.2f} seconds. Estimated time left: {eta} (H:M:S).')
 
+_NAME = 'baseline-0-single-experiment-NB'
+single_experiment_arguments = single_experiment(_NAME)
+run_experiment(single_experiment_arguments, _NAME)
 
 #th_experiement_tfidf_bow_ra = th_experiement_tfidf_bow_ra('experiment_prod_pan20')
 #tfidf_arguments = experiement_tfidf_bow('experiment_prod_pan20-super')
@@ -253,9 +256,9 @@ def run_experiment(arguments, _type):
 
 #run_experiment(th_experiement_tfidf_bow_ra, 'th_tfidf_ra')
 
-tfidf_arguments = experiement_tfidf_bow('b0-tfidf-experiment')
+#tfidf_arguments = experiement_tfidf_bow('b0-tfidf-experiment')
 
-run_experiment(tfidf_arguments, 'b0-tfidf-experiment')
+#run_experiment(tfidf_arguments, 'b0-tfidf-experiment')
 #run_experiment(word_embeddings_arguments, 'word_embeddings')
 #run_experiment(dependency_arguments, 'dependency')
 
