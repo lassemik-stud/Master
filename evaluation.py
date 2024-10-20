@@ -169,6 +169,7 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, ra
         f.write(json.dumps(evaluation_dict) + '\n')
 
 def get_best_auroc(args, current_auroc):
+    args = args[0]
     name = args.get('name')
     author_id = args.get('author_id')
     
