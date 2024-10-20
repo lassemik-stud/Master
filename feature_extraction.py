@@ -10,6 +10,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 from settings.logging import printLog
 
 # Initialize spaCy
+# pip uninstall spacy thinc
+# pip uninstall spacy
+# pip install spacy
+# python3 -m spacy download en_core_web_sm
 nlp = spacy.load("en_core_web_sm")
 
 class TextPairFeatureExtractor(BaseEstimator, TransformerMixin):

@@ -14,7 +14,7 @@ from evaluation import evaluations
 #from experiments.ra_experiment import experiement_tfidf_bow_ra, experiement_dependency_ra, experiement_word_embeddings_ra, experiment_bert_ra
 # from experiments.experiment_troubleshooting import th_experiement_tfidf_bow_ra
 
-from experiments.pan20_baseline_0 import experiement_tfidf_bow
+from experiments.pan20_baseline_0 import experiement_tfidf_bow, experiement_dependency
 from experiments.pan20_baseline_0_single_experiment import single_experiment
 
 # from sklearn.metrics import classification_report
@@ -239,9 +239,13 @@ def run_experiment(arguments, _type):
         
         printLog.info(f'Experiment {i+1} took {elapsed_time:.2f} seconds. Estimated time left: {eta} (H:M:S).')
 
-_NAME = 'baseline-0-single-experiment-NB'
-single_experiment_arguments = single_experiment(_NAME)
-run_experiment(single_experiment_arguments, _NAME)
+# _NAME = 'baseline-0-single-experiment-NB'
+# single_experiment_arguments = single_experiment(_NAME)
+# run_experiment(single_experiment_arguments, _NAME)
+
+_NAME = 'baseline-0-dependency-experiment'
+experiement_dependency_arguments = experiement_dependency(_NAME)
+run_experiment(experiement_dependency_arguments, _NAME)
 
 #th_experiement_tfidf_bow_ra = th_experiement_tfidf_bow_ra('experiment_prod_pan20')
 #tfidf_arguments = experiement_tfidf_bow('experiment_prod_pan20-super')
