@@ -16,6 +16,7 @@ from evaluation import evaluations
 
 from experiments.pan20_baseline_0 import experiement_tfidf_bow, experiement_dependency
 from experiments.pan20_baseline_0_single_experiment import single_experiment_dependency
+from experiments.pan23_baseline_0_single_experiment import pan23_single_experiment_tfidf
 
 # from sklearn.metrics import classification_report
 from sklearn.svm import SVC
@@ -191,8 +192,11 @@ def prepare_pipeline(arg):
     d = arg.get('ra_d') if ra else None
     pcc_rate = arg.get('ra_number_of_ra_inserts') if ra else None
     pcc_part_size = arg.get('ra_PCC_part_size') if ra else None
+
+    dataset = arg.get('dataset')
+    selected_dataset = dataset.get('dataset')
   
-    x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, pcc_train_params, pcc_test_param = load_or_process_data(cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg, author_id=author_id, dataset='baseline-0')
+    x_train, y_train, x_test, y_test, raw_c_train, raw_c_test, pcc_train_params, pcc_test_param = load_or_process_data(cutoff=cutoff,sentence_size=sentence_size,k=k,d=d,arg=arg, author_id=author_id, dataset=selected_dataset)
     printLog.debug(f'x_t: {len(x_train)}, y_t: {len(y_train)}, x_t: {len(x_test)}, y_t: {len(y_test)}, r_c_t: {len(raw_c_train)}, r_c_t: {len(raw_c_test)}')
     if ra: 
         printLog.debug(f'k: {k}, d: {d}, s_s: {sentence_size}, pcc_r: {pcc_rate}, pcc_part_size: {pcc_part_size}, author_id: {author_id}')
@@ -247,9 +251,13 @@ def run_experiment(arguments, _type):
 #experiement_dependency_arguments = experiement_dependency(_NAME)
 #run_experiment(experiement_dependency_arguments, _NAME)
 
-_NAME_DEPENDENCY = 'baseline-0-dependency-experiment-NB'
-experiement_dependency_arguments = single_experiment_dependency(_NAME_DEPENDENCY)
-run_experiment(experiement_dependency_arguments, _NAME_DEPENDENCY)
+_name = 'b0-tfidf-pan23-test-experiment'
+experiment_pan23_tfidf_arguments = pan23_single_experiment_tfidf(_name)
+run_experiment(experiment_pan23_tfidf_arguments, _name)
+
+# _NAME_DEPENDENCY = 'baseline-0-dependency-experiment-NB'
+# experiement_dependency_arguments = single_experiment_dependency(_NAME_DEPENDENCY)
+# run_experiment(experiement_dependency_arguments, _NAME_DEPENDENCY)
 
 #th_experiement_tfidf_bow_ra = th_experiement_tfidf_bow_ra('experiment_prod_pan20')
 #tfidf_arguments = experiement_tfidf_bow('experiment_prod_pan20-super')
