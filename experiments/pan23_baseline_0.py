@@ -6,35 +6,36 @@ from settings.static_values import EXPECTED_DATASETS_FOLDER
 name = 'default'
 
 DATASET = {
-    'dataset' : 'baseline-0-pan23-test',
+    'dataset' : 'baseline-0-pan23',
     'dataset_train_path_pair' : EXPECTED_DATASETS_FOLDER + "pan23_authorship-verification-training-dataset/pairs.jsonl",
     'dataset_train_path_truth': EXPECTED_DATASETS_FOLDER + "pan23_authorship-verification-training-dataset/truth.jsonl",
     'dataset_test_path_pair' : EXPECTED_DATASETS_FOLDER + "pan23-authorship-verification-test-dataset/pairs.jsonl",
     'dataset_test_path_truth' : EXPECTED_DATASETS_FOLDER + "pan23-authorship-verification-test-dataset/truth.jsonl"
 }
+# base experiment that does something
 
 clf = {
         'SVM' : [True],
-        'LR' : [False],
-        'NaiveBayes' : [False]
+        'LR' : [True],
+        'NaiveBayes' : [True]
     }
 
 svm_parameters = {
-            'svm_c': [10],
-            'svm_degree': [1],
-            'svm_kernel': ['poly']
+            'svm_c': [0.01, 0.1, 1, 10],
+            'svm_degree': [1,2,3],
+            'svm_kernel': ['linear', 'poly', 'rbf', 'sigmoid']
         }
 lr_parameters = {
-            'lr_c': [0.01],
+            'lr_c': [0.01, 0.1, 1, 10],
             'lr_penalty': ['elasticnet'],
             'lr_solver': ['saga'],
-            'lr_l1_ratio': [0.0],
+            'lr_l1_ratio': np.linspace(0, 1, 10),
             'lr_max_iter': [2000]
         }
 
 naiveBayes_parameters = {
-            'nb_alpha': [10],
-            'nb_fit_prior': [False]
+            'nb_alpha': [0.01, 0.1, 0.5, 1.0, 10],
+            'nb_fit_prior': [True, False]
         }
 
 author_id = 0
@@ -56,14 +57,14 @@ parameters_tfidf_bow = {
         'dataset' : DATASET,
         'name' : [name],
         'author_id' : author_id,
-        'feature_extractor_ngram_range': [(3,4)],
+        'feature_extractor_ngram_range': [(1,1),(2,2),(3,3),(4,4),(5,5),(1,2),(2,3),(3,4),(4,5)],
         'feature_extractor_max_features': [1000],
-        'feature_type': ['tfidf'],
-        'feature_analyzer': ['char'],
-        'samples': [8836],
-        'special_char': [False],
+        'feature_type': ['tfidf','BoW'],
+        'feature_analyzer': ['word', 'char', 'char_wb'],
+        'samples': [100],
+        'special_char': [True, False],
         'word_length_dist': [False],
-        'include_vocab_richness': [True],
+        'include_vocab_richness': [True, False],
         
         'svm_parameters' : svm_parameters,
         'lr_parameters': lr_parameters,
@@ -83,9 +84,9 @@ parameters_dependency = {
         'author_id' : author_id,
         'feature_type': ['dependency'],
         'samples': [870],
-        'special_char': [False],
+        'special_char': [True, False],
         'word_length_dist': [False],
-        'include_vocab_richness': [True],
+        'include_vocab_richness': [True, False],
         
         'svm_parameters' : svm_parameters,
         'lr_parameters': lr_parameters,
@@ -156,12 +157,18 @@ def base_experiment(parameters):
 
     return combinations
 
-def pan23_single_experiment_tfidf(name):
+def experiment_bert(name):
+    parameters_bert['name'] = [name]
+    return base_experiment(parameters_bert)
+
+def pan23_experiement_tfidf_bow(name):
     parameters_tfidf_bow['name'] = [name]
-    parameters_tfidf_bow['distribution_plot'] = [True]
     return base_experiment(parameters_tfidf_bow)
 
-def pan23_single_experiment_dependency(name):
+def experiement_dependency(name):
     parameters_dependency['name'] = [name]
-    parameters_dependency['distribution_plot'] = [True]
     return base_experiment(parameters_dependency)
+
+def experiement_word_embeddings(name):
+    parameters_word_embeddings['name'] = [name]
+    return base_experiment(parameters_word_embeddings)

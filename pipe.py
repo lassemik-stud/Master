@@ -9,7 +9,7 @@ from multiprocessing import Pool#, cpu_count
 
 from feature_extraction import TextPairFeatureExtractor
 from preprocess import load_or_process_data #, save_data_to_pickle, load_data_from_pickle, data_exists
-from evaluation import evaluations
+from evaluation import evaluations, get_best_auroc
 #from experiments.base_experiment import experiement_tfidf_bow, experiement_word_embeddings, experiement_dependency#, experiment_bert
 #from experiments.ra_experiment import experiement_tfidf_bow_ra, experiement_dependency_ra, experiement_word_embeddings_ra, experiment_bert_ra
 # from experiments.experiment_troubleshooting import th_experiement_tfidf_bow_ra
@@ -17,6 +17,7 @@ from evaluation import evaluations
 from experiments.pan20_baseline_0 import experiement_tfidf_bow, experiement_dependency
 from experiments.pan20_baseline_0_single_experiment import single_experiment_dependency
 from experiments.pan23_baseline_0_single_experiment import pan23_single_experiment_tfidf
+from experiments.pan23_baseline_0 import pan23_experiement_tfidf_bow
 
 # from sklearn.metrics import classification_report
 from sklearn.svm import SVC
@@ -224,6 +225,8 @@ def prepare_pipeline(arg):
 def run_experiment(arguments, _type):
     durations = []
     printLog.debug(f'Running {_type}-experiment with {len(arguments)} combination(s)')
+    current_auroc = 0
+    best_classifier = ''
     for i, argument in enumerate(arguments):
         start_time = time.time()
        
@@ -241,7 +244,9 @@ def run_experiment(arguments, _type):
         # Convert estimated time left to clock format
         eta = str(timedelta(seconds=int(estimated_time_left)))
         
-        printLog.info(f'Experiment {i+1} took {elapsed_time:.2f} seconds. Estimated time left: {eta} (H:M:S).')
+        current_auroc, best_classifier = get_best_auroc(arguments, current_auroc)
+
+        printLog.info(f'Experiment {i+1} took {elapsed_time:.2f} seconds. Estimated time left: {eta} (H:M:S). - best auroc: {current_auroc} - best classifier: {best_classifier}')  
 
 # _NAME = 'baseline-0-single-experiment-NB'
 # single_experiment_arguments = single_experiment(_NAME)
@@ -251,8 +256,12 @@ def run_experiment(arguments, _type):
 #experiement_dependency_arguments = experiement_dependency(_NAME)
 #run_experiment(experiement_dependency_arguments, _NAME)
 
-_name = 'b0-tfidf-pan23-test-experiment'
-experiment_pan23_tfidf_arguments = pan23_single_experiment_tfidf(_name)
+#_name = 'b0-tfidf-pan23-test-experiment'
+#experiment_pan23_tfidf_arguments = pan23_single_experiment_tfidf(_name)
+#run_experiment(experiment_pan23_tfidf_arguments, _name)
+
+_name = 'b0-tfidf-pan23-test-0'
+experiment_pan23_tfidf_arguments = pan23_experiement_tfidf_bow(_name)
 run_experiment(experiment_pan23_tfidf_arguments, _name)
 
 # _NAME_DEPENDENCY = 'baseline-0-dependency-experiment-NB'

@@ -3,6 +3,7 @@ import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 
 # from scipy.optimize import brentq
 # from scipy.interpolate import interp1d
@@ -166,6 +167,39 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, ra
     author_id = args.get('author_id')
     with open(f'{RESULTS_PATH}{str(name)}-{author_id}.jsonl', 'a', encoding='utf-8') as f:
         f.write(json.dumps(evaluation_dict) + '\n')
+
+def get_best_auroc(args, current_auroc):
+    name = args.get('name')
+    author_id = args.get('author_id')
+    
+    try:
+        with open(f'{RESULTS_PATH}{str(name)}-{author_id}.jsonl', 'r', encoding='utf-8') as f:
+            # Go to the end of the file
+            f.seek(0, os.SEEK_END)
+            
+            # Find the position 200 lines from the end (approximately)
+            position = f.tell()
+            lines_to_read = 200
+            while lines_to_read > 0 and position > 0:
+                position -= 1
+                f.seek(position)
+                if f.read(1) == '\n':
+                    lines_to_read -= 1
+            
+            # Read the remaining lines
+            lines = f.readlines()
+            
+            for line in lines:
+                evaluation = json.loads(line)
+                if evaluation['auroc'] > current_auroc:
+                    current_auroc = evaluation['auroc']
+                    best_classifier = evaluation['classifier']  # Store the entire evaluation
+        
+        return current_auroc, best_classifier
+    
+    except FileNotFoundError:
+        print(f"File not found: {RESULTS_PATH}{str(name)}-{author_id}.jsonl")
+        return None
 
 def distribution_plot(y_test, y_pred_proba, args, best_threshold):
     name = args.get('name')
