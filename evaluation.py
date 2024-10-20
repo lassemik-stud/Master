@@ -85,7 +85,7 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, ra
     if ra: 
         y_test, y_pred_proba, raw_y_test_pred, raw_y = tranform_ra(pcc_test_params,y_test,y_pred_proba, raw_c_test)
     best_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc = evaluation_metrics(y_test, y_pred_proba)
-    print(distribution_plot_v)
+
     if distribution_plot_v:
         if bool(distribution_plot_v):
             distribution_plot(y_test, y_pred_proba, args, best_threshold)

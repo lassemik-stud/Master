@@ -21,15 +21,15 @@ clf = {
     }
 
 svm_parameters = {
-            'svm_c': [10],
-            'svm_degree': [1],
-            'svm_kernel': ['poly']
+            'svm_c': [1],
+            'svm_degree': [3],
+            'svm_kernel': ['rbf']
         }
 lr_parameters = {
-            'lr_c': [1],
+            'lr_c': [0.01],
             'lr_penalty': ['elasticnet'],
             'lr_solver': ['saga'],
-            'lr_l1_ratio': [0.4444],
+            'lr_l1_ratio': [0.0],
             'lr_max_iter': [2000]
         }
 
@@ -84,9 +84,9 @@ parameters_dependency = {
         'author_id' : author_id,
         'feature_type': ['dependency'],
         'samples': [870],
-        'special_char': [True, False],
+        'special_char': [False],
         'word_length_dist': [False],
-        'include_vocab_richness': [True, False],
+        'include_vocab_richness': [True],
         
         'svm_parameters' : svm_parameters,
         'lr_parameters': lr_parameters,
@@ -157,8 +157,12 @@ def base_experiment(parameters):
 
     return combinations
 
-def single_experiment(name):
+def single_experiment_tfidf(name):
     parameters_tfidf_bow['name'] = [name]
     parameters_tfidf_bow['distribution_plot'] = [True]
     return base_experiment(parameters_tfidf_bow)
 
+def single_experiment_dependency(name):
+    parameters_dependency['name'] = [name]
+    parameters_dependency['distribution_plot'] = [True]
+    return base_experiment(parameters_dependency)

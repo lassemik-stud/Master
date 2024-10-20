@@ -15,7 +15,7 @@ from evaluation import evaluations
 # from experiments.experiment_troubleshooting import th_experiement_tfidf_bow_ra
 
 from experiments.pan20_baseline_0 import experiement_tfidf_bow, experiement_dependency
-from experiments.pan20_baseline_0_single_experiment import single_experiment
+from experiments.pan20_baseline_0_single_experiment import single_experiment_dependency
 
 # from sklearn.metrics import classification_report
 from sklearn.svm import SVC
@@ -243,9 +243,13 @@ def run_experiment(arguments, _type):
 # single_experiment_arguments = single_experiment(_NAME)
 # run_experiment(single_experiment_arguments, _NAME)
 
-_NAME = 'baseline-0-dependency-experiment'
-experiement_dependency_arguments = experiement_dependency(_NAME)
-run_experiment(experiement_dependency_arguments, _NAME)
+#_NAME = 'baseline-0-dependency-experiment'
+#experiement_dependency_arguments = experiement_dependency(_NAME)
+#run_experiment(experiement_dependency_arguments, _NAME)
+
+_NAME_DEPENDENCY = 'baseline-0-dependency-experiment-NB'
+experiement_dependency_arguments = single_experiment_dependency(_NAME_DEPENDENCY)
+run_experiment(experiement_dependency_arguments, _NAME_DEPENDENCY)
 
 #th_experiement_tfidf_bow_ra = th_experiement_tfidf_bow_ra('experiment_prod_pan20')
 #tfidf_arguments = experiement_tfidf_bow('experiment_prod_pan20-super')
