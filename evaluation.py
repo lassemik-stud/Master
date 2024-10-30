@@ -175,23 +175,19 @@ def get_best_auroc(args, current_auroc):
     
     try:
         with open(f'{RESULTS_PATH}{str(name)}-{author_id}.jsonl', 'r', encoding='utf-8') as f:
-            # Go to the end of the file
-            f.seek(0, os.SEEK_END)
-            
-            # Find the position 200 lines from the end (approximately)
-            position = f.tell()
-            lines_to_read = 200
-            while lines_to_read > 0 and position > 0:
-                position -= 1
-                f.seek(position)
-                if f.read(1) == '\n':
-                    lines_to_read -= 1
-            
-            # Read the remaining lines
-            lines = f.readlines()
-            
-            for line in lines:
-                evaluation = json.loads(line)
+            last_200_lines = []
+            for line in f:
+                line = line.strip()
+                if line:  # Check if the line is not empty
+                    try:
+                        evaluation = json.loads(line)
+                        last_200_lines.append(evaluation)
+                        if len(last_200_lines) > 200:
+                            last_200_lines.pop(0)  # Keep only the last 200
+                    except json.JSONDecodeError:
+                        print(f"Skipping invalid JSON: {line}") 
+
+            for evaluation in last_200_lines:
                 if evaluation['auroc'] > current_auroc:
                     current_auroc = evaluation['auroc']
                     best_classifier = evaluation['classifier']  # Store the entire evaluation

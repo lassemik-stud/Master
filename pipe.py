@@ -13,11 +13,17 @@ from evaluation import evaluations, get_best_auroc
 #from experiments.base_experiment import experiement_tfidf_bow, experiement_word_embeddings, experiement_dependency#, experiment_bert
 #from experiments.ra_experiment import experiement_tfidf_bow_ra, experiement_dependency_ra, experiement_word_embeddings_ra, experiment_bert_ra
 # from experiments.experiment_troubleshooting import th_experiement_tfidf_bow_ra
+from experiments.pan20_b0_LR_single_experiment import pan20_b0_LR_single_experiment_tfidf, pan20_b0_LR_single_experiment_dependency
+from experiments.pan20_b0_NB_single_experiment import pan20_b0_NB_single_experiment_tfidf, pan20_b0_NB_single_experiment_dependency
+from experiments.pan20_b0_SVM_single_experiment import pan20_b0_SVM_single_experiment_tfidf, pan20_b0_SVM_single_experiment_dependency
 
-from experiments.pan20_baseline_0 import experiement_tfidf_bow, experiement_dependency
-from experiments.pan20_baseline_0_single_experiment import single_experiment_dependency
-from experiments.pan23_baseline_0_single_experiment import pan23_single_experiment_tfidf
-from experiments.pan23_baseline_0 import pan23_experiement_tfidf_bow
+from experiments.pan21_b0_LR_single_experiment import pan21_b0_LR_single_experiment_tfidf, pan21_b0_LR_single_experiment_dependency
+from experiments.pan21_b0_NB_single_experiment import pan21_b0_NB_single_experiment_tfidf, pan21_b0_NB_single_experiment_dependency
+from experiments.pan21_b0_SVM_single_experiment import pan21_b0_SVM_single_experiment_tfidf, pan21_b0_SVM_single_experiment_dependency
+
+from experiments.pan23_b0_LR_single_experiment import pan23_b0_LR_single_experiment_dependency, pan23_b0_LR_single_experiment_tfidf
+from experiments.pan23_b0_NB_single_experiment import pan23_b0_NB_single_experiment_dependency, pan23_b0_NB_single_experiment_tfidf
+from experiments.pan23_b0_SVM_single_experiment import pan23_b0_SVM_single_experiment_dependency, pan23_b0_SVM_single_experiment_tfidf
 
 # from sklearn.metrics import classification_report
 from sklearn.svm import SVC
@@ -248,6 +254,79 @@ def run_experiment(arguments, _type):
 
         printLog.info(f'Experiment {i+1} took {elapsed_time:.2f} seconds. Estimated time left: {eta} (H:M:S). - best auroc: {current_auroc} - best classifier: {best_classifier}')  
 
+# _NAME = 'pan20_b0_LR_single_experiment_TFIDF'
+# arguments = pan20_b0_LR_single_experiment_tfidf(_NAME)
+# run_experiment(arguments, _NAME)
+
+# _NAME = 'pan20_b0_NB_single_experiment_TFIDF'
+# arguments = pan20_b0_NB_single_experiment_tfidf(_NAME)
+# run_experiment(arguments, _NAME)
+
+# _NAME = 'pan20_b0_SVM_single_experiment_TFIDF'
+# arguments = pan20_b0_SVM_single_experiment_tfidf(_NAME)
+# run_experiment(arguments, _NAME)
+
+_NAME = 'pan23_b0_LR_single_experiment_TFIDF'
+arguments = pan23_b0_LR_single_experiment_tfidf(_NAME)
+run_experiment(arguments, _NAME)
+
+_NAME = 'pan23_b0_NB_single_experiment_TFIDF'
+arguments = pan23_b0_NB_single_experiment_tfidf(_NAME)
+run_experiment(arguments, _NAME)
+
+_NAME = 'pan23_b0_SVM_single_experiment_TFIDF'
+arguments = pan23_b0_SVM_single_experiment_tfidf(_NAME)
+run_experiment(arguments, _NAME)
+
+_NAME = 'pan23_b0_LR_single_experiment_dependency'
+arguments = pan23_b0_LR_single_experiment_dependency(_NAME)
+run_experiment(arguments, _NAME)
+
+_NAME = 'pan23_b0_NB_single_experiment_dependency'
+arguments = pan23_b0_NB_single_experiment_dependency(_NAME)
+run_experiment(arguments, _NAME)
+
+_NAME = 'pan23_b0_SVM_single_experiment_dependency'
+arguments = pan23_b0_SVM_single_experiment_dependency(_NAME)
+run_experiment(arguments, _NAME)
+
+
+# _NAME = 'pan21_b0_LR_single_experiment_TFIDF'
+# arguments = pan21_b0_LR_single_experiment_tfidf(_NAME)
+# run_experiment(arguments, _NAME)
+
+# _NAME = 'pan21_b0_NB_single_experiment_TFIDF'
+# arguments = pan21_b0_NB_single_experiment_tfidf(_NAME)
+# run_experiment(arguments, _NAME)
+
+# _NAME = 'pan21_b0_SVM_single_experiment_TFIDF'
+# arguments = pan21_b0_SVM_single_experiment_tfidf(_NAME)
+# run_experiment(arguments, _NAME)
+
+# _NAME = 'pan20_b0_LR_single_experiment_dependency'
+# arguments = pan20_b0_LR_single_experiment_dependency(_NAME)
+# run_experiment(arguments, _NAME)
+
+# _NAME = 'pan20_b0_NB_single_experiment_dependency'
+# arguments = pan20_b0_NB_single_experiment_dependency(_NAME)
+# run_experiment(arguments, _NAME)
+
+# _NAME = 'pan20_b0_SVM_single_experiment_dependency'
+# arguments = pan20_b0_SVM_single_experiment_dependency(_NAME)
+# run_experiment(arguments, _NAME)
+
+# _NAME = 'pan21_b0_LR_single_experiment_dependency'
+# arguments = pan21_b0_LR_single_experiment_dependency(_NAME)
+# run_experiment(arguments, _NAME)
+
+# _NAME = 'pan21_b0_NB_single_experiment_dependency'
+# arguments = pan21_b0_NB_single_experiment_dependency(_NAME)
+# run_experiment(arguments, _NAME)
+
+# _NAME = 'pan21_b0_SVM_single_experiment_dependency'
+# arguments = pan21_b0_SVM_single_experiment_dependency(_NAME)
+# run_experiment(arguments, _NAME)
+
 # _NAME = 'baseline-0-single-experiment-NB'
 # single_experiment_arguments = single_experiment(_NAME)
 # run_experiment(single_experiment_arguments, _NAME)
@@ -260,9 +339,13 @@ def run_experiment(arguments, _type):
 #experiment_pan23_tfidf_arguments = pan23_single_experiment_tfidf(_name)
 #run_experiment(experiment_pan23_tfidf_arguments, _name)
 
-_name = 'b0-tfidf-pan23-test-0'
-experiment_pan23_tfidf_arguments = pan23_experiement_tfidf_bow(_name)
-run_experiment(experiment_pan23_tfidf_arguments, _name)
+# _name = 'b0-tfidf-pan23-test-0'
+# experiment_pan23_tfidf_arguments = pan23_experiement_tfidf_bow(_name)
+# run_experiment(experiment_pan23_tfidf_arguments, _name)
+
+# _name = 'b0-tfidf-pan23-test-single-experiment'
+# experiment_pan23_tfidf_arguments = pan23_single_experiment_tfidf(_name)
+# run_experiment(experiment_pan23_tfidf_arguments, _name)
 
 # _NAME_DEPENDENCY = 'baseline-0-dependency-experiment-NB'
 # experiement_dependency_arguments = single_experiment_dependency(_NAME_DEPENDENCY)

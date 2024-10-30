@@ -12,6 +12,7 @@ DATASET = {
     'dataset_test_path_pair' : EXPECTED_DATASETS_FOLDER + "pan23-authorship-verification-test-dataset/pairs.jsonl",
     'dataset_test_path_truth' : EXPECTED_DATASETS_FOLDER + "pan23-authorship-verification-test-dataset/truth.jsonl"
 }
+# base experiment that does something
 
 clf = {
         'SVM' : [True],
@@ -20,22 +21,21 @@ clf = {
     }
 
 svm_parameters = {
-            'svm_c': [0.1],
-            'svm_degree': [3],
+            'svm_c': [10],
+            'svm_degree': [1],
             'svm_kernel': ['poly']
         }
-
 lr_parameters = {
-            'lr_c': [0.01],
-            'lr_penalty': ['elasticnet'],
-            'lr_solver': ['saga'],
+            'lr_c': [0.0],
+            'lr_penalty': ['Null'],
+            'lr_solver': ['Null'],
             'lr_l1_ratio': [0.0],
-            'lr_max_iter': [2000]
+            'lr_max_iter': [0]
         }
 
 naiveBayes_parameters = {
-            'nb_alpha': [10],
-            'nb_fit_prior': [False]
+            'nb_alpha': [0],
+            'nb_fit_prior': [0]
         }
 
 author_id = 0
@@ -57,14 +57,14 @@ parameters_tfidf_bow = {
         'dataset' : DATASET,
         'name' : [name],
         'author_id' : author_id,
-        'feature_extractor_ngram_range': [(4,5)],
+        'feature_extractor_ngram_range': [(3,4)],
         'feature_extractor_max_features': [1000],
         'feature_type': ['tfidf'],
         'feature_analyzer': ['char'],
-        'samples': [8836],
+        'samples': [1000],
         'special_char': [False],
         'word_length_dist': [False],
-        'include_vocab_richness': [False],
+        'include_vocab_richness': [True],
         
         'svm_parameters' : svm_parameters,
         'lr_parameters': lr_parameters,
@@ -83,7 +83,7 @@ parameters_dependency = {
         'name' : [name],
         'author_id' : author_id,
         'feature_type': ['dependency'],
-        'samples': [870],
+        'samples': [1000],
         'special_char': [False],
         'word_length_dist': [False],
         'include_vocab_richness': [True],
@@ -157,12 +157,12 @@ def base_experiment(parameters):
 
     return combinations
 
-def pan23_single_experiment_tfidf(name):
+def pan23_b0_SVM_single_experiment_tfidf(name):
     parameters_tfidf_bow['name'] = [name]
     parameters_tfidf_bow['distribution_plot'] = [True]
     return base_experiment(parameters_tfidf_bow)
 
-def pan23_single_experiment_dependency(name):
+def pan23_b0_SVM_single_experiment_dependency(name):
     parameters_dependency['name'] = [name]
     parameters_dependency['distribution_plot'] = [True]
     return base_experiment(parameters_dependency)
