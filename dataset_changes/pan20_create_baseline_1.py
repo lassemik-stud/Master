@@ -6,7 +6,7 @@ import os
 import hashlib
 
 DATASET_PATH = '../../datasets/'
-DATASET_CREATE_PATH = 'pan20-dataset-baseline-1'
+DATASET_CREATE_PATH = 'pan20-dataset-baseline-15'
 # Datset for focusing on one author, but does not add the texts together as many times as possible. Gives about 20 samples - 10 SA, 10 DA were one author is present in all of them. 
 
 
@@ -67,8 +67,7 @@ def main(author_id_list, truth_path, text_path, _type):
     print("Loading json files | finished")
 
     for author_i, author_id in enumerate(author_id_list):
-        
-        # Assuming the existence of a function to filter texts by author ID
+    
         same_author_data, different_author_data, all_different_authors = filter_texts_by_author_id(author_id, truth_data, text_data)
 
         same_pairs, different_pairs = generate_pairs(same_author_data, different_author_data)
@@ -76,7 +75,6 @@ def main(author_id_list, truth_path, text_path, _type):
         new_truth_entries = []
         
         # Generate entries for same authorship
-        
         for pair in same_pairs:
             entry_id = str(uuid.uuid4())
             fandoms = pair['fandoms']
@@ -123,7 +121,7 @@ def main(author_id_list, truth_path, text_path, _type):
         path = f'{DATASET_PATH}{DATASET_CREATE_PATH}/pan20-{_type}-all-different-authors.jsonl'
         if not os.path.exists(path):
             write_jsonl_file(path, all_different_authors)
-        print(f"{(author_i + 1)} | {len(author_id_list)} \t Finished generating {_type} pairs for author {author_id}")
+        print(f"{(author_i + 1)} | {len(author_id_list)} \t Finished generating {_type} pairs for author {author_id} \t| {len(new_text_entries), len(new_truth_entries)}")
     
 # This function needs to return data with associated fandoms and text pairs for both same and different authors
 def filter_texts_by_author_id(author_id, truth_data, text_data):

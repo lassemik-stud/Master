@@ -2,7 +2,7 @@ import itertools
 import numpy as np
 
 from settings.static_values import EXPECTED_DATASETS_FOLDER
-from dataset_changes.pan20_create_baseline_2 import DATASET_CREATE_PATH
+from dataset_changes.pan20_create_baseline_15 import DATASET_CREATE_PATH
 
 name = 'default'
 

@@ -13,17 +13,7 @@ from evaluation import evaluations, get_best_auroc
 #from experiments.base_experiment import experiement_tfidf_bow, experiement_word_embeddings, experiement_dependency#, experiment_bert
 #from experiments.ra_experiment import experiement_tfidf_bow_ra, experiement_dependency_ra, experiement_word_embeddings_ra, experiment_bert_ra
 # from experiments.experiment_troubleshooting import th_experiement_tfidf_bow_ra
-from experiments.pan20_b0_LR_single_experiment import pan20_b0_LR_single_experiment_tfidf, pan20_b0_LR_single_experiment_dependency
-from experiments.pan20_b0_NB_single_experiment import pan20_b0_NB_single_experiment_tfidf, pan20_b0_NB_single_experiment_dependency
-from experiments.pan20_b0_SVM_single_experiment import pan20_b0_SVM_single_experiment_tfidf, pan20_b0_SVM_single_experiment_dependency
 
-from experiments.pan21_b0_LR_single_experiment import pan21_b0_LR_single_experiment_tfidf, pan21_b0_LR_single_experiment_dependency
-from experiments.pan21_b0_NB_single_experiment import pan21_b0_NB_single_experiment_tfidf, pan21_b0_NB_single_experiment_dependency
-from experiments.pan21_b0_SVM_single_experiment import pan21_b0_SVM_single_experiment_tfidf, pan21_b0_SVM_single_experiment_dependency
-
-from experiments.pan23_b0_LR_single_experiment import pan23_b0_LR_single_experiment_dependency, pan23_b0_LR_single_experiment_tfidf
-from experiments.pan23_b0_NB_single_experiment import pan23_b0_NB_single_experiment_dependency, pan23_b0_NB_single_experiment_tfidf
-from experiments.pan23_b0_SVM_single_experiment import pan23_b0_SVM_single_experiment_dependency, pan23_b0_SVM_single_experiment_tfidf
 
 # from sklearn.metrics import classification_report
 from sklearn.svm import SVC
@@ -254,147 +244,55 @@ def run_experiment(arguments, _type):
 
         printLog.info(f'Experiment {i+1} took {elapsed_time:.2f} seconds. Estimated time left: {eta} (H:M:S). - best auroc: {current_auroc} - best classifier: {best_classifier}')  
 
-# _NAME = 'pan20_b0_LR_single_experiment_TFIDF'
-# arguments = pan20_b0_LR_single_experiment_tfidf(_NAME)
-# run_experiment(arguments, _NAME)
-
-# _NAME = 'pan20_b0_NB_single_experiment_TFIDF'
-# arguments = pan20_b0_NB_single_experiment_tfidf(_NAME)
-# run_experiment(arguments, _NAME)
-
-# _NAME = 'pan20_b0_SVM_single_experiment_TFIDF'
-# arguments = pan20_b0_SVM_single_experiment_tfidf(_NAME)
-# run_experiment(arguments, _NAME)
-
-_NAME = 'pan23_b0_LR_single_experiment_TFIDF'
-arguments = pan23_b0_LR_single_experiment_tfidf(_NAME)
-run_experiment(arguments, _NAME)
-
-_NAME = 'pan23_b0_NB_single_experiment_TFIDF'
-arguments = pan23_b0_NB_single_experiment_tfidf(_NAME)
-run_experiment(arguments, _NAME)
-
-_NAME = 'pan23_b0_SVM_single_experiment_TFIDF'
-arguments = pan23_b0_SVM_single_experiment_tfidf(_NAME)
-run_experiment(arguments, _NAME)
-
-_NAME = 'pan23_b0_LR_single_experiment_dependency'
-arguments = pan23_b0_LR_single_experiment_dependency(_NAME)
-run_experiment(arguments, _NAME)
-
-_NAME = 'pan23_b0_NB_single_experiment_dependency'
-arguments = pan23_b0_NB_single_experiment_dependency(_NAME)
-run_experiment(arguments, _NAME)
-
-_NAME = 'pan23_b0_SVM_single_experiment_dependency'
-arguments = pan23_b0_SVM_single_experiment_dependency(_NAME)
-run_experiment(arguments, _NAME)
-
-
-# _NAME = 'pan21_b0_LR_single_experiment_TFIDF'
-# arguments = pan21_b0_LR_single_experiment_tfidf(_NAME)
-# run_experiment(arguments, _NAME)
-
-# _NAME = 'pan21_b0_NB_single_experiment_TFIDF'
-# arguments = pan21_b0_NB_single_experiment_tfidf(_NAME)
-# run_experiment(arguments, _NAME)
-
-# _NAME = 'pan21_b0_SVM_single_experiment_TFIDF'
-# arguments = pan21_b0_SVM_single_experiment_tfidf(_NAME)
-# run_experiment(arguments, _NAME)
-
-# _NAME = 'pan20_b0_LR_single_experiment_dependency'
-# arguments = pan20_b0_LR_single_experiment_dependency(_NAME)
-# run_experiment(arguments, _NAME)
-
-# _NAME = 'pan20_b0_NB_single_experiment_dependency'
-# arguments = pan20_b0_NB_single_experiment_dependency(_NAME)
-# run_experiment(arguments, _NAME)
-
-# _NAME = 'pan20_b0_SVM_single_experiment_dependency'
-# arguments = pan20_b0_SVM_single_experiment_dependency(_NAME)
-# run_experiment(arguments, _NAME)
-
-# _NAME = 'pan21_b0_LR_single_experiment_dependency'
-# arguments = pan21_b0_LR_single_experiment_dependency(_NAME)
-# run_experiment(arguments, _NAME)
-
-# _NAME = 'pan21_b0_NB_single_experiment_dependency'
-# arguments = pan21_b0_NB_single_experiment_dependency(_NAME)
-# run_experiment(arguments, _NAME)
-
-# _NAME = 'pan21_b0_SVM_single_experiment_dependency'
-# arguments = pan21_b0_SVM_single_experiment_dependency(_NAME)
-# run_experiment(arguments, _NAME)
-
-# _NAME = 'baseline-0-single-experiment-NB'
-# single_experiment_arguments = single_experiment(_NAME)
-# run_experiment(single_experiment_arguments, _NAME)
-
-#_NAME = 'baseline-0-dependency-experiment'
-#experiement_dependency_arguments = experiement_dependency(_NAME)
-#run_experiment(experiement_dependency_arguments, _NAME)
-
-#_name = 'b0-tfidf-pan23-test-experiment'
-#experiment_pan23_tfidf_arguments = pan23_single_experiment_tfidf(_name)
-#run_experiment(experiment_pan23_tfidf_arguments, _name)
-
-# _name = 'b0-tfidf-pan23-test-0'
-# experiment_pan23_tfidf_arguments = pan23_experiement_tfidf_bow(_name)
-# run_experiment(experiment_pan23_tfidf_arguments, _name)
-
-# _name = 'b0-tfidf-pan23-test-single-experiment'
-# experiment_pan23_tfidf_arguments = pan23_single_experiment_tfidf(_name)
-# run_experiment(experiment_pan23_tfidf_arguments, _name)
-
-# _NAME_DEPENDENCY = 'baseline-0-dependency-experiment-NB'
-# experiement_dependency_arguments = single_experiment_dependency(_NAME_DEPENDENCY)
-# run_experiment(experiement_dependency_arguments, _NAME_DEPENDENCY)
-
-#th_experiement_tfidf_bow_ra = th_experiement_tfidf_bow_ra('experiment_prod_pan20')
-#tfidf_arguments = experiement_tfidf_bow('experiment_prod_pan20-super')
-#word_embeddings_arguments = experiement_word_embeddings('experiment_prod_pan20-super')
-#dependency_arguments = experiement_dependency('experiment_prod_pan20-super')
-#bert_arguments = experiemtn_bert_m()
-
-##tfidf_ra_arguments = experiement_tfidf_bow_ra()
-#word_embeddings_arguments_ra = experiement_word_embeddings_ra()
-#dependency_arguments_ra = experiement_dependency_ra()
-#bert_arguments_ra = experiment_bert_ra()
-
-#run_experiment(th_experiement_tfidf_bow_ra, 'th_tfidf_ra')
-
-#tfidf_arguments = experiement_tfidf_bow('b0-tfidf-experiment')
-
-#run_experiment(tfidf_arguments, 'b0-tfidf-experiment')
-#run_experiment(word_embeddings_arguments, 'word_embeddings')
-#run_experiment(dependency_arguments, 'dependency')
-
-# #run_experiment(bert_arguments_ra, 'bert-ra')
-# run_experiment(tfidf_ra_arguments, 'tfidf-ra')
-# run_experiment(word_embeddings_arguments_ra, 'word_embeddings-ra')
-# run_experiment(dependency_arguments_ra, 'dependency-ra')
-
-# #run_experiment(word_embeddings_arguments, 'word_embeddings')
-#run_experiment(dependency_arguments, 'dependency')
-
-#for arg in arguments:
+def pan20_b1_tests():
+    from experiments.b1.pan20_baseline_1_LR import pan20_b1_LR_tfidf, pan20_b1_LR_dependency
+    from experiments.b1.pan20_baseline_1_NB import pan20_b1_NB_tfidf, pan20_b1_NB_dependency
+    from experiments.b1.pan20_baseline_1_SVM import pan20_b1_SVM_tfidf, pan20_b1_SVM_dependency
     
-    #prepare_pipeline(arg)
- #   exit()
-    
-        # # Preload the data if it has been processed before
-        # #root_path = '../pre_data/'
-        # #path = f'{root_path}-svc_c-{svc_c}-{svc_degree}-{str(cutoff)}-{str(sentence_size)}-{k}-{d}-ft-{feature_type}-fa{feature_analyzer}-ngram-{str(feature_extractor_ngram_range[0])}-{str(feature_extractor_ngram_range[1])}-{feature_extractor_max_features}-y_pred.pkl'
-        # #if data_exists(path):
-        # #    y_pred = load_data_from_pickle(path)
-        # #    printLog.debug('Classification data loaded from pickle files')
-        # #else:
-        # pipeline.fit(x_train, y_train)
-        # y_pred_proba = pipeline.predict_proba(x_test)
-        # y_pred = pipeline.predict(x_test)
-        # #    save_data_to_pickle(y_pred, path)
-        # #   printLog.debug('Classification data saved to pickle files')
-        
-        # evaluations(y_test, y_pred_proba[:, 1], arg)
-        # #distribution_plot(y_test, y_pred_proba[:, 1], arg)
+    _NAME = 'pan20_b1_LR_dependency'
+    run_experiment(pan20_b1_LR_dependency(_NAME), _NAME)
+
+    _NAME = 'pan20_b1_NB_dependency'
+    run_experiment(pan20_b1_NB_dependency(_NAME), _NAME)
+
+    _NAME = 'pan20_b1_SVM_dependency'
+    run_experiment(pan20_b1_SVM_dependency(_NAME), _NAME)
+
+    _NAME = 'pan20_b1_LR_tfidf'
+    run_experiment(pan20_b1_LR_tfidf(_NAME), _NAME)
+
+    _NAME = 'pan20_b1_NB_tfidf'
+    run_experiment(pan20_b1_NB_tfidf(_NAME), _NAME) 
+
+    _NAME = 'pan20_b1_SVM_tfidf'
+    run_experiment(pan20_b1_SVM_tfidf(_NAME), _NAME)
+
+def pan20_b15_test():
+    from experiments.b15.pan20_baseline_1_LR import pan20_b15_LR_tfidf, pan20_b15_LR_dependency
+    from experiments.b15.pan20_baseline_1_NB import pan20_b15_NB_tfidf, pan20_b15_NB_dependency
+    from experiments.b15.pan20_baseline_1_SVM import pan20_b15_SVM_tfidf, pan20_b15_SVM_dependency
+
+    _NAME = 'pan20_b15_LR_dependency'
+    run_experiment(pan20_b15_LR_dependency(_NAME), _NAME)
+
+    _NAME = 'pan20_b15_NB_dependency'
+    run_experiment(pan20_b15_NB_dependency(_NAME), _NAME)
+
+    _NAME = 'pan20_b15_SVM_dependency'
+    run_experiment(pan20_b15_SVM_dependency(_NAME), _NAME)
+
+    _NAME = 'pan20_b15_LR_tfidf'
+    run_experiment(pan20_b15_LR_tfidf(_NAME), _NAME)
+
+    _NAME = 'pan20_b15_NB_tfidf'
+    run_experiment(pan20_b15_NB_tfidf(_NAME), _NAME) 
+
+    _NAME = 'pan20_b15_SVM_tfidf'
+    run_experiment(pan20_b15_SVM_tfidf(_NAME), _NAME)
+
+def main():
+    #pan20_b1_tests()
+    pan20_b15_test()
+
+if __name__ == '__main__':
+    main()

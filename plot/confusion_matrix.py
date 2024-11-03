@@ -4,6 +4,22 @@ import numpy as np
 import json
 import sys
 import os
+import glob
+
+def convert_json_booleans(obj):
+    """
+    Recursively converts lowercase "true" and "false" in a JSON object to Python booleans.
+    """
+    if isinstance(obj, dict):
+        return {k: convert_json_booleans(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_json_booleans(elem) for elem in obj]
+    elif obj == 'false': 
+        return False
+    elif obj == 'true':  
+        return True
+    else:
+        return obj
 
 def save_confusion_matrix(input_file, output_dir="../../results/plot/"):
   """
@@ -17,7 +33,7 @@ def save_confusion_matrix(input_file, output_dir="../../results/plot/"):
 
   try:
     with open(input_file, 'r') as f:
-      data = json.load(f)
+      data = json.load(f, object_hook=convert_json_booleans)
       confusion_matrix_data = data["confusion_matrix"]
 
       # Extract values from the confusion matrix dictionary
@@ -31,7 +47,7 @@ def save_confusion_matrix(input_file, output_dir="../../results/plot/"):
 
       # Generate the plot
       plt.figure(figsize=(8, 6))
-      sns.heatmap(cm, annot=True, fmt="d", cmap="Blues")
+      sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", annot_kws={"size": 30})
       plt.xlabel("Predicted label")
       plt.ylabel("True label")
       plt.title("Confusion Matrix")
@@ -55,8 +71,14 @@ def save_confusion_matrix(input_file, output_dir="../../results/plot/"):
     print(f"An error occurred: {e}")
 
 if __name__ == "__main__":
-  if len(sys.argv) != 2:
-    print("Usage: python script_name.py <input_file>")
+  print(len(sys.argv))
+  if len(sys.argv) != 3:  # Corrected the number of arguments to 3
+    print("Usage: python script_name.py <input_glob> <output_dir>")
+    print('Example: python3 confusion_matrix.py "../../results/pan*_b0_*.jsonl" "../../results/plot/CM/"') 
   else:
-    input_file = sys.argv[1]
-    save_confusion_matrix(input_file)
+    input_glob = sys.argv[1]
+    output_dir = sys.argv[2]
+
+    for input_file in glob.glob(input_glob):
+      print(f"Processing file: {input_file}")
+      save_confusion_matrix(input_file, output_dir)

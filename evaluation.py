@@ -50,8 +50,6 @@ def evaluation_metrics(y_test, y_pred_proba):
         best_precision = precision[ix]
         best_recall = recall[ix]
 
-        
-
         if len(set(y_pred_proba))== 2: 
             y_pred_optimal = y_pred_proba
         else:
@@ -76,7 +74,7 @@ def evaluation_metrics(y_test, y_pred_proba):
         # Calculate AUROC
         auroc = roc_auc_score(y_test, y_pred_proba)
 
-        return best_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc
+        return eer_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc
 
 def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, raw_c_test):
     distribution_plot_v = args.get('distribution_plot')
@@ -191,6 +189,8 @@ def get_best_auroc(args, current_auroc):
                 if evaluation['auroc'] > current_auroc:
                     current_auroc = evaluation['auroc']
                     best_classifier = evaluation['classifier']  # Store the entire evaluation
+                else:
+                    best_classifier = ""
         
         return current_auroc, best_classifier
     
