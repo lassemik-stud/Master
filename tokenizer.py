@@ -69,8 +69,8 @@ def spacy_tokenizer(arg):
     ut = pair[1]
 
     # Tokenize the texts
-    doc_kt = nlp(kt)
-    doc_ut = nlp(ut)
+    docs = nlp.pipe([kt, ut])
+    doc_kt, doc_ut = list(docs)
 
     # Calculate word length distributions for each text
     word_length_dist_kt = calculate_word_length_distribution(kt) if word_length_dist_flag else 0

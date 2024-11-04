@@ -52,6 +52,7 @@ def evaluation_metrics(y_test, y_pred_proba):
 
         if len(set(y_pred_proba))== 2: 
             y_pred_optimal = y_pred_proba
+            eer_threshold = "N/A"
         else:
             fpr, tpr, threshold_roc = roc_curve(y_test, y_pred_proba)
             fnr = 1 - tpr

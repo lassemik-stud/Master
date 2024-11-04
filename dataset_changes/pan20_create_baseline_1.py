@@ -6,7 +6,7 @@ import os
 import hashlib
 
 DATASET_PATH = '../../datasets/'
-DATASET_CREATE_PATH = 'pan20-dataset-baseline-15'
+DATASET_CREATE_PATH = 'pan20-dataset-baseline-1'
 # Datset for focusing on one author, but does not add the texts together as many times as possible. Gives about 20 samples - 10 SA, 10 DA were one author is present in all of them. 
 
 

@@ -124,19 +124,19 @@ def naive_bayes(naive_bayes_combination, text_pair_feature_extractor_prepopulate
     run_pipeline(pipeline_nb, x_train, y_train, x_test, y_test, current_arg, 'NaiveBayes', pcc_test_param, raw_c_test)
 
 def run_svm(clf_svm_flag, svm_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test):
-    if bool(clf_svm_flag[0]):
+    if (clf_svm_flag):
         printLog.debug(f'Running SVM with {len(svm_combinations)} combination(s)')
         with Pool() as p:
             p.map(svm_wrapper, [(svm_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param,raw_c_test) for svm_combination in svm_combinations])
 
 def run_lr(clf_lr_flag, lr_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test):
-    if bool(clf_lr_flag[0]):
+    if (clf_lr_flag):
         printLog.debug(f'Running LR with {len(lr_combinations)} combination(s)')
         with Pool() as p:
             p.map(lr_wrapper, [(lr_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test) for lr_combination in lr_combinations])
 
 def run_nb(clf_nb_flag, naive_bayes_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test):
-    if bool(clf_nb_flag[0]):
+    if (clf_nb_flag):
         printLog.debug(f'Running Naive Bayes with {len(naive_bayes_combinations)} combination(s)')
         with Pool() as p:
             p.map(naive_bayes_wrapper, [(naive_bayes_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param,raw_c_test) for naive_bayes_combination in naive_bayes_combinations])
@@ -167,9 +167,9 @@ def prepare_pipeline(arg):
 
     # Classifier parameters
     clfs = arg.get('clf')
-    clf_svm_flag = clfs.get('SVM')
-    clf_lr_flag = clfs.get('LR')
-    clf_nb_flag = clfs.get('NaiveBayes')
+    clf_svm_flag = bool(clfs.get('SVM')[0])
+    clf_lr_flag = (clfs.get('LR')[0])
+    clf_nb_flag = (clfs.get('NaiveBayes')[0])
 
     svm_parameters = arg.get('svm_parameters')
 
@@ -198,25 +198,25 @@ def prepare_pipeline(arg):
     if ra: 
         printLog.debug(f'k: {k}, d: {d}, s_s: {sentence_size}, pcc_r: {pcc_rate}, pcc_part_size: {pcc_part_size}, author_id: {author_id}')
     # Initialize the pipelines
-    # if clf_svm_flag:
-    #     for svm_i, svm_combination in enumerate(svm_combinations):
-    #         printLog.debug(f'Running SVM with combination {svm_i+1} of {len(svm_combinations)}')
-    #         svm(svm_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    if (clf_svm_flag):
+        for svm_i, svm_combination in enumerate(svm_combinations):
+            printLog.debug(f'Running SVM with combination {svm_i+1} of {len(svm_combinations)}')
+            svm(svm_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
-    #if clf_lr_flag:
-    #    for lr_i, lr_combination in enumerate(lr_combinations):
-    #        printLog.debug(f'Running LR with combination {lr_i+1} of {len(lr_combinations)}')
-    #        lr(lr_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    if (clf_lr_flag):
+       for lr_i, lr_combination in enumerate(lr_combinations):
+           printLog.debug(f'Running LR with combination {lr_i+1} of {len(lr_combinations)}')
+           lr(lr_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
-    # if clf_nb_flag:
-    #     for nb_i, naive_bayes_combination in enumerate(naive_bayes_combinations):
-    #         printLog.debug(f'Running Naive Bayes with combination {nb_i+1} of {len(naive_bayes_combinations)}')
-    #         naive_bayes(naive_bayes_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    if (clf_nb_flag):
+        for nb_i, naive_bayes_combination in enumerate(naive_bayes_combinations):
+            printLog.debug(f'Running Naive Bayes with combination {nb_i+1} of {len(naive_bayes_combinations)}')
+            naive_bayes(naive_bayes_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
-    with ProcessPoolExecutor() as executor:
-        executor.submit(run_svm, clf_svm_flag, svm_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
-        executor.submit(run_lr, clf_lr_flag, lr_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
-        executor.submit(run_nb, clf_nb_flag, naive_bayes_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    # with ProcessPoolExecutor() as executor:
+    #     executor.submit(run_svm, clf_svm_flag, svm_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    #     executor.submit(run_lr, clf_lr_flag, lr_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    #     executor.submit(run_nb, clf_nb_flag, naive_bayes_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
 def run_experiment(arguments, _type):
     durations = []
@@ -240,7 +240,7 @@ def run_experiment(arguments, _type):
         # Convert estimated time left to clock format
         eta = str(timedelta(seconds=int(estimated_time_left)))
         
-        current_auroc, best_classifier = get_best_auroc(arguments, current_auroc)
+        #current_auroc, best_classifier = get_best_auroc(arguments, current_auroc)
 
         printLog.info(f'Experiment {i+1} took {elapsed_time:.2f} seconds. Estimated time left: {eta} (H:M:S). - best auroc: {current_auroc} - best classifier: {best_classifier}')  
 
@@ -290,9 +290,26 @@ def pan20_b15_test():
     _NAME = 'pan20_b15_SVM_tfidf'
     run_experiment(pan20_b15_SVM_tfidf(_NAME), _NAME)
 
+def pan20_ra1_test():
+    from experiments.ra1.pan20_ra1_LR import pan20_ra1_LR_tfidf, pan20_ra1_LR_dependency
+    from experiments.ra1.pan20_ra1_SVM import pan20_ra1_SVM_tfidf, pan20_ra1_SVM_dependency
+
+    _NAME = 'pan20_ra1_LR_lexical'
+    run_experiment(pan20_ra1_LR_tfidf(_NAME), _NAME)
+
+    _NAME = 'pan20_ra1_SVM_lexical'
+    run_experiment(pan20_ra1_SVM_tfidf(_NAME), _NAME)
+
+    _NAME = 'pan20_ra1_SVM_dependency'
+    run_experiment(pan20_ra1_SVM_dependency(_NAME), _NAME)
+
+    _NAME = 'pan20_ra1_LR_dependency'
+    run_experiment(pan20_ra1_LR_dependency(_NAME), _NAME)
+
 def main():
     #pan20_b1_tests()
-    pan20_b15_test()
+    #pan20_b15_test()
+    pan20_ra1_test()
 
 if __name__ == '__main__':
     main()

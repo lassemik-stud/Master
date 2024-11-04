@@ -37,9 +37,10 @@ def load_or_process_data(cutoff=0,sentence_size=0,no_load_flag=False,k=4,d=1,arg
     ra = arg.get('ra')
     ra_pcc_rate = arg.get('ra_number_of_ra_inserts')
     ra_part_size = arg.get('ra_PCC_part_size')
+    incert_cc = arg.get('insert_cc')
 
     feature_param = str(feature_type) + str(special_chars) + str(word_length_dist) + str(include_vocab_richness) + str(samples_count) # + str(feature_extractor_ngram_range[0]) + str(feature_extractor_ngram_range[1])   
-    ra_param = str(ra)+str(k)+str(d)+str(sentence_size)+str(ra_pcc_rate)+str(ra_part_size)
+    ra_param = str(ra)+str(k)+str(d)+str(sentence_size)+str(ra_pcc_rate)+str(ra_part_size)+str(incert_cc)
     dataset_param = str(dataset)+str(author_id)
     
     root_path = EXPECTED_PREPROCESSED_DATASETS_FOLDER
@@ -112,7 +113,8 @@ def process_pair(args):
     x_out = []
     y_out = []
 
-    if cc_array:
+    insert_cc = arg.get('insert_cc')
+    if cc_array and insert_cc:
         Y = int(arg.get('ra_PCC_part_size'))
         s_pcc_sample = sentences(pcc_samples, sentence_size)
         c = [y_train]*len(s_ut)
