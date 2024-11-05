@@ -4,18 +4,19 @@ import itertools
 import numpy as np
 
 from settings.static_values import EXPECTED_DATASETS_FOLDER
-from dataset_changes.pan20_create_baseline_15 import DATASET_CREATE_PATH
+from dataset_changes.pan20_create_baseline_1 import DATASET_CREATE_PATH
 
 name = 'default'
 
 DATASET = {
-    'dataset' : 'baseline-15',
+    'dataset' : 'rolling-attribution-1',
     'dataset_train_path_pair' : EXPECTED_DATASETS_FOLDER + DATASET_CREATE_PATH + "/pan20-train-pairs-AUTHOR.jsonl",
     'dataset_train_path_truth': EXPECTED_DATASETS_FOLDER + DATASET_CREATE_PATH + "/pan20-train-truth-AUTHOR.jsonl",
     'dataset_test_path_pair' : EXPECTED_DATASETS_FOLDER + DATASET_CREATE_PATH + "/pan20-test-pairs-AUTHOR.jsonl",
-    'dataset_test_path_truth' : EXPECTED_DATASETS_FOLDER + DATASET_CREATE_PATH + "/pan20-test-truth-AUTHOR.jsonl"
+    'dataset_test_path_truth' : EXPECTED_DATASETS_FOLDER + DATASET_CREATE_PATH + "/pan20-test-truth-AUTHOR.jsonl",
+    'pcc_train_samples' : EXPECTED_DATASETS_FOLDER +  "/pan20-created/pan20-train-all-different-authors.jsonl",
+    'pcc_test_samples' : EXPECTED_DATASETS_FOLDER + "pan20-created/pan20-test-all-different-authors.jsonl"
 }
-
 clf = {
         'SVM' : [True],
         'LR' : [False],
@@ -46,14 +47,21 @@ AUTHOR_ID = [2049660, 3107154, 4483094]
 #     \item     0.8999        3107154
 #     \item     0.8099        4483094
 
+# AUTHOR PARAMS
+AUTHOR_ID = [2049660] #, 1648312, 1777261]
+#     \item     1.0       2049660
+#     \item     0.909     1648312
+#     \item     0.8       1777261
+
 # BASE PARAMETERS
-ra = [False]
-ra_k = [0]                  # Window size
-ra_d = [0]                # Overlap size
-ra_sentence_size = [0]     # Size of part used to split up the text. This could be a paragraph size. Size is in number of sentences. 
-samples = [100]             # Max number of samples used in train and test
-ra_PCC_part_size = [1]      # number of parts of sentence size inserted into the UT
-number_of_ra_inserts = [1]
+ra = [True]
+ra_k = [3]                  # Window size
+ra_d = [2]                # Overlap size
+ra_sentence_size = [80]     # Size of part used to split up the text. This could be a paragraph size. Size is in number of sentences. 
+samples = [1000]             # Max number of samples used in train and test
+ra_PCC_part_size = [1,2,3]      # number of parts of sentence size inserted into the UT
+number_of_ra_inserts = [1,2,3]
+insert_cc = [True]
 
 special_char = [True]
 word_length_dist = [False]
@@ -82,6 +90,7 @@ parameters_tfidf_bow = {
         'ra_sentence_size' : ra_sentence_size,
         'ra_PCC_part_size' : ra_PCC_part_size,
         'ra_number_of_ra_inserts' : number_of_ra_inserts,
+        'insert_cc' : insert_cc
     }
 
 parameters_dependency = {
@@ -104,6 +113,7 @@ parameters_dependency = {
         'ra_sentence_size' : ra_sentence_size,
         'ra_PCC_part_size' : ra_PCC_part_size,
         'ra_number_of_ra_inserts' : number_of_ra_inserts,
+        'insert_cc' : insert_cc
     }
 
 parameters_word_embeddings = {
@@ -147,6 +157,7 @@ parameters_bert = {
     }
 
 def base_experiment(parameters):
+
     nested_dicts = {k: parameters[k] for k in ['clf','svm_parameters', 'lr_parameters', 'NaiveBayes_parameters','dataset']}
     other_params = {k: parameters[k] for k in parameters if k not in nested_dicts}
 
@@ -155,7 +166,12 @@ def base_experiment(parameters):
         if not isinstance(value, (list, tuple)):  # Check if it's already iterable
             other_params[key] = [value]  # Convert single values to a list
 
-    combinations = [dict(zip(other_params, v)) for v in itertools.product(*other_params.values())]
+    # Create combinations, filtering out those where d >= k
+    combinations = []
+    for v in itertools.product(*other_params.values()):
+        comb = dict(zip(other_params, v))
+        if comb['ra_d'] < comb['ra_k']:  # Add the check here
+            combinations.append(comb)
 
     for combination in combinations:
         for k, v in nested_dicts.items():

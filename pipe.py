@@ -198,25 +198,25 @@ def prepare_pipeline(arg):
     if ra: 
         printLog.debug(f'k: {k}, d: {d}, s_s: {sentence_size}, pcc_r: {pcc_rate}, pcc_part_size: {pcc_part_size}, author_id: {author_id}')
     # Initialize the pipelines
-    if (clf_svm_flag):
-        for svm_i, svm_combination in enumerate(svm_combinations):
-            printLog.debug(f'Running SVM with combination {svm_i+1} of {len(svm_combinations)}')
-            svm(svm_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    # if (clf_svm_flag):
+    #     for svm_i, svm_combination in enumerate(svm_combinations):
+    #         printLog.debug(f'Running SVM with combination {svm_i+1} of {len(svm_combinations)}')
+    #         svm(svm_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
-    if (clf_lr_flag):
-       for lr_i, lr_combination in enumerate(lr_combinations):
-           printLog.debug(f'Running LR with combination {lr_i+1} of {len(lr_combinations)}')
-           lr(lr_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    # if (clf_lr_flag):
+    #    for lr_i, lr_combination in enumerate(lr_combinations):
+    #        printLog.debug(f'Running LR with combination {lr_i+1} of {len(lr_combinations)}')
+    #        lr(lr_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
-    if (clf_nb_flag):
-        for nb_i, naive_bayes_combination in enumerate(naive_bayes_combinations):
-            printLog.debug(f'Running Naive Bayes with combination {nb_i+1} of {len(naive_bayes_combinations)}')
-            naive_bayes(naive_bayes_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    # if (clf_nb_flag):
+    #     for nb_i, naive_bayes_combination in enumerate(naive_bayes_combinations):
+    #         printLog.debug(f'Running Naive Bayes with combination {nb_i+1} of {len(naive_bayes_combinations)}')
+    #         naive_bayes(naive_bayes_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
-    # with ProcessPoolExecutor() as executor:
-    #     executor.submit(run_svm, clf_svm_flag, svm_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
-    #     executor.submit(run_lr, clf_lr_flag, lr_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
-    #     executor.submit(run_nb, clf_nb_flag, naive_bayes_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    with ProcessPoolExecutor() as executor:
+        executor.submit(run_svm, clf_svm_flag, svm_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+        executor.submit(run_lr, clf_lr_flag, lr_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+        executor.submit(run_nb, clf_nb_flag, naive_bayes_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
 def run_experiment(arguments, _type):
     durations = []
@@ -306,10 +306,18 @@ def pan20_ra1_test():
     _NAME = 'pan20_ra1_LR_dependency'
     run_experiment(pan20_ra1_LR_dependency(_NAME), _NAME)
 
+def pan20_ra2_test():
+    from experiments.ra1.pan20_ra2_LR import pan20_ra2_LR_tfidf, pan20_ra2_LR_dependency
+    from experiments.ra1.pan20_ra2_SVM import pan20_ra2_SVM_tfidf, pan20_ra2_SVM_dependency
+
+    _NAME = 'test_pan20_ra2_LR_lexical'
+    run_experiment(pan20_ra2_LR_tfidf(_NAME), _NAME)
+
 def main():
     #pan20_b1_tests()
     #pan20_b15_test()
-    pan20_ra1_test()
+    #pan20_ra1_test()
+    pan20_ra2_test()
 
 if __name__ == '__main__':
     main()
