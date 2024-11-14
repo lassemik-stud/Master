@@ -48,18 +48,18 @@ AUTHOR_ID = [2049660, 3107154, 4483094]
 #     \item     0.8099        4483094
 
 # AUTHOR PARAMS
-AUTHOR_ID = [2049660] #, 1648312, 1777261]
+AUTHOR_ID = [2049660, 1648312, 1777261]
 #     \item     1.0       2049660
 #     \item     0.909     1648312
 #     \item     0.8       1777261
 
 # BASE PARAMETERS
 ra = [True]
-ra_k = [3]                  # Window size
-ra_d = [2]                # Overlap size
-ra_sentence_size = [80]     # Size of part used to split up the text. This could be a paragraph size. Size is in number of sentences. 
+ra_k = [2,4,5]                # Window size
+ra_d = [3,4,5]                # Overlap size
+ra_sentence_size = [30,50,80]     # Size of part used to split up the text. This could be a paragraph size. Size is in number of sentences. 
 samples = [1000]             # Max number of samples used in train and test
-ra_PCC_part_size = [1,2,3]      # number of parts of sentence size inserted into the UT
+ra_PCC_part_size = [1,2,3,4]      # number of parts of sentence size inserted into the UT
 number_of_ra_inserts = [1,2,3]
 insert_cc = [True]
 

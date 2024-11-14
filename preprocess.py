@@ -246,7 +246,6 @@ def load_corp(x_path, y_path, pcc_samples_path, sentence_size=0, cutoff=0,cc_fla
             pcc_samples.append(pcc_json['text'])
 
     cc_array = [1 if classification == 1 and i < len(y_filtered)*(pcc_rate)/2 else 0 for i, classification in enumerate(y_filtered)]
-    printLog.debug(f"cc-array: {cc_array}")
     printLog.debug(f'Post-processing sizes - x: {len(x_filtered)}, y: {len(y_filtered)}')
     
     if cc_flag: # contract cheating flag

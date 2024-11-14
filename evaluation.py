@@ -15,7 +15,7 @@ from settings.static_values import RESULTS_PATH
 
 def evaluation_metrics(y_test, y_pred_proba): 
     if len(set(y_test)) <= 1: 
-        best_threshold = "N/A"
+        EER_threshold = "N/A"
         best_f1_score = "N/A"
         fnr = "N/A"
         tnr = "N/A"
@@ -28,7 +28,8 @@ def evaluation_metrics(y_test, y_pred_proba):
         fn = "N/A"
         tp = "N/A"
         auroc = "N/A"
-        return best_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc
+        fn_zero_threshold = zero_tn = zero_fp = zero_fn = zero_tp = zero_fnr = zero_tnr = zero_tpr = zero_fpr = "N/A"
+        return EER_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc, zero_tn, zero_fp, zero_fn, zero_tp, zero_fnr, zero_tnr, zero_tpr, zero_fpr, fn_zero_threshold
     
     else:
         # Calculate precision, recall, and thresholds from the predicted probabilities
@@ -45,7 +46,7 @@ def evaluation_metrics(y_test, y_pred_proba):
         ix = np.argmax(f1_scores)
 
         # Best threshold and its F1 score
-        best_threshold = thresholds[ix]
+        EER_threshold = thresholds[ix]
         best_f1_score = f1_scores[ix]
         best_precision = precision[ix]
         best_recall = recall[ix]
@@ -53,6 +54,7 @@ def evaluation_metrics(y_test, y_pred_proba):
         if len(set(y_pred_proba))== 2: 
             y_pred_optimal = y_pred_proba
             eer_threshold = "N/A"
+            fn_zero_threshold = zero_tn = zero_fp = zero_fn = zero_tp = zero_fnr = zero_tnr = zero_tpr = zero_fpr = "N/A"
         else:
             fpr, tpr, threshold_roc = roc_curve(y_test, y_pred_proba)
             fnr = 1 - tpr
@@ -61,6 +63,31 @@ def evaluation_metrics(y_test, y_pred_proba):
             eer_threshold = threshold_roc[np.nanargmin(np.abs(fpr - fnr))]
             # eer = brentq(lambda x : 1. - x - interp1d(fpr, tpr)(x), 0., 1.)
             y_pred_optimal = (y_pred_proba >= eer_threshold).astype(int)
+
+            # Initialize variables to store the highest threshold and confusion matrix
+            fn_zero_threshold = None
+            conf_matrix = None
+            for threshold in sorted(threshold_roc, reverse=True):
+                # Calculate predicted labels
+                y_pred_optimal_FN = (y_pred_proba >= threshold).astype(int)
+                
+                # Compute confusion matrix
+                tn, fp, fn, tp = confusion_matrix(y_test, y_pred_optimal_FN).ravel()
+                
+                # Check if FN is zero
+                if fn == 0:
+                    fn_zero_threshold = threshold
+                    zero_tn = tn
+                    zero_fp = fp
+                    zero_fn = fn
+                    zero_tp = tp
+                    zero_fnr = zero_fn / (zero_fn + zero_tp)
+                    zero_tnr = zero_tn / (zero_tn + zero_fp)
+                    zero_tpr = zero_tp / (zero_tp + zero_fn)
+                    zero_fpr = zero_fp / (zero_fp + zero_tn)
+                    break
+                else:
+                    fn_zero_threshold = zero_tn = zero_fp = zero_fn = zero_tp = zero_fnr = zero_tnr = zero_tpr = zero_fpr = "N/A"
 
         # Confusion matrix
         tn, fp, fn, tp = confusion_matrix(y_test, y_pred_optimal).ravel()
@@ -71,11 +98,10 @@ def evaluation_metrics(y_test, y_pred_proba):
 
         tpr = tp / (tp + fn)
         fpr = fp / (fp + tn)
-
+        
         # Calculate AUROC
         auroc = roc_auc_score(y_test, y_pred_proba)
-
-        return eer_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc
+        return eer_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc, zero_tn, zero_fp, zero_fn, zero_tp, zero_fnr, zero_tnr, zero_tpr, zero_fpr, fn_zero_threshold
 
 def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, raw_c_test):
     distribution_plot_v = args.get('distribution_plot')
@@ -84,21 +110,29 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, ra
     ra = args.get('ra')
     if ra: 
         y_test, y_pred_proba, raw_y_test_pred, raw_y = tranform_ra(pcc_test_params,y_test,y_pred_proba, raw_c_test)
-    best_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc = evaluation_metrics(y_test, y_pred_proba)
+
+    EER_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc,zero_tn, zero_fp, zero_fn, zero_tp, zero_fnr, zero_tnr, zero_tpr, zero_fpr, fn_zero_threshold = evaluation_metrics(y_test, y_pred_proba)
 
     if distribution_plot_v:
         if bool(distribution_plot_v):
-            distribution_plot(y_test, y_pred_proba, args, best_threshold)
+            distribution_plot(y_test, y_pred_proba, args, EER_threshold, fn_zero_threshold)
     
     if ra: 
-        pcc_simple_test, pcc_simple_pred, pcc_intermediate_pred, pcc_intermediate_test, pcc_advanced = evaluate_pcc(raw_y, raw_y_test_pred, pcc_test_params, best_threshold)
-        best_threshold_pcc_simple, best_f1_score_pcc_simple, fnr_pcc_simple, tnr_pcc_simple, tpr_pcc_simple, fpr_pcc_simple, best_precision_pcc_simple, best_recall_pcc_simple, tn_pcc_simple, fp_pcc_simple, fn_pcc_simple, tp_pcc_simple, auroc_pcc_simple = evaluation_metrics(pcc_simple_test, pcc_simple_pred)
-        best_threshold_pcc_intermediate, best_f1_score_pcc_intermediate, fnr_pcc_intermediate, tnr_pcc_intermediate, tpr_pcc_intermediate, fpr_pcc_intermediate, best_precision_pcc_intermediate, best_recall_pcc_intermediate, tn_pcc_intermediate, fp_pcc_intermediate, fn_pcc_intermediate, tp_pcc_intermediate, auroc_pcc_intermediate = evaluation_metrics(pcc_intermediate_test, pcc_intermediate_pred)
+        pcc_simple_test, pcc_simple_pred, pcc_intermediate_pred, pcc_intermediate_test, pcc_advanced = evaluate_pcc(raw_y, raw_y_test_pred, pcc_test_params, EER_threshold)
+        EER_threshold_pcc_simple, best_f1_score_pcc_simple, fnr_pcc_simple, tnr_pcc_simple, tpr_pcc_simple, fpr_pcc_simple, best_precision_pcc_simple, best_recall_pcc_simple, tn_pcc_simple, fp_pcc_simple, fn_pcc_simple, tp_pcc_simple, auroc_pcc_simple, zero_tn_pcc_simple, zero_fp_pcc_simple, zero_fn_pcc_simple, zero_tp_pcc_simple, zero_fnr_pcc_simple, zero_tnr_pcc_simple, zero_tpr_pcc_simple, zero_fpr_pcc_simple, fn_zero_threshold_pcc_simple = evaluation_metrics(pcc_simple_test, pcc_simple_pred)
+        EER_threshold_pcc_intermediate, best_f1_score_pcc_intermediate, fnr_pcc_intermediate, tnr_pcc_intermediate, tpr_pcc_intermediate, fpr_pcc_intermediate, best_precision_pcc_intermediate, best_recall_pcc_intermediate, tn_pcc_intermediate, fp_pcc_intermediate, fn_pcc_intermediate, tp_pcc_intermediate, auroc_pcc_intermediate, zero_tn_pcc_intermediate, zero_fp_pcc_intermediate, zero_fn_pcc_intermediate, zero_tp_pcc_intermediate, zero_fnr_pcc_intermediate, zero_tnr_pcc_intermediate, zero_tpr_pcc_intermediate, zero_fpr_pcc_intermediate, fn_zero_threshold_pcc_intermediate = evaluation_metrics(pcc_intermediate_test, pcc_intermediate_pred)
         correct_location_of_pcc = pcc_advanced.count(1)
         false_location_of_pcc = pcc_advanced.count(0)
-        pcc_results = {
-            'simple': {
-                'best_threshold': convert_to_serializable(best_threshold_pcc_simple),
+
+        zero_FP_pcc_simple_test, zero_FP_simple_pred, zero_FP_intermediate_pred, zero_FP_intermediate_test, zero_FP_advanced = evaluate_pcc(raw_y, raw_y_test_pred, pcc_test_params, fn_zero_threshold)
+        zero_fp_EER_threshold_pcc_simple, zero_fp_best_f1_score_pcc_simple, zero_fp_fnr_pcc_simple, zero_fp_tnr_pcc_simple, zero_fp_tpr_pcc_simple, zero_fp_fpr_pcc_simple, zero_fp_best_precision_pcc_simple, zero_fp_best_recall_pcc_simple, zero_fp_tn_pcc_simple, zero_fp_fp_pcc_simple, zero_fp_fn_pcc_simple, zero_fp_tp_pcc_simple, zero_fp_auroc_pcc_simple, zero_fp_zero_tn_pcc_simple, zero_fp_zero_fp_pcc_simple, zero_fp_zero_fn_pcc_simple, zero_fp_zero_tp_pcc_simple, zero_fp_zero_fnr_pcc_simple, zero_fp_zero_tnr_pcc_simple, zero_fp_zero_tpr_pcc_simple, zero_fp_zero_fpr_pcc_simple, zero_fp_fn_zero_threshold_pcc_simple = evaluation_metrics(zero_FP_pcc_simple_test, zero_FP_simple_pred)
+        zerp_fp_threshold_pcc_intermediate, zero_fp_best_f1_score_pcc_intermediate, zero_fp_fnr_pcc_intermediate, zero_fp_tnr_pcc_intermediate, zero_fp_tpr_pcc_intermediate, zero_fp_fpr_pcc_intermediate, zero_fp_best_precision_pcc_intermediate, zero_fp_best_recall_pcc_intermediate, zero_fp_tn_pcc_intermediate, zero_fp_fp_pcc_intermediate, zero_fp_fn_pcc_intermediate, zero_fp_tp_pcc_intermediate, zero_fp_auroc_pcc_intermediate, zero_fp_zero_tn_pcc_intermediate, zero_fp_zero_fp_pcc_intermediate, zero_fp_zero_fn_pcc_intermediate, zero_fp_zero_tp_pcc_intermediate, zero_fp_zero_fnr_pcc_intermediate, zero_fp_zero_tnr_pcc_intermediate, zero_fp_zero_tpr_pcc_intermediate, zero_fp_zero_fpr_pcc_intermediate, zero_fp_fn_zero_threshold_pcc_intermediate = evaluation_metrics(zero_FP_intermediate_test, zero_FP_intermediate_pred)
+        zero_fp_correct_location_of_pcc = zero_FP_advanced.count(1)
+        zero_fp_false_location_of_pcc = zero_FP_advanced.count(0)
+        
+        pcc_results_EER = {
+            'simple_EER': {
+                'EER_threshold': convert_to_serializable(EER_threshold_pcc_simple),
                 'best_f1_score': convert_to_serializable(best_f1_score_pcc_simple),
                 'false_negative_rate': convert_to_serializable(fnr_pcc_simple),
                 'true_negative_rate': convert_to_serializable(tnr_pcc_simple),
@@ -112,10 +146,21 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, ra
                     'false_negative': convert_to_serializable(fn_pcc_simple),
                     'true_positive': convert_to_serializable(tp_pcc_simple)
                 },
-                'auroc': convert_to_serializable(auroc_pcc_simple)
+                'auroc': convert_to_serializable(auroc_pcc_simple),
+                'simple_FN_zero_threshold': {
+                    'true_negative': convert_to_serializable(zero_tn_pcc_simple),
+                    'false_positive': convert_to_serializable(zero_fp_pcc_simple),
+                    'false_negative': convert_to_serializable(zero_fn_pcc_simple),
+                    'true_positive': convert_to_serializable(zero_tp_pcc_simple),
+                    'false_negative_rate': convert_to_serializable(zero_fnr_pcc_simple),
+                    'true_negative_rate': convert_to_serializable(zero_tnr_pcc_simple),
+                    'true_positive_rate': convert_to_serializable(zero_tpr_pcc_simple),
+                    'false_positive_rate': convert_to_serializable(zero_fpr_pcc_simple),
+                    'threshold': convert_to_serializable(fn_zero_threshold_pcc_simple)
+                }
             },
-            'intermediate': {
-                'best_threshold': convert_to_serializable(best_threshold_pcc_intermediate),
+            'intermediate_EER': {
+                'EER_threshold': convert_to_serializable(EER_threshold_pcc_intermediate),
                 'best_f1_score': convert_to_serializable(best_f1_score_pcc_intermediate),
                 'false_negative_rate': convert_to_serializable(fnr_pcc_intermediate),
                 'true_negative_rate': convert_to_serializable(tnr_pcc_intermediate),
@@ -129,22 +174,98 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, ra
                     'false_negative': convert_to_serializable(fn_pcc_intermediate),
                     'true_positive': convert_to_serializable(tp_pcc_intermediate)
                 },
-                'auroc': convert_to_serializable(auroc_pcc_intermediate)
+                'auroc': convert_to_serializable(auroc_pcc_intermediate),
+                'intermediate_FN_zero_threshold': {
+                    'true_negative': convert_to_serializable(zero_tn_pcc_intermediate),
+                    'false_positive': convert_to_serializable(zero_fp_pcc_intermediate),
+                    'false_negative': convert_to_serializable(zero_fn_pcc_intermediate),
+                    'true_positive': convert_to_serializable(zero_tp_pcc_intermediate),
+                    'false_negative_rate': convert_to_serializable(zero_fnr_pcc_intermediate),
+                    'true_negative_rate': convert_to_serializable(zero_tnr_pcc_intermediate),
+                    'true_positive_rate': convert_to_serializable(zero_tpr_pcc_intermediate),
+                    'false_positive_rate': convert_to_serializable(zero_fpr_pcc_intermediate),
+                    'threshold': convert_to_serializable(fn_zero_threshold_pcc_intermediate)
+                    
+                }
             },
-            'advanced' : {
+            'advanced_EER' : {
                 'correct_location_of_pcc': convert_to_serializable(correct_location_of_pcc),
                 'false_location_of_pcc': convert_to_serializable(false_location_of_pcc)
             }
         }
+
+        pcc_results_FP_zero = {
+    'simple_zero_FP': {
+        'EER_threshold': convert_to_serializable(zero_fp_EER_threshold_pcc_simple),
+        'best_f1_score': convert_to_serializable(zero_fp_best_f1_score_pcc_simple),
+        'false_negative_rate': convert_to_serializable(zero_fp_fnr_pcc_simple),
+        'true_negative_rate': convert_to_serializable(zero_fp_tnr_pcc_simple),
+        'true_positive_rate': convert_to_serializable(zero_fp_tpr_pcc_simple),
+        'false_positive_rate': convert_to_serializable(zero_fp_fpr_pcc_simple),
+        'precision': convert_to_serializable(zero_fp_best_precision_pcc_simple),
+        'recall': convert_to_serializable(zero_fp_best_recall_pcc_simple),
+        'confusion_matrix': {
+            'true_negative': convert_to_serializable(zero_fp_tn_pcc_simple),
+            'false_positive': convert_to_serializable(zero_fp_fp_pcc_simple),
+            'false_negative': convert_to_serializable(zero_fp_fn_pcc_simple),
+            'true_positive': convert_to_serializable(zero_fp_tp_pcc_simple)
+        },
+        'auroc': convert_to_serializable(zero_fp_auroc_pcc_simple),
+        'simple_FN_zero_threshold': {
+            'true_negative': convert_to_serializable(zero_fp_zero_tn_pcc_simple),
+            'false_positive': convert_to_serializable(zero_fp_zero_fp_pcc_simple),
+            'false_negative': convert_to_serializable(zero_fp_zero_fn_pcc_simple),
+            'true_positive': convert_to_serializable(zero_fp_zero_tp_pcc_simple),
+            'false_negative_rate': convert_to_serializable(zero_fp_zero_fnr_pcc_simple),
+            'true_negative_rate': convert_to_serializable(zero_fp_zero_tnr_pcc_simple),
+            'true_positive_rate': convert_to_serializable(zero_fp_zero_tpr_pcc_simple),
+            'false_positive_rate': convert_to_serializable(zero_fp_zero_fpr_pcc_simple),
+            'threshold': convert_to_serializable(zero_fp_fn_zero_threshold_pcc_simple)
+        }
+    },
+    'intermediate_zero_FP': {
+        'EER_threshold': convert_to_serializable(zerp_fp_threshold_pcc_intermediate),
+        'best_f1_score': convert_to_serializable(zero_fp_best_f1_score_pcc_intermediate),
+        'false_negative_rate': convert_to_serializable(zero_fp_fnr_pcc_intermediate),
+        'true_negative_rate': convert_to_serializable(zero_fp_tnr_pcc_intermediate),
+        'true_positive_rate': convert_to_serializable(zero_fp_tpr_pcc_intermediate),
+        'false_positive_rate': convert_to_serializable(zero_fp_fpr_pcc_intermediate),
+        'precision': convert_to_serializable(zero_fp_best_precision_pcc_intermediate),
+        'recall': convert_to_serializable(zero_fp_best_recall_pcc_intermediate),
+        'confusion_matrix': {
+            'true_negative': convert_to_serializable(zero_fp_tn_pcc_intermediate),
+            'false_positive': convert_to_serializable(zero_fp_fp_pcc_intermediate),
+            'false_negative': convert_to_serializable(zero_fp_fn_pcc_intermediate),
+            'true_positive': convert_to_serializable(zero_fp_tp_pcc_intermediate)
+        },
+        'auroc': convert_to_serializable(zero_fp_auroc_pcc_intermediate),
+        'intermediate_FN_zero_threshold': {
+            'true_negative': convert_to_serializable(zero_fp_zero_tn_pcc_intermediate),
+            'false_positive': convert_to_serializable(zero_fp_zero_fp_pcc_intermediate),
+            'false_negative': convert_to_serializable(zero_fp_zero_fn_pcc_intermediate),
+            'true_positive': convert_to_serializable(zero_fp_zero_tp_pcc_intermediate),
+            'false_negative_rate': convert_to_serializable(zero_fp_zero_fnr_pcc_intermediate),
+            'true_negative_rate': convert_to_serializable(zero_fp_zero_tnr_pcc_intermediate),
+            'true_positive_rate': convert_to_serializable(zero_fp_zero_tpr_pcc_intermediate),
+            'false_positive_rate': convert_to_serializable(zero_fp_zero_fpr_pcc_intermediate),
+            'threshold': convert_to_serializable(zero_fp_fn_zero_threshold_pcc_intermediate)
+        }
+    },
+    'advanced_zero_FP': {
+        'correct_location_of_pcc': convert_to_serializable(zero_fp_correct_location_of_pcc),
+        'false_location_of_pcc': convert_to_serializable(zero_fp_false_location_of_pcc)
+    }
+}
     else: 
-        pcc_results = "No RA"
+        pcc_results_EER = "No RA"
+        pcc_results_FP_zero = "No RA"
 
     # Write to JSON file 
     evaluation_dict = {
     'time' : datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     'classifier': classifier_name,
     'input_args': convert_to_serializable(args),
-    'best_threshold': convert_to_serializable(best_threshold),
+    'EER_threshold': convert_to_serializable(EER_threshold),
     'best_f1_score': convert_to_serializable(best_f1_score),
     'false_negative_rate': convert_to_serializable(fnr),
     'true_negative_rate': convert_to_serializable(tnr),
@@ -159,7 +280,19 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, ra
         'true_positive': convert_to_serializable(tp)
     },
     'auroc': convert_to_serializable(auroc),
-    'pcc_results': pcc_results
+    'FN_zero_threshold': {
+        'true_negative': convert_to_serializable(zero_tn),
+        'false_positive': convert_to_serializable(zero_fp),
+        'false_negative': convert_to_serializable(zero_fn),
+        'true_positive': convert_to_serializable(zero_tp),
+        'false_negative_rate': convert_to_serializable(zero_fnr),
+        'true_negative_rate': convert_to_serializable(zero_tnr),
+        'true_positive_rate': convert_to_serializable(zero_tpr),
+        'false_positive_rate': convert_to_serializable(zero_fpr),
+        'threshold': convert_to_serializable(fn_zero_threshold)
+    },
+    'pcc_results_EER': pcc_results_EER,
+    'pcc_results_FP_zero' : pcc_results_FP_zero
     }
 
     # Ensure the 'evaluation' directory exists or adjust the path as needed
@@ -199,7 +332,7 @@ def get_best_auroc(args, current_auroc):
         print(f"File not found: {RESULTS_PATH}{str(name)}-{author_id}.jsonl")
         return None
 
-def distribution_plot(y_test, y_pred_proba, args, best_threshold):
+def distribution_plot(y_test, y_pred_proba, args, EER_threshold, FN_zero_threshold):
     name = args.get('name')
     author_id = args.get('author_id')
     # Define the figure
@@ -210,15 +343,16 @@ def distribution_plot(y_test, y_pred_proba, args, best_threshold):
     sns.histplot([prob for prob, actual in zip(y_pred_proba, y_test) if actual == 1], stat='density', kde=True, color='blue', label='Same Author')
     
     # Add the vertical line for the best threshold
-    plt.axvline(x=best_threshold, color='black', linestyle='--', label=f'Best Threshold: {best_threshold:.3f}') 
-
+    plt.axvline(x=EER_threshold, color='black', linestyle='--', label=f'EER Threshold: {EER_threshold:.3f}') 
+    plt.axvline(x=FN_zero_threshold, color='red', linestyle='--', label=f'FP=0 Threshold: {FN_zero_threshold:.3f}') 
+    
     # Add titles and labels
     plt.title('Predicted Probability Distribution by Actual Class')
     plt.xlabel('Predicted Probability of Same Authorship')
     plt.ylabel('Number of samples')
 
     # Adding the legend
-    plt.legend(title='Actual Class')
+    plt.legend(title='')
 
     # Ensure the 'plot' directory exists or adjust the path as needed
     plt.savefig(f'{RESULTS_PATH}/plot/{str(name)}-{author_id}-class_probability_distribution.pdf', bbox_inches='tight')

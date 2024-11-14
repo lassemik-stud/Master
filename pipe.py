@@ -294,28 +294,148 @@ def pan20_ra1_test():
     from experiments.ra1.pan20_ra1_LR import pan20_ra1_LR_tfidf, pan20_ra1_LR_dependency
     from experiments.ra1.pan20_ra1_SVM import pan20_ra1_SVM_tfidf, pan20_ra1_SVM_dependency
 
-    _NAME = 'pan20_ra1_LR_lexical'
+    _NAME = 'pan20_ra1_LR_lexical-v2'
     run_experiment(pan20_ra1_LR_tfidf(_NAME), _NAME)
 
-    _NAME = 'pan20_ra1_SVM_lexical'
+    _NAME = 'pan20_ra1_SVM_lexical-v2'
     run_experiment(pan20_ra1_SVM_tfidf(_NAME), _NAME)
 
-    _NAME = 'pan20_ra1_SVM_dependency'
+    _NAME = 'pan20_ra1_SVM_dependency-v2'
     run_experiment(pan20_ra1_SVM_dependency(_NAME), _NAME)
 
-    _NAME = 'pan20_ra1_LR_dependency'
+    _NAME = 'pan20_ra1_LR_dependency-v2'
     run_experiment(pan20_ra1_LR_dependency(_NAME), _NAME)
 
 def pan20_ra2_test():
     from experiments.ra1.pan20_ra2_LR import pan20_ra2_LR_tfidf, pan20_ra2_LR_dependency
     from experiments.ra1.pan20_ra2_SVM import pan20_ra2_SVM_tfidf, pan20_ra2_SVM_dependency
 
-    _NAME = 'test_pan20_ra2_LR_lexical'
+    _NAME = 'pan20_ra2_LR_lexical-v3'
     run_experiment(pan20_ra2_LR_tfidf(_NAME), _NAME)
 
+    _NAME = 'pan20_ra2_SVM_lexical-v3'
+    run_experiment(pan20_ra2_SVM_tfidf(_NAME), _NAME)
+
+    _NAME = 'pan20_ra2_SVM_dependency-v3'
+    run_experiment(pan20_ra2_SVM_dependency(_NAME), _NAME)
+
+    _NAME = 'pan20_ra2_LR_dependency-v3'
+    run_experiment(pan20_ra2_LR_dependency(_NAME), _NAME)
+
+def b0_tests():
+    from experiments.b0.pan20_b0_LR_single_experiment import pan20_b0_LR_single_experiment_tfidf, pan20_b0_LR_single_experiment_dependency
+    from experiments.b0.pan20_b0_SVM_single_experiment import pan20_b0_SVM_single_experiment_tfidf, pan20_b0_SVM_single_experiment_dependency
+    from experiments.b0.pan20_b0_NB_single_experiment import pan20_b0_NB_single_experiment_tfidf, pan20_b0_NB_single_experiment_dependency
+    
+    from experiments.b0.pan21_b0_LR_single_experiment import pan21_b0_LR_single_experiment_tfidf, pan21_b0_LR_single_experiment_dependency
+    from experiments.b0.pan21_b0_NB_single_experiment import pan21_b0_NB_single_experiment_tfidf, pan21_b0_NB_single_experiment_dependency
+    from experiments.b0.pan21_b0_SVM_single_experiment import pan21_b0_SVM_single_experiment_tfidf, pan21_b0_SVM_single_experiment_dependency
+
+    from experiments.b0.pan23_b0_LR_single_experiment import pan23_b0_LR_single_experiment_tfidf, pan23_b0_LR_single_experiment_dependency
+    from experiments.b0.pan23_b0_NB_single_experiment import pan23_b0_NB_single_experiment_tfidf, pan23_b0_NB_single_experiment_dependency
+    from experiments.b0.pan23_b0_SVM_single_experiment import pan23_b0_SVM_single_experiment_tfidf, pan23_b0_SVM_single_experiment_dependency
+    
+    #PAN20
+    _NAME = 'pan20_b0_LR_dependency-v2'
+    run_experiment(pan20_b0_LR_single_experiment_dependency(_NAME), _NAME)
+    _NAME = 'pan20_b0_LR_tfidf-v2'
+    run_experiment(pan20_b0_LR_single_experiment_tfidf(_NAME), _NAME)
+
+    _NAME = 'pan20_b0_NB_dependency-v2'
+    run_experiment(pan20_b0_NB_single_experiment_dependency(_NAME), _NAME)
+    _NAME = 'pan20_b0_NB_tfidf-v2'
+    run_experiment(pan20_b0_NB_single_experiment_tfidf(_NAME), _NAME)
+    
+    _NAME = 'pan20_b0_SVM_dependency-v2'
+    run_experiment(pan20_b0_SVM_single_experiment_dependency(_NAME), _NAME)
+    _NAME = 'pan20_b0_SVM_tfidf-v2'
+    run_experiment(pan20_b0_SVM_single_experiment_tfidf(_NAME), _NAME)
+    
+    # # PAN21
+    _NAME = 'pan21_b0_LR_dependency-v2'
+    run_experiment(pan21_b0_LR_single_experiment_dependency(_NAME), _NAME)
+    _NAME = 'pan21_b0_LR_tfidf-v2'
+    run_experiment(pan21_b0_LR_single_experiment_tfidf(_NAME), _NAME)
+    
+    _NAME = 'pan21_b0_NB_dependency-v2'
+    run_experiment(pan21_b0_NB_single_experiment_dependency(_NAME), _NAME)
+    _NAME = 'pan21_b0_NB_tfidf-v2'
+    run_experiment(pan21_b0_NB_single_experiment_tfidf(_NAME), _NAME)
+
+    _NAME = 'pan21_b0_SVM_dependency-v2'
+    run_experiment(pan21_b0_SVM_single_experiment_dependency(_NAME), _NAME)
+    _NAME = 'pan21_b0_SVM_tfidf-v2'
+    run_experiment(pan21_b0_SVM_single_experiment_tfidf(_NAME), _NAME)
+
+    #PAN23
+    _NAME = 'pan23_b0_LR_dependency-v2'
+    run_experiment(pan23_b0_LR_single_experiment_dependency(_NAME), _NAME)
+    _NAME = 'pan23_b0_LR_tfidf-v2'
+    run_experiment(pan23_b0_LR_single_experiment_tfidf(_NAME), _NAME)
+
+    _NAME = 'pan23_b0_NB_dependency-v2'
+    run_experiment(pan23_b0_NB_single_experiment_dependency(_NAME), _NAME)
+    _NAME = 'pan23_b0_NB_tfidf-v2'
+    run_experiment(pan23_b0_NB_single_experiment_tfidf(_NAME), _NAME)
+
+    _NAME = 'pan23_b0_SVM_dependency-v2'
+    run_experiment(pan23_b0_SVM_single_experiment_dependency(_NAME), _NAME)
+    _NAME = 'pan23_b0_SVM_tfidf-v2'
+    run_experiment(pan23_b0_SVM_single_experiment_tfidf(_NAME), _NAME)
+
+def b1_tests():
+    from experiments.b1.pan20_baseline_1_LR import pan20_b1_LR_tfidf, pan20_b1_LR_dependency
+    from experiments.b1.pan20_baseline_1_NB import pan20_b1_NB_tfidf, pan20_b1_NB_dependency
+    from experiments.b1.pan20_baseline_1_SVM import pan20_b1_SVM_tfidf, pan20_b1_SVM_dependency
+
+    _NAME = 'pan20_b1_LR_dependency-v2'
+    run_experiment(pan20_b1_LR_dependency(_NAME), _NAME)
+
+    _NAME = 'pan20_b1_NB_dependency-v2'
+    run_experiment(pan20_b1_NB_dependency(_NAME), _NAME)
+    
+    _NAME = 'pan20_b1_SVM_dependency-v2'
+    run_experiment(pan20_b1_SVM_dependency(_NAME), _NAME)
+
+    _NAME = 'pan20_b1_LR_tfidf-v2'
+    run_experiment(pan20_b1_LR_tfidf(_NAME), _NAME)
+
+    _NAME = 'pan20_b1_NB_tfidf-v2'
+    run_experiment(pan20_b1_NB_tfidf(_NAME), _NAME)
+
+    _NAME = 'pan20_b1_SVM_tfidf-v2'
+    run_experiment(pan20_b1_SVM_tfidf(_NAME), _NAME)
+
+def b15_test():
+    from experiments.b15.pan20_baseline_1_LR import pan20_b15_LR_tfidf, pan20_b15_LR_dependency
+    from experiments.b15.pan20_baseline_1_NB import pan20_b15_NB_tfidf, pan20_b15_NB_dependency
+    from experiments.b15.pan20_baseline_1_SVM import pan20_b15_SVM_tfidf, pan20_b15_SVM_dependency
+
+    _NAME = 'pan20_b15_LR_dependency-v2'
+    run_experiment(pan20_b15_LR_dependency(_NAME), _NAME)
+
+    _NAME = 'pan20_b15_NB_dependency-v2'
+    run_experiment(pan20_b15_NB_dependency(_NAME), _NAME)
+
+    _NAME = 'pan20_b15_SVM_dependency-v2'
+    run_experiment(pan20_b15_SVM_dependency(_NAME), _NAME)
+
+    _NAME = 'pan20_b15_LR_tfidf-v2'
+    run_experiment(pan20_b15_LR_tfidf(_NAME), _NAME)
+
+    _NAME = 'pan20_b15_NB_tfidf-v2'
+    run_experiment(pan20_b15_NB_tfidf(_NAME), _NAME)
+
+    _NAME = 'pan20_b15_SVM_tfidf-v2'
+    run_experiment(pan20_b15_SVM_tfidf(_NAME), _NAME)
+    
 def main():
-    #pan20_b1_tests()
-    #pan20_b15_test()
+    # pan20_b1_tests()
+    # pan20_b15_test()
+    
+    #b0_tests()
+    #b1_tests()
+    #b15_test()
     #pan20_ra1_test()
     pan20_ra2_test()
 
