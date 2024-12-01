@@ -13,7 +13,29 @@ from sklearn.metrics import precision_recall_curve, roc_auc_score, confusion_mat
 
 from settings.static_values import RESULTS_PATH
 
-def evaluation_metrics(y_test, y_pred_proba): 
+def evaluation_metrics(y_test, y_pred_proba, threshold=False): 
+    if threshold:
+         # Confusion matrix
+        if len(set(y_pred_proba)) > 2: 
+            y_pred_optimal = (y_pred_proba >= threshold).astype(int) # Apply the threshold to the predicted probabilities
+        else: 
+            y_pred_optimal = y_pred_proba
+        
+        #print(y_test, y_pred_optimal)
+        tn, fp, fn, tp = confusion_matrix(y_test, y_pred_optimal).ravel()
+        #print(tn, fp, fn, tp)
+
+        # Calculate FNR and TNR
+        fnr = fn / (fn + tp)
+        tnr = tn / (tn + fp)
+
+        tpr = tp / (tp + fn)
+        fpr = fp / (fp + tn)
+    
+        return fnr, tnr, tpr, fpr, tn, fp, fn, tp
+    
+    #print(y_pred_proba)
+    #print(len(set(y_test)))
     if len(set(y_test)) <= 1: 
         EER_threshold = "N/A"
         best_f1_score = "N/A"
@@ -55,6 +77,7 @@ def evaluation_metrics(y_test, y_pred_proba):
             y_pred_optimal = y_pred_proba
             eer_threshold = "N/A"
             fn_zero_threshold = zero_tn = zero_fp = zero_fn = zero_tp = zero_fnr = zero_tnr = zero_tpr = zero_fpr = "N/A"
+            #print("y_pred_proba: ", y_pred_proba)
         else:
             fpr, tpr, threshold_roc = roc_curve(y_test, y_pred_proba)
             fnr = 1 - tpr
@@ -110,7 +133,6 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, ra
     ra = args.get('ra')
     if ra: 
         y_test, y_pred_proba, raw_y_test_pred, raw_y = tranform_ra(pcc_test_params,y_test,y_pred_proba, raw_c_test)
-
     EER_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc,zero_tn, zero_fp, zero_fn, zero_tp, zero_fnr, zero_tnr, zero_tpr, zero_fpr, fn_zero_threshold = evaluation_metrics(y_test, y_pred_proba)
 
     if distribution_plot_v:
@@ -119,146 +141,78 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, ra
     
     if ra: 
         pcc_simple_test, pcc_simple_pred, pcc_intermediate_pred, pcc_intermediate_test, pcc_advanced = evaluate_pcc(raw_y, raw_y_test_pred, pcc_test_params, EER_threshold)
-        EER_threshold_pcc_simple, best_f1_score_pcc_simple, fnr_pcc_simple, tnr_pcc_simple, tpr_pcc_simple, fpr_pcc_simple, best_precision_pcc_simple, best_recall_pcc_simple, tn_pcc_simple, fp_pcc_simple, fn_pcc_simple, tp_pcc_simple, auroc_pcc_simple, zero_tn_pcc_simple, zero_fp_pcc_simple, zero_fn_pcc_simple, zero_tp_pcc_simple, zero_fnr_pcc_simple, zero_tnr_pcc_simple, zero_tpr_pcc_simple, zero_fpr_pcc_simple, fn_zero_threshold_pcc_simple = evaluation_metrics(pcc_simple_test, pcc_simple_pred)
-        EER_threshold_pcc_intermediate, best_f1_score_pcc_intermediate, fnr_pcc_intermediate, tnr_pcc_intermediate, tpr_pcc_intermediate, fpr_pcc_intermediate, best_precision_pcc_intermediate, best_recall_pcc_intermediate, tn_pcc_intermediate, fp_pcc_intermediate, fn_pcc_intermediate, tp_pcc_intermediate, auroc_pcc_intermediate, zero_tn_pcc_intermediate, zero_fp_pcc_intermediate, zero_fn_pcc_intermediate, zero_tp_pcc_intermediate, zero_fnr_pcc_intermediate, zero_tnr_pcc_intermediate, zero_tpr_pcc_intermediate, zero_fpr_pcc_intermediate, fn_zero_threshold_pcc_intermediate = evaluation_metrics(pcc_intermediate_test, pcc_intermediate_pred)
-        correct_location_of_pcc = pcc_advanced.count(1)
-        false_location_of_pcc = pcc_advanced.count(0)
+  
+        #print("SIMPLE EER")
+        fnr_pcc_simple, tnr_pcc_simple, tpr_pcc_simple, fpr_pcc_simple, tn_pcc_simple, fp_pcc_simple, fn_pcc_simple, tp_pcc_simple = evaluation_metrics(pcc_simple_test, pcc_simple_pred, EER_threshold)
+        #print("INTERMEDIATE EER")
+        fnr_pcc_intermediate, tnr_pcc_intermediate, tpr_pcc_intermediate, fpr_pcc_intermediate, tn_pcc_intermediate, fp_pcc_intermediate, fn_pcc_intermediate, tp_pcc_intermediate = evaluation_metrics(pcc_intermediate_test, pcc_intermediate_pred, EER_threshold)
 
         zero_FP_pcc_simple_test, zero_FP_simple_pred, zero_FP_intermediate_pred, zero_FP_intermediate_test, zero_FP_advanced = evaluate_pcc(raw_y, raw_y_test_pred, pcc_test_params, fn_zero_threshold)
-        zero_fp_EER_threshold_pcc_simple, zero_fp_best_f1_score_pcc_simple, zero_fp_fnr_pcc_simple, zero_fp_tnr_pcc_simple, zero_fp_tpr_pcc_simple, zero_fp_fpr_pcc_simple, zero_fp_best_precision_pcc_simple, zero_fp_best_recall_pcc_simple, zero_fp_tn_pcc_simple, zero_fp_fp_pcc_simple, zero_fp_fn_pcc_simple, zero_fp_tp_pcc_simple, zero_fp_auroc_pcc_simple, zero_fp_zero_tn_pcc_simple, zero_fp_zero_fp_pcc_simple, zero_fp_zero_fn_pcc_simple, zero_fp_zero_tp_pcc_simple, zero_fp_zero_fnr_pcc_simple, zero_fp_zero_tnr_pcc_simple, zero_fp_zero_tpr_pcc_simple, zero_fp_zero_fpr_pcc_simple, zero_fp_fn_zero_threshold_pcc_simple = evaluation_metrics(zero_FP_pcc_simple_test, zero_FP_simple_pred)
-        zerp_fp_threshold_pcc_intermediate, zero_fp_best_f1_score_pcc_intermediate, zero_fp_fnr_pcc_intermediate, zero_fp_tnr_pcc_intermediate, zero_fp_tpr_pcc_intermediate, zero_fp_fpr_pcc_intermediate, zero_fp_best_precision_pcc_intermediate, zero_fp_best_recall_pcc_intermediate, zero_fp_tn_pcc_intermediate, zero_fp_fp_pcc_intermediate, zero_fp_fn_pcc_intermediate, zero_fp_tp_pcc_intermediate, zero_fp_auroc_pcc_intermediate, zero_fp_zero_tn_pcc_intermediate, zero_fp_zero_fp_pcc_intermediate, zero_fp_zero_fn_pcc_intermediate, zero_fp_zero_tp_pcc_intermediate, zero_fp_zero_fnr_pcc_intermediate, zero_fp_zero_tnr_pcc_intermediate, zero_fp_zero_tpr_pcc_intermediate, zero_fp_zero_fpr_pcc_intermediate, zero_fp_fn_zero_threshold_pcc_intermediate = evaluation_metrics(zero_FP_intermediate_test, zero_FP_intermediate_pred)
-        zero_fp_correct_location_of_pcc = zero_FP_advanced.count(1)
-        zero_fp_false_location_of_pcc = zero_FP_advanced.count(0)
         
-        pcc_results_EER = {
+        #print("SIMPLE FN ZERO")
+        zerofp_fnr_pcc_simple, zerofp_tnr_pcc_simple, zerofp_tpr_pcc_simple, zerofp_fpr_pcc_simple, zerofp_tn_pcc_simple, zerofp_fp_pcc_simple, zerofp_fn_pcc_simple, zerofp_tp_pcc_simple = evaluation_metrics(zero_FP_pcc_simple_test, zero_FP_simple_pred, fn_zero_threshold)
+        #print("INTERMEDIATE FN ZERO")
+        zerofp_fnr_pcc_intermediate, zerofp_tnr_pcc_intermediate, zerofp_tpr_pcc_intermediate, zerofp_fpr_pcc_intermediate, zerofp_tn_pcc_intermediate, zerofp_fp_pcc_intermediate, zerofp_fn_pcc_intermediate, zerofp_tp_pcc_intermediate = evaluation_metrics(zero_FP_intermediate_test, zero_FP_intermediate_pred, fn_zero_threshold)
+        
+        pcc_results = {
             'simple_EER': {
-                'EER_threshold': convert_to_serializable(EER_threshold_pcc_simple),
-                'best_f1_score': convert_to_serializable(best_f1_score_pcc_simple),
+                'EER_threshold': convert_to_serializable(EER_threshold),
                 'false_negative_rate': convert_to_serializable(fnr_pcc_simple),
                 'true_negative_rate': convert_to_serializable(tnr_pcc_simple),
                 'true_positive_rate': convert_to_serializable(tpr_pcc_simple),
                 'false_positive_rate': convert_to_serializable(fpr_pcc_simple),
-                'precision': convert_to_serializable(best_precision_pcc_simple),
-                'recall': convert_to_serializable(best_recall_pcc_simple),
                 'confusion_matrix': {
                     'true_negative': convert_to_serializable(tn_pcc_simple),
                     'false_positive': convert_to_serializable(fp_pcc_simple),
                     'false_negative': convert_to_serializable(fn_pcc_simple),
                     'true_positive': convert_to_serializable(tp_pcc_simple)
                 },
-                'auroc': convert_to_serializable(auroc_pcc_simple),
                 'simple_FN_zero_threshold': {
-                    'true_negative': convert_to_serializable(zero_tn_pcc_simple),
-                    'false_positive': convert_to_serializable(zero_fp_pcc_simple),
-                    'false_negative': convert_to_serializable(zero_fn_pcc_simple),
-                    'true_positive': convert_to_serializable(zero_tp_pcc_simple),
-                    'false_negative_rate': convert_to_serializable(zero_fnr_pcc_simple),
-                    'true_negative_rate': convert_to_serializable(zero_tnr_pcc_simple),
-                    'true_positive_rate': convert_to_serializable(zero_tpr_pcc_simple),
-                    'false_positive_rate': convert_to_serializable(zero_fpr_pcc_simple),
-                    'threshold': convert_to_serializable(fn_zero_threshold_pcc_simple)
+                    'false_negative_rate': convert_to_serializable(zerofp_fnr_pcc_simple),
+                    'true_negative_rate': convert_to_serializable(zerofp_tnr_pcc_simple),
+                    'true_positive_rate': convert_to_serializable(zerofp_tpr_pcc_simple),
+                    'false_positive_rate': convert_to_serializable(zerofp_fpr_pcc_simple),
+                    'confusion_matrix': {
+                        'true_negative': convert_to_serializable(zerofp_tn_pcc_simple),
+                        'false_positive': convert_to_serializable(zerofp_fp_pcc_simple),
+                        'false_negative': convert_to_serializable(zerofp_fn_pcc_simple),
+                        'true_positive': convert_to_serializable(zerofp_tp_pcc_simple)
+                },
                 }
             },
             'intermediate_EER': {
-                'EER_threshold': convert_to_serializable(EER_threshold_pcc_intermediate),
-                'best_f1_score': convert_to_serializable(best_f1_score_pcc_intermediate),
+                'EER_threshold': convert_to_serializable(EER_threshold),
                 'false_negative_rate': convert_to_serializable(fnr_pcc_intermediate),
                 'true_negative_rate': convert_to_serializable(tnr_pcc_intermediate),
                 'true_positive_rate': convert_to_serializable(tpr_pcc_intermediate),
                 'false_positive_rate': convert_to_serializable(fpr_pcc_intermediate),
-                'precision': convert_to_serializable(best_precision_pcc_intermediate),
-                'recall': convert_to_serializable(best_recall_pcc_intermediate),
                 'confusion_matrix': {
                     'true_negative': convert_to_serializable(tn_pcc_intermediate),
                     'false_positive': convert_to_serializable(fp_pcc_intermediate),
                     'false_negative': convert_to_serializable(fn_pcc_intermediate),
                     'true_positive': convert_to_serializable(tp_pcc_intermediate)
                 },
-                'auroc': convert_to_serializable(auroc_pcc_intermediate),
                 'intermediate_FN_zero_threshold': {
-                    'true_negative': convert_to_serializable(zero_tn_pcc_intermediate),
-                    'false_positive': convert_to_serializable(zero_fp_pcc_intermediate),
-                    'false_negative': convert_to_serializable(zero_fn_pcc_intermediate),
-                    'true_positive': convert_to_serializable(zero_tp_pcc_intermediate),
-                    'false_negative_rate': convert_to_serializable(zero_fnr_pcc_intermediate),
-                    'true_negative_rate': convert_to_serializable(zero_tnr_pcc_intermediate),
-                    'true_positive_rate': convert_to_serializable(zero_tpr_pcc_intermediate),
-                    'false_positive_rate': convert_to_serializable(zero_fpr_pcc_intermediate),
-                    'threshold': convert_to_serializable(fn_zero_threshold_pcc_intermediate)
+                    'false_negative_rate': convert_to_serializable(zerofp_fnr_pcc_intermediate),
+                    'true_negative_rate': convert_to_serializable(zerofp_tnr_pcc_intermediate),
+                    'true_positive_rate': convert_to_serializable(zerofp_tpr_pcc_intermediate),
+                    'false_positive_rate': convert_to_serializable(zerofp_fpr_pcc_intermediate),
+                    'confusion_matrix': {
+                        'true_negative': convert_to_serializable(zerofp_tn_pcc_intermediate),
+                        'false_positive': convert_to_serializable(zerofp_fp_pcc_intermediate),
+                        'false_negative': convert_to_serializable(zerofp_fn_pcc_intermediate),
+                        'true_positive': convert_to_serializable(zerofp_tp_pcc_intermediate)
+                },
+                    'threshold': convert_to_serializable(fn_zero_threshold)
+                
                     
                 }
-            },
-            'advanced_EER' : {
-                'correct_location_of_pcc': convert_to_serializable(correct_location_of_pcc),
-                'false_location_of_pcc': convert_to_serializable(false_location_of_pcc)
             }
         }
-
-        pcc_results_FP_zero = {
-    'simple_zero_FP': {
-        'EER_threshold': convert_to_serializable(zero_fp_EER_threshold_pcc_simple),
-        'best_f1_score': convert_to_serializable(zero_fp_best_f1_score_pcc_simple),
-        'false_negative_rate': convert_to_serializable(zero_fp_fnr_pcc_simple),
-        'true_negative_rate': convert_to_serializable(zero_fp_tnr_pcc_simple),
-        'true_positive_rate': convert_to_serializable(zero_fp_tpr_pcc_simple),
-        'false_positive_rate': convert_to_serializable(zero_fp_fpr_pcc_simple),
-        'precision': convert_to_serializable(zero_fp_best_precision_pcc_simple),
-        'recall': convert_to_serializable(zero_fp_best_recall_pcc_simple),
-        'confusion_matrix': {
-            'true_negative': convert_to_serializable(zero_fp_tn_pcc_simple),
-            'false_positive': convert_to_serializable(zero_fp_fp_pcc_simple),
-            'false_negative': convert_to_serializable(zero_fp_fn_pcc_simple),
-            'true_positive': convert_to_serializable(zero_fp_tp_pcc_simple)
-        },
-        'auroc': convert_to_serializable(zero_fp_auroc_pcc_simple),
-        'simple_FN_zero_threshold': {
-            'true_negative': convert_to_serializable(zero_fp_zero_tn_pcc_simple),
-            'false_positive': convert_to_serializable(zero_fp_zero_fp_pcc_simple),
-            'false_negative': convert_to_serializable(zero_fp_zero_fn_pcc_simple),
-            'true_positive': convert_to_serializable(zero_fp_zero_tp_pcc_simple),
-            'false_negative_rate': convert_to_serializable(zero_fp_zero_fnr_pcc_simple),
-            'true_negative_rate': convert_to_serializable(zero_fp_zero_tnr_pcc_simple),
-            'true_positive_rate': convert_to_serializable(zero_fp_zero_tpr_pcc_simple),
-            'false_positive_rate': convert_to_serializable(zero_fp_zero_fpr_pcc_simple),
-            'threshold': convert_to_serializable(zero_fp_fn_zero_threshold_pcc_simple)
-        }
-    },
-    'intermediate_zero_FP': {
-        'EER_threshold': convert_to_serializable(zerp_fp_threshold_pcc_intermediate),
-        'best_f1_score': convert_to_serializable(zero_fp_best_f1_score_pcc_intermediate),
-        'false_negative_rate': convert_to_serializable(zero_fp_fnr_pcc_intermediate),
-        'true_negative_rate': convert_to_serializable(zero_fp_tnr_pcc_intermediate),
-        'true_positive_rate': convert_to_serializable(zero_fp_tpr_pcc_intermediate),
-        'false_positive_rate': convert_to_serializable(zero_fp_fpr_pcc_intermediate),
-        'precision': convert_to_serializable(zero_fp_best_precision_pcc_intermediate),
-        'recall': convert_to_serializable(zero_fp_best_recall_pcc_intermediate),
-        'confusion_matrix': {
-            'true_negative': convert_to_serializable(zero_fp_tn_pcc_intermediate),
-            'false_positive': convert_to_serializable(zero_fp_fp_pcc_intermediate),
-            'false_negative': convert_to_serializable(zero_fp_fn_pcc_intermediate),
-            'true_positive': convert_to_serializable(zero_fp_tp_pcc_intermediate)
-        },
-        'auroc': convert_to_serializable(zero_fp_auroc_pcc_intermediate),
-        'intermediate_FN_zero_threshold': {
-            'true_negative': convert_to_serializable(zero_fp_zero_tn_pcc_intermediate),
-            'false_positive': convert_to_serializable(zero_fp_zero_fp_pcc_intermediate),
-            'false_negative': convert_to_serializable(zero_fp_zero_fn_pcc_intermediate),
-            'true_positive': convert_to_serializable(zero_fp_zero_tp_pcc_intermediate),
-            'false_negative_rate': convert_to_serializable(zero_fp_zero_fnr_pcc_intermediate),
-            'true_negative_rate': convert_to_serializable(zero_fp_zero_tnr_pcc_intermediate),
-            'true_positive_rate': convert_to_serializable(zero_fp_zero_tpr_pcc_intermediate),
-            'false_positive_rate': convert_to_serializable(zero_fp_zero_fpr_pcc_intermediate),
-            'threshold': convert_to_serializable(zero_fp_fn_zero_threshold_pcc_intermediate)
-        }
-    },
-    'advanced_zero_FP': {
-        'correct_location_of_pcc': convert_to_serializable(zero_fp_correct_location_of_pcc),
-        'false_location_of_pcc': convert_to_serializable(zero_fp_false_location_of_pcc)
-    }
-}
+        #print(pcc_results)
+        
     else: 
-        pcc_results_EER = "No RA"
-        pcc_results_FP_zero = "No RA"
+        pcc_results = "No RA"
 
     # Write to JSON file 
     evaluation_dict = {
@@ -291,8 +245,7 @@ def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, ra
         'false_positive_rate': convert_to_serializable(zero_fpr),
         'threshold': convert_to_serializable(fn_zero_threshold)
     },
-    'pcc_results_EER': pcc_results_EER,
-    'pcc_results_FP_zero' : pcc_results_FP_zero
+    'pcc_results': pcc_results
     }
 
     # Ensure the 'evaluation' directory exists or adjust the path as needed
@@ -370,7 +323,8 @@ def check_for_simple_pcc(array):
     """
     return 1 if len(set(array)) == 1 else 0
 
-def check_cheating_position(array):
+ ######################### NOT USED #########################
+def check_cheating_position(array): # NOT USED
     """
     INTERMEDIATE PCC
     evaluate the location of PCC in the set.
@@ -383,6 +337,7 @@ def check_cheating_position(array):
         return 0 if zero_index < len(array) / 2 else 1
     except ValueError:
         return 1  # No cheating
+######################### NOT USED #########################
 
 def check_advanced_pcc(array1, array2):
     return 1 if array1 == array2 else 0
@@ -391,6 +346,7 @@ def threashold_func(list, threashold):
     return [1 if x >= threashold else 0 for x in list]
 
 def evaluate_pcc(y_test, y_pred, pcc_test_params, threashold):
+    #y_test)
     pcc_simple_pred = []
     pcc_simple_test = []
 
@@ -414,7 +370,6 @@ def evaluate_pcc(y_test, y_pred, pcc_test_params, threashold):
 
     flat_pcc_intermediate_test = [item for sublist in pcc_intermediate_test for item in (sublist if isinstance(sublist, list) else [sublist])]
     flat_pcc_intermediate_pred = [item for sublist in pcc_intermediate_pred for item in (sublist if isinstance(sublist, list) else [sublist])]
-
 
     return pcc_simple_test, pcc_simple_pred, flat_pcc_intermediate_pred, flat_pcc_intermediate_test, pcc_advanced
 
@@ -481,7 +436,7 @@ def tranform_ra(pcc_test_params,y_test,y_pred, raw_c_test):
             result = array_sum if array_sum == 0 else array_sum / length
             sum_c.append(result)
             sum_truth.append(raw_c_local[i])
-            # print(f'--> {round(result,2)} - {y_truth[i]} - {raw_c_local[i]}')
+            #print(f'--> {round(result,2)} - {y_truth[i]} - {raw_c_local[i]}')
         # print("-----------------------")
         # print(len(y_truth), len(y_test),pcc_i, c_size, N)
         raw_y_test_pred.append(sum_c)

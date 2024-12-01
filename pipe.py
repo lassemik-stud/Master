@@ -198,35 +198,37 @@ def prepare_pipeline(arg):
     if ra: 
         printLog.debug(f'k: {k}, d: {d}, s_s: {sentence_size}, pcc_r: {pcc_rate}, pcc_part_size: {pcc_part_size}, author_id: {author_id}')
     # Initialize the pipelines
-    # if (clf_svm_flag):
-    #     for svm_i, svm_combination in enumerate(svm_combinations):
-    #         printLog.debug(f'Running SVM with combination {svm_i+1} of {len(svm_combinations)}')
-    #         svm(svm_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    if (clf_svm_flag):
+        for svm_i, svm_combination in enumerate(svm_combinations):
+            printLog.debug(f'Running SVM with combination {svm_i+1} of {len(svm_combinations)}')
+            svm(svm_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
-    # if (clf_lr_flag):
-    #    for lr_i, lr_combination in enumerate(lr_combinations):
-    #        printLog.debug(f'Running LR with combination {lr_i+1} of {len(lr_combinations)}')
-    #        lr(lr_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    if (clf_lr_flag):
+       for lr_i, lr_combination in enumerate(lr_combinations):
+           printLog.debug(f'Running LR with combination {lr_i+1} of {len(lr_combinations)}')
+           lr(lr_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
-    # if (clf_nb_flag):
-    #     for nb_i, naive_bayes_combination in enumerate(naive_bayes_combinations):
-    #         printLog.debug(f'Running Naive Bayes with combination {nb_i+1} of {len(naive_bayes_combinations)}')
-    #         naive_bayes(naive_bayes_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    if (clf_nb_flag):
+        for nb_i, naive_bayes_combination in enumerate(naive_bayes_combinations):
+            printLog.debug(f'Running Naive Bayes with combination {nb_i+1} of {len(naive_bayes_combinations)}')
+            naive_bayes(naive_bayes_combination, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
-    with ProcessPoolExecutor() as executor:
-        executor.submit(run_svm, clf_svm_flag, svm_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
-        executor.submit(run_lr, clf_lr_flag, lr_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
-        executor.submit(run_nb, clf_nb_flag, naive_bayes_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    # with ProcessPoolExecutor() as executor:
+    #     executor.submit(run_svm, clf_svm_flag, svm_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    #     executor.submit(run_lr, clf_lr_flag, lr_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
+    #     executor.submit(run_nb, clf_nb_flag, naive_bayes_combinations, text_pair_feature_extractor_prepopulated, x_train, y_train, x_test, y_test, arg, pcc_test_param, raw_c_test)
 
 def run_experiment(arguments, _type):
     durations = []
     printLog.debug(f'Running {_type}-experiment with {len(arguments)} combination(s)')
     current_auroc = 0
     best_classifier = ''
+    
     for i, argument in enumerate(arguments):
         start_time = time.time()
        
         printLog.info(f'{100*(i+1)/len(arguments):.2f} % --> Running {_type}-experiment {i+1} of {len(arguments)}')
+        #print(argument)
         prepare_pipeline(argument)
         
         end_time = time.time()
@@ -437,7 +439,38 @@ def main():
     #b1_tests()
     #b15_test()
     #pan20_ra1_test()
-    pan20_ra2_test()
+    #pan20_ra2_test()
+    from experiments.ra1.pan20_ra2_custom import create_experiment
+
+    data = [
+        {'author': '2049660', 'FT': 'tfidf', 'clf': 'SVM', 'k': 5, 'd': 3, 'X': 30, 'Z': 3, 'Y': 3},
+        {'author': '2049660', 'FT': 'tfidf', 'clf': 'LR', 'k': 5, 'd': 3, 'X': 30, 'Z': 3, 'Y': 3},
+        {'author': '2049660', 'FT': 'dependency', 'clf': 'SVM', 'k': 4, 'd': 3, 'X': 30, 'Z': 3, 'Y': 1},
+        {'author': '2049660', 'FT': 'dependency', 'clf': 'LR', 'k': 4, 'd': 3, 'X': 30, 'Z': 3, 'Y': 1},
+        {'author': '1648312', 'FT': 'tfidf', 'clf': 'SVM', 'k': 4, 'd': 3, 'X': 30, 'Z': 3, 'Y': 1},
+        {'author': '1648312', 'FT': 'tfidf', 'clf': 'LR', 'k': 5, 'd': 0, 'X': 30, 'Z': 1, 'Y': 1},
+        {'author': '1648312', 'FT': 'dependency', 'clf': 'SVM', 'k': 4, 'd': 3, 'X': 80, 'Z': 1, 'Y': 1},
+        {'author': '1648312', 'FT': 'dependency', 'clf': 'LR', 'k': 2, 'd': 1, 'X': 80, 'Z': 2, 'Y': 1},
+        {'author': '1777261', 'FT': 'tfidf', 'clf': 'SVM', 'k': 5, 'd': 3, 'X': 50, 'Z': 1, 'Y': 1},
+        {'author': '1777261', 'FT': 'tfidf', 'clf': 'LR', 'k': 5, 'd': 3, 'X': 50, 'Z': 1, 'Y': 1},
+        {'author': '1777261', 'FT': 'dependency', 'clf': 'SVM', 'k': 5, 'd': 3, 'X': 50, 'Z': 2, 'Y': 3},
+        {'author': '1777261', 'FT': 'dependency', 'clf': 'LR', 'k': 2, 'd': 0, 'X': 80, 'Z': 1, 'Y': 4},
+    ]
+
+    for row in data:
+        _name = f'pan20_{row["clf"]}-{row["FT"]}-v4'
+        experiment_config = create_experiment(
+            clf_type=row['clf'],
+            k=row['k'],
+            d=row['d'],
+            X=row['X'],
+            Z=row['Z'],
+            Y=row['Y'],
+            feature_type=row['FT'],
+            AUTHOR_ID=row['author'],
+            name=_name
+        )
+        run_experiment([experiment_config], _name)
 
 if __name__ == '__main__':
     main()

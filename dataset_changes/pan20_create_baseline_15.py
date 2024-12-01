@@ -5,7 +5,8 @@ import ast
 import os
 import hashlib
 
-from dataset_changes.pan20_create_baseline_1 import main as test_main
+#from dataset_changes.pan20_create_baseline_1 import main as test_main
+from pan20_create_baseline_1 import main as test_main
 
 DATASET_PATH = '../../datasets/'
 DATASET_CREATE_PATH = 'pan20-dataset-baseline-15'
@@ -24,9 +25,7 @@ def generate_pairs(same_author_data, different_author_data):
     same_pairs = []
     different_pairs = []
     i = 0
-    same_author_length = int(len(same_author_data)*(2/3)/2)
-    diff_author_length = int(len(same_author_data)*(1/3))
-
+    
     for i in range(len(same_author_data)):
         for j in range(i+1, len(same_author_data)):
             if i == j: 
@@ -35,7 +34,6 @@ def generate_pairs(same_author_data, different_author_data):
                 'fandoms': same_author_data[i]['fandoms'],
                 'pair': [same_author_data[i]['text'], same_author_data[j]['text']]
             })
-
 
     for i in range(len(different_author_data)):
         for j in range(i+1, len(different_author_data)):
