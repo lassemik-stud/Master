@@ -14,3 +14,6 @@ results
 ```
 # Todo
 - Do something with the tokenization process. This is a very heavy process. Maybe do all tokenization before everything else? 
+
+
+This project is licensed under the terms of the MIT license.
