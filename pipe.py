@@ -431,7 +431,8 @@ def b15_test():
     _NAME = 'pan20_b15_SVM_tfidf-v2'
     run_experiment(pan20_b15_SVM_tfidf(_NAME), _NAME)
     
-def main():
+
+def rerunra():
     # pan20_b1_tests()
     # pan20_b15_test()
     
@@ -471,6 +472,61 @@ def main():
             name=_name
         )
         run_experiment([experiment_config], _name)
+
+def test_all_authors_ra_cc():
+    from experiments.ra1.pan20_ra2_custom import create_experiment
+    
+    with open('dataset_changes/pan20_similar_authors.txt', 'r', encoding='utf-8') as file:
+        author_id = [line.strip() for line in file if line.strip()]
+
+    data = []
+    for author in author_id: 
+        data.append({'author': str(author), 'FT': 'tfidf', 'clf': 'SVM', 'k': 4, 'd': 3, 'X': 30, 'Z': 3, 'Y': 1})
+    
+    for row in data:
+        _name = f'pan20_{row["clf"]}-{row["FT"]}-all-authors-v1'
+        experiment_config = create_experiment(
+            clf_type=row['clf'],
+            k=row['k'],
+            d=row['d'],
+            X=row['X'],
+            Z=row['Z'],
+            Y=row['Y'],
+            feature_type=row['FT'],
+            AUTHOR_ID=row['author'],
+            name=_name,
+            insert_cc=True
+        )
+        run_experiment([experiment_config], _name)
+
+def test_all_authors_ra():
+    from experiments.ra1.pan20_ra2_custom import create_experiment
+    
+    with open('dataset_changes/pan20_similar_authors.txt', 'r', encoding='utf-8') as file:
+        author_id = [line.strip() for line in file if line.strip()]
+
+    data = []
+    for author in author_id: 
+        data.append({'author': str(author), 'FT': 'tfidf', 'clf': 'SVM', 'k': 4, 'd': 1, 'X': 80, 'Z': 0, 'Y': 0})
+    
+    for row in data:
+        _name = f'pan20_{row["clf"]}-{row["FT"]}-all-authors-v1-no-cc'
+        experiment_config = create_experiment(
+            clf_type=row['clf'],
+            k=row['k'],
+            d=row['d'],
+            X=row['X'],
+            Z=row['Z'],
+            Y=row['Y'],
+            feature_type=row['FT'],
+            AUTHOR_ID=row['author'],
+            name=_name,
+            insert_cc=False
+        )
+        run_experiment([experiment_config], _name)
+
+def main():
+    test_all_authors_ra()
 
 if __name__ == '__main__':
     main()

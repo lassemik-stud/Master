@@ -35,7 +35,7 @@ naiveBayes_parameters = {
 }
 
 # AUTHOR PARAMS
-AUTHOR_ID = [2049660, 3107154, 4483094]
+# AUTHOR_ID = [2049660, 3107154, 4483094]
 #     \item     1.0           2049660
 #     \item     0.8999        3107154
 #     \item     0.8099        4483094
@@ -50,7 +50,7 @@ AUTHOR_ID = [2049660, 1648312, 1777261]
 def create_experiment(clf_type='SVM', k=2, d=1, X=20, Z=1, Y=1, 
                       feature_type='tfidf', feature_extractor_ngram_range=(3, 4), feature_extractor_max_features=1000,
                       feature_analyzer='char', samples=1000, special_char=False, word_length_dist=False, 
-                      include_vocab_richness=True, name='default', AUTHOR_ID=2049660):
+                      include_vocab_richness=True, name='default', AUTHOR_ID=2049660,insert_cc=True):
     ra_k = k
     ra_d = d 
     ra_sentence_size = X
@@ -76,13 +76,13 @@ def create_experiment(clf_type='SVM', k=2, d=1, X=20, Z=1, Y=1,
         'lr_parameters': lr_parameters,
         'NaiveBayes_parameters': naiveBayes_parameters,
         'clf': clf,
-        'ra': [True],  # Assuming you always want ra=True
+        'ra': [True],  
         'ra_k': [ra_k],
         'ra_d': [ra_d],
         'ra_sentence_size': [ra_sentence_size],
         'ra_PCC_part_size': [ra_PCC_part_size],
         'ra_number_of_ra_inserts': [ra_number_of_ra_inserts],
-        'insert_cc' : [True]
+        'insert_cc' : [insert_cc]
     }
 
     if feature_type == 'tfidf':

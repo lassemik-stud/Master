@@ -22,6 +22,8 @@ def evaluation_metrics(y_test, y_pred_proba, threshold=False):
             y_pred_optimal = y_pred_proba
         
         #print(y_test, y_pred_optimal)
+        print(y_test, y_pred_optimal)
+        print("SHOULD NOT BE HERE")
         tn, fp, fn, tp = confusion_matrix(y_test, y_pred_optimal).ravel()
         #print(tn, fp, fn, tp)
 
@@ -128,18 +130,18 @@ def evaluation_metrics(y_test, y_pred_proba, threshold=False):
 
 def evaluations(y_test, y_pred_proba, args, classifier_name, pcc_test_params, raw_c_test):
     distribution_plot_v = args.get('distribution_plot')
-    
     name = args.get('name')
     ra = args.get('ra')
+    incert_cc = args.get('insert_cc')
     if ra: 
         y_test, y_pred_proba, raw_y_test_pred, raw_y = tranform_ra(pcc_test_params,y_test,y_pred_proba, raw_c_test)
-    EER_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc,zero_tn, zero_fp, zero_fn, zero_tp, zero_fnr, zero_tnr, zero_tpr, zero_fpr, fn_zero_threshold = evaluation_metrics(y_test, y_pred_proba)
+    EER_threshold, best_f1_score, fnr, tnr, tpr, fpr, best_precision, best_recall, tn, fp, fn, tp, auroc,zero_tn, zero_fp, zero_fn, zero_tp, zero_fnr, zero_tnr, zero_tpr, zero_fpr, fn_zero_threshold = evaluation_metrics(y_test, y_pred_proba, False)
 
     if distribution_plot_v:
         if bool(distribution_plot_v):
             distribution_plot(y_test, y_pred_proba, args, EER_threshold, fn_zero_threshold)
     
-    if ra: 
+    if ra and incert_cc:
         pcc_simple_test, pcc_simple_pred, pcc_intermediate_pred, pcc_intermediate_test, pcc_advanced = evaluate_pcc(raw_y, raw_y_test_pred, pcc_test_params, EER_threshold)
   
         #print("SIMPLE EER")
